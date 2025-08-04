@@ -1,0 +1,89 @@
+################################
+# 기본적으로 모든 파일 무시 (workspace 제외)
+################################
+/*
+!/workspace/
+
+################################
+# Git 기본 파일 허용
+################################
+!.gitignore
+!.gitattributes
+!.github/
+
+################################
+# workspace 하위 프로젝트 허용
+################################
+!/workspace/NEXACRO_APPROVAL_DEMO/**
+!/workspace/XUP_DEMO/**
+
+################################
+# XUP 주요 파일 예외 허용 (.xam 등)
+################################
+!/workspace/XUP_DEMO/**/*.xam
+
+################################
+# 제외할 불필요 경로
+################################
+/workspace/.xup/
+workspace/Compile/
+
+################################
+# NEXACRO_APPROVAL_DEMO 내 특정 파일 제외
+################################
+/workspace/NEXACRO_APPROVAL_DEMO/appvariables.xml
+/workspace/NEXACRO_APPROVAL_DEMO/environment.xml
+/workspace/NEXACRO_APPROVAL_DEMO/typedefinition.xml
+
+################################
+# XUP_DEMO 내 특정 파일 제외
+################################
+/workspace/XUP_DEMO/mashup.msh
+
+################################
+# IDE / 메타데이터
+################################
+**/.project
+**/.classpath
+**/.settings/
+**/.metadata/
+**/Servers/
+**/.idea/
+**/.vscode/
+
+################################
+# 빌드 결과물 / 라이브러리
+################################
+**/bin/
+**/build/
+**/dist/
+**/target/
+**/node_modules/
+**/*.jar
+**/*.war
+**/*.ear
+**/*.class
+**/*.exe
+**/*.dll
+**/*.so
+**/*.dylib
+
+################################
+# 로그 / 임시 파일
+################################
+**/logs/
+**/log/
+**/tmp/
+**/temp/
+*.bak
+*.tmp
+*.swp
+*.swo
+
+################################
+# OS 생성 파일
+################################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
