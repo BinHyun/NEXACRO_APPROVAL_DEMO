@@ -9,22 +9,6 @@
       <Script rule_version="1.02"/>
       <GeneratorInfo rule_version="1.3"/>
     </Rule>
-    <Info project="D:\dev\Nexacro\NEXACRO_APPROVAL_DEMO\workspace\NEXACRO_APPROVAL_DEMO\" generated="D:\dev\Nexacro\NEXACRO_APPROVAL_DEMO\workspace\Compile\src\main\webapp\NEXACRO_APPROVAL_DEMO\">
-      <File url="typedefinition.xml" checksum="20250804223430" errormsg=""/>
-      <File url="appvariables.xml" checksum="20250804223400" errormsg=""/>
-      <File url="environment.xml" checksum="20250804223359" errormsg=""/>
-      <File url="_resource_\_theme_\blue\theme.xcss" checksum="20250804223400" errormsg=""/>
-      <File url="Application_Desktop.xadl" checksum="20250804223400" errormsg=""/>
-      <File url="FrameBase\Form_Left.xfdl" checksum="20250804223400" errormsg=""/>
-      <File url="FrameBase\Form_Work.xfdl" checksum="20250804223400" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20240227142740" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20240227142740" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20240227142736" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20240227142736" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20240227142738" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20240227142740" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20240227142738" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\MobileComp.json" checksum="20240227142742" errormsg=""/>
-    </Info>
+    <Info project="D:\dev\Nexacro\NEXACRO_APPROVAL_DEMO\workspace\NEXACRO_APPROVAL_DEMO\" generated="D:\dev\Nexacro\NEXACRO_APPROVAL_DEMO\workspace\Compile\src\main\webapp\NEXACRO_APPROVAL_DEMO\"><File url="typedefinition.xml" checksum="20250805222832" errormsg=""/><File url="appvariables.xml" checksum="20250805232221" errormsg=""/><File url="environment.xml" checksum="20250804223359" errormsg=""/><File url="_resource_\_theme_\blue\theme.xcss" checksum="20250804223400" errormsg=""/><File url="Application_Desktop.xadl" checksum="20250804223400" errormsg=""/><File url="FrameBase\Form_Left.xfdl" checksum="20250805232208" errormsg=""/><File url="FrameBase\Form_Work.xfdl" checksum="20250805230810" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20240227142740" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20240227142740" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20240227142736" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20240227142736" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20240227142738" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20240227142740" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20240227142738" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\MobileComp.json" checksum="20240227142742" errormsg=""/><File url="Lib\lib_array.xjs" checksum="20250802221147" errormsg=""/><File url="Lib\lib_base.xjs" checksum="20250802220742" errormsg=""/><File url="Lib\lib_date.xjs" checksum="20250802221139" errormsg=""/><File url="Lib\lib_number.xjs" checksum="20250802221112" errormsg=""/><File url="Lib\lib_string.xjs" checksum="20250802221104" errormsg=""/><File url="Lib\lib_transaction.xjs" checksum="20250802231019" errormsg=""/><File url="TestPage\Test_01.xfdl" checksum="20250805231832" errormsg=""/><File url="Base\Base_01.xfdl" checksum="20250805232249" errormsg=""/><File url="TestPage\Test_02.xfdl" checksum="20250805232119" errormsg=""/></Info>
   </GenInfo>
 </root>

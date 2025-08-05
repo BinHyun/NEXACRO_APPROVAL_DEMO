@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Base_01" width="1280" height="720" titletext="New Form" onload="Base_01_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Button00" left="134" top="32" width="165" height="71"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Base_01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	alert("기본영역 호출 완료");
+};
+]]></Script>
+  </Form>
+</FDL>

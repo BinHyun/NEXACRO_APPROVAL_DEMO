@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Test_02" width="1280" height="720" titletext="New Form" onload="Test_02_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Button00" left="62" top="53" width="58" height="27"/>
+        <Button id="Button00_00" taborder="1" text="Button00" left="320.00" top="53" width="58" height="27"/>
+        <Button id="Button00_01" taborder="2" text="Button00" left="230.00" top="53" width="58" height="27"/>
+        <Button id="Button00_02" taborder="3" text="Button00" left="142.00" top="53" width="58" height="27"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Test_02_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	alert("Test_02 호출 완료");
+};
+]]></Script>
+  </Form>
+</FDL>
