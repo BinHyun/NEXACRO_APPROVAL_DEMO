@@ -2,17 +2,11 @@
 <FDL version="2.1">
   <Form id="Form_Work" width="1080" height="720" titletext="Form_Work" onload="Form_Work_onload">
     <Layouts>
-      <Layout width="1080" height="720" screenid="Desktop_screen">
-        <Button id="Button00" taborder="0" text="Button00" left="148" top="41" width="221" height="70"/>
-      </Layout>
+      <Layout width="1080" height="720" screenid="Desktop_screen"/>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[this.Form_Work_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	var objApp = nexacro.getApplication();
-	var objDs = objApp.dsUrl;
 	
-	var menu_url = objDs.getColumn(0, "RECEIVED_URL");
-	alert("컨텐츠 영역 ==> " + menu_url);
 };
 ]]></Script>
   </Form>

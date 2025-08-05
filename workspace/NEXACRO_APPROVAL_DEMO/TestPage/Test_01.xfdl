@@ -3,10 +3,7 @@
   <Form id="Test_01" width="1280" height="720" titletext="New Form" onload="Test_01_onload">
     <Layouts>
       <Layout height="720" width="1280">
-        <Button id="Button00" taborder="0" text="Button00" left="62" top="53" width="58" height="27"/>
-        <Button id="Button00_00" taborder="1" text="Button00" left="62.00" top="83" width="58" height="27"/>
-        <Button id="Button00_01" taborder="2" text="Button00" left="62.00" top="113" width="58" height="27"/>
-        <Button id="Button00_02" taborder="3" text="Button00" left="62.00" top="143" width="58" height="27"/>
+        <Static id="Static00" taborder="0" text="Test Page 01" left="31" top="21" width="430" height="69"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
