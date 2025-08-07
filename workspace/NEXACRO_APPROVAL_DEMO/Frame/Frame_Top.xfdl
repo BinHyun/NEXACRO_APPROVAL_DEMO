@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Frame_Top" width="1280" height="720" titletext="New Form" onload="Frame_Top_onload">
+  <Form id="Frame_Top" width="1280" height="50" titletext="New Form" onload="Frame_Top_onload">
     <Layouts>
-      <Layout height="720" width="1280">
+      <Layout height="50" width="1280">
         <Static id="staBack01" taborder="0" left="0" top="0" width="1280" height="24" cssclass="sta_top_bg01"/>
-        <Static id="staBack02" taborder="1" left="0" top="20" height="41" cssclass="sta_top_bg02" width="1280"/>
+        <Static id="staBack02" taborder="1" left="0" top="20" height="41" cssclass="sta_top_bg02" width="1280" onclick="staBack02_onclick"/>
         <Static id="staLogo" taborder="2" left="0" top="24" width="160" height="41" cssclass="sta_top_logo"/>
         <Static id="staHello" taborder="3" left="10" top="0" width="210" height="24" cssclass="sta_top_textWht" text="Hello! Bin Hyun"/>
       </Layout>
@@ -25,18 +25,18 @@
 */
 this.fnGetTopMenu = function ()
 {
-  //글로벌 데이터셋 gdsMenu 가져옴
-  var objApp = nexacro.getApplication();
-  var objDsMenu = objApp.gdsMenu;
+	//글로벌 데이터셋 gdsMenu 가져옴
+	var objApp = nexacro.getApplication();
+	var objDsMenu = objApp.gdsMenu;
   
-  //MENU_LVL이 0인 값으로 데이터셋 필터링
-  objDsMenu.filter("MENU_LEVEL == 0");
+	//MENU_LVL이 0인 값으로 데이터셋 필터링
+	objDsMenu.filter("MENU_LEVEL == 0");
   
-  //필터처리된 데이터셋을 복사
-  //CopyData 메서드 매개변수에 "true" 설정하여 필터링 된 데이터만 복사
-  this.dsTop.copyData(objDsMenu,true);
+	//필터처리된 데이터셋을 복사
+	//CopyData 메서드 매개변수에 "true" 설정하여 필터링 된 데이터만 복사
+	this.dsTop.copyData(objDsMenu,true);
   
-  objDsMenu.filter("");
+	objDsMenu.filter("");
 };
 
 /**
@@ -46,55 +46,55 @@ this.fnGetTopMenu = function ()
 */
 this.fnCreateTopMenu = function ()
 {  
-  //메뉴id, 메뉴명
-  var sMenuId;
-  var sMenuNm;
+	//메뉴id, 메뉴명
+	var sMenuId;
+	var sMenuNm;
 
-  //메뉴 버튼들 위치 설정을 위한 기본값
-  var nLeft = 190;
-  var nTop = 24;
-  var nWidth = 190 ;
-  var nHeight = 40;
+	//메뉴 버튼들 위치 설정을 위한 기본값
+	var nLeft = 190;
+	var nTop = 24;
+	var nWidth = 190 ;
+	var nHeight = 40;
   
-  //버튼 사이에 간격 선언
-  var nGap = 20;
+	//버튼 사이에 간격 선언
+	var nGap = 20;
   
-  //버튼의 cssclass 선언
-  var sBtnCssClass = "btn_top_menu";
+	//버튼의 cssclass 선언
+	var sBtnCssClass = "btn_top_menu";
   
-  var nRowCnt  = this.dsTop.rowcount;
+	var nRowCnt  = this.dsTop.rowcount;
   
-  //복사한 데이터셋의 row 갯수만큼 for문 반복
-  for(i=0; i<nRowCnt; i++){
+	//복사한 데이터셋의 row 갯수만큼 for문 반복
+	for(i=0; i<nRowCnt; i++){
   
-    //데이터셋에서 MENU_CD, MENU_NM 값 가져와 선언한 변수에 각각 넣어주기
-    sMenuId = this.dsTop.getColumn(i, "MENU_ID");
-    sMenuNm = this.dsTop.getColumn(i ,"MENU_NM");
+		//데이터셋에서 MENU_CD, MENU_NM 값 가져와 선언한 변수에 각각 넣어주기
+		sMenuId = this.dsTop.getColumn(i, "MENU_ID");
+		sMenuNm = this.dsTop.getColumn(i ,"MENU_NM");
+		
+		//새로운 버튼 생성
+		var objButton = new Button();  
+		objButton.init("btn_"+sMenuId, nLeft, nTop, nWidth, nHeight, null, null);
+    
+		//버튼 컴포넌트 설정
+		objButton.set_text(sMenuNm);
+		objButton.set_cssclass(sBtnCssClass);
 
-    //새로운 버튼 생성
-    var objButton = new Button();  
-    objButton.init("btn_"+sMenuId, nLeft, nTop, nWidth, nHeight, null, null);
+		//fittocontents
+		objButton.set_fittocontents("width");
     
-    //버튼 컴포넌트 설정
-    objButton.set_text(sMenuNm);
-    objButton.set_cssclass(sBtnCssClass);
-
-    //fittocontents
-    objButton.set_fittocontents("width");
+		//생성한 버튼 컴포넌트를 form의 자식 컴포넌트로 추가
+		this.addChild(objButton.id,objButton); 
     
-    //생성한 버튼 컴포넌트를 form의 자식 컴포넌트로 추가
-    this.addChild(objButton.id,objButton); 
+		//버튼의 특정 이벤트에 onclick 핸들러 함수를 추가
+		objButton.addEventHandler("onclick",this.btnTopMenu_onclick,this);
     
-    //버튼의 특정 이벤트에 onclick 핸들러 함수를 추가
-    objButton.addEventHandler("onclick",this.btnTopMenu_onclick,this);
+		objButton.show();
     
-    objButton.show();
-    
-    //두번째 버튼부터는 이전 버튼과 nGap 만큼의 간격으로 생성되도록 Left 값 설정
-    //PositionBase
-    nLeft = objButton.id+":"+nGap+"px";
-  }
-  this.resetScroll();
+		//두번째 버튼부터는 이전 버튼과 nGap 만큼의 간격으로 생성되도록 Left 값 설정
+		//PositionBase
+		nLeft = objButton.id+":"+nGap+"px";
+	}
+	this.resetScroll();
 };
 
 /**
@@ -102,13 +102,13 @@ this.fnCreateTopMenu = function ()
 */
 this.btnTopMenu_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-  //버튼 Id에서 메뉴 id값을 추출
-  //ex) btn_000001 -> 000001
-  var arrResultId = obj.id.split('_');
-  var sResultId = arrResultId [1];
-    
-  //왼쪽 메뉴 가져오는 함수 호출 - frmleft 화면
-  nexacro.LeftFrame.form.fnGetLeftMenu(sResultId);
+	//버튼 Id에서 메뉴 id값을 추출
+	//ex) btn_000001 -> 000001
+	var arrResultId = obj.id.split('_');
+	var sResultId = arrResultId [1];
+ 
+	//왼쪽 메뉴 가져오는 함수 호출 - frmleft 화면
+	nexacro.LeftFrame.form.fnGetLeftMenu(sResultId);
 };]]></Script>
     <Objects>
       <Dataset id="dsTop"/>

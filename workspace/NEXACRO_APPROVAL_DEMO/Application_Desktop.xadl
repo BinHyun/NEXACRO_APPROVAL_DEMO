@@ -2,14 +2,14 @@
 <ADL version="2.0">
   <Application id="Application_Desktop" screenid="Desktop_screen" onload="Application_onload">
     <Layout>
-      <MainFrame id="mainframe" showtitlebar="false" showstatusbar="true" left="0" top="0" width="1280" height="720" titletext="LeftFrame">
-        <VFrameSet id="VFSet01" showtitlebar="false">
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="700" titletext="LeftFrame" openalign="left">
+        <VFrameSet id="VFSet01" separatesize="0,0,0,*" showtitlebar="false">
           <Frames>
             <ChildFrame id="TopFrame" formurl="Frame::Frame_Top.xfdl" showtitlebar="false"/>
-            <HFrameSet id="HFSet01" separatesize="190,*" progressbarsmooth="" showtitlebar="false">
+            <HFrameSet id="HFSet01" separatesize="190,*" showtitlebar="false">
               <Frames>
                 <ChildFrame id="LeftFrame" formurl="Frame::Frame_Left.xfdl" showtitlebar="false"/>
-                <VFrameSet id="VFSet02" progressbarsmooth="" showtitlebar="false">
+                <VFrameSet id="VFSet02" separatesize="40,*" showtitlebar="false">
                   <Frames>
                     <ChildFrame id="MdiFrame" formurl="Frame::Frame_Mdi.xfdl" showtitlebar="false"/>
                     <FrameSet id="WorkFrame" showtitlebar="false"/>
@@ -17,7 +17,7 @@
                 </VFrameSet>
               </Frames>
             </HFrameSet>
-            <ChildFrame id="BottomFrame" formurl="Frame::Frame_Bottom.xfdl" showtitlebar="false"/>
+            <ChildFrame id="BottomFrame" formurl="" showtitlebar="false"/>
             <ChildFrame id="LoginFrame" formurl="Frame::Frame_Login.xfdl" showtitlebar="false"/>
           </Frames>
         </VFrameSet>
