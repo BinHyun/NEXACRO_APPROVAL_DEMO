@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Frame_Login" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="btnLogin" taborder="0" text="로그인" left="438" top="164" width="120" height="40" onclick="btnLogin_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.btnLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//Top, HFSet01, Bottom, Login 4개 영역에 대하여
+	//로그인 화면이 보이지 않도록 설정
+	nexacro.VFSet01.set_separatesize("65,*,30,0");
+};
+]]></Script>
+  </Form>
+</FDL>
