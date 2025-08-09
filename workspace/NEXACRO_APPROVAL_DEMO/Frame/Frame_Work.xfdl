@@ -1,8 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Fram_Work" width="1280" height="720" titletext="New Form">
+  <Form id="Fram_Work" width="1700" height="720" titletext="New Form" onload="Fram_Work_onload">
     <Layouts>
-      <Layout height="720" width="1280"/>
+      <Layout height="720" width="1700">
+        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="1280" height="720" background="white" color="black"/>
+      </Layout>
     </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+* @description  : Frame_Work 화면
+* @Date         : 2025.08.09
+* @Author		: 김빈현
+*/
+this.Fram_Work_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var objParam = this.getOwnerFrame().param;
+	var menunm = objParam.menunm;
+	var menupath = objParam.menupath;
+	
+	this.Div00.url = menupath;
+};]]></Script>
   </Form>
 </FDL>

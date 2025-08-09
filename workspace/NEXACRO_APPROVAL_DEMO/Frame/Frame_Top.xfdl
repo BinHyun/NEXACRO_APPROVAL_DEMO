@@ -3,8 +3,8 @@
   <Form id="Frame_Top" width="1280" height="50" titletext="New Form" onload="Frame_Top_onload">
     <Layouts>
       <Layout height="50" width="1280">
-        <Static id="staBack01" taborder="0" left="0" top="0" width="1280" height="24" cssclass="sta_top_bg01"/>
-        <Static id="staBack02" taborder="1" left="0" top="20" height="41" cssclass="sta_top_bg02" width="1280" onclick="staBack02_onclick"/>
+        <Static id="staBack01" taborder="0" left="0" top="0" width="100.00%" height="24" cssclass="sta_top_bg01"/>
+        <Static id="staBack02" taborder="1" left="0" top="20" height="41" cssclass="sta_top_bg02" width="100%" onclick="staBack02_onclick"/>
         <Static id="staLogo" taborder="2" left="0" top="24" width="160" height="41" cssclass="sta_top_logo"/>
         <Static id="staHello" taborder="3" left="10" top="0" width="210" height="24" cssclass="sta_top_textWht" text="Hello! Bin Hyun"/>
       </Layout>
