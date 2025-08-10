@@ -2,21 +2,21 @@
 <ADL version="2.0">
   <Application id="Application_Desktop" screenid="Desktop_screen" onload="Application_onload">
     <Layout>
-      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="720" titletext="LeftFrame" openalign="left">
-        <VFrameSet id="VFSet01" showtitlebar="false" separatesize="65">
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" titletext="LeftFrame" openalign="left" width="1700" height="900">
+        <VFrameSet id="VFSet01" showtitlebar="false" separatesize="65,805,30">
           <Frames>
             <ChildFrame id="TopFrame" formurl="Frame::Frame_Top.xfdl" showtitlebar="false"/>
-            <HFrameSet id="HFSet01" showtitlebar="false" separatesize="190,*" width="1280" height="720">
+            <HFrameSet id="HFSet01" showtitlebar="false" separatesize="190,*" height="300">
               <Frames>
                 <ChildFrame id="LeftFrame" formurl="Frame::Frame_Left.xfdl" showtitlebar="false"/>
-                <VFrameSet id="VFSet02" showtitlebar="false" separatesize="3000,*" width="1080" height="705">
+                <VFrameSet id="VFSet02" showtitlebar="false" separatesize="1000,*">
                   <Frames>
-                    <FrameSet id="WorkFrame" showtitlebar="false" width="1730" height="700"/>
+                    <FrameSet id="WorkFrame" showtitlebar="false"/>
                   </Frames>
                 </VFrameSet>
               </Frames>
             </HFrameSet>
-            <ChildFrame id="BottomFrame" formurl="" showtitlebar="false"/>
+            <ChildFrame id="BottomFrame" formurl="Frame::Frame_Bottom.xfdl" showtitlebar="false" height="100"/>
           </Frames>
         </VFrameSet>
       </MainFrame>

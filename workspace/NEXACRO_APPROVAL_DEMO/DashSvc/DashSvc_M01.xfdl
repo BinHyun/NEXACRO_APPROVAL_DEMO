@@ -1,9 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="DashSvc_M01" width="1000" height="720" titletext="New Form" onload="DashSvc_M01_onload">
+  <Form id="DashSvc_M01" width="1730" height="805" titletext="New Form" onload="DashSvc_M01_onload" cssclass="sta_main_text11C">
     <Layouts>
-      <Layout height="720" width="1000">
-        <Div id="Div00" taborder="0" text="Div00" left="10" top="50" width="100%" height="50" background="blue"/>
+      <Layout height="805" width="1730">
+        <Div id="Div00" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" border="1px solid">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="연도" left="10.00" top="8" width="39" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="Combo00" taborder="1" text="2025" left="51.00" top="13" width="58" height="18" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" index="3" value="2025" cssclass=".Combo[status=focused]"/>
+            </Layout>
+          </Layouts>
+        </Div>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[/**
@@ -16,5 +23,31 @@ this.DashSvc_M01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 	alert("대시보드 메인 화면 입니다.");
 };
 ]]></Script>
+    <Objects>
+      <Dataset id="dsYear">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">2022</Col>
+            <Col id="NAME">2022</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2023</Col>
+            <Col id="NAME">2023</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2024</Col>
+            <Col id="NAME">2024</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2025</Col>
+            <Col id="NAME">2025</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
   </Form>
 </FDL>
