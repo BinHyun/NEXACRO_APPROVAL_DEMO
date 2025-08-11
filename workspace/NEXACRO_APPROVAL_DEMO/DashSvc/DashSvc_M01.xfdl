@@ -3,14 +3,26 @@
   <Form id="DashSvc_M01" width="1730" height="805" titletext="New Form" onload="DashSvc_M01_onload" cssclass="sta_main_text11C">
     <Layouts>
       <Layout height="805" width="1730">
-        <Div id="Div00" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" border="1px solid">
+        <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" border="1px solid">
           <Layouts>
             <Layout>
-              <Static id="Static00" taborder="0" text="연도" left="10.00" top="8" width="39" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="Combo00" taborder="1" text="2025" left="51.00" top="13" width="58" height="18" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" index="3" value="2025" cssclass=".Combo[status=focused]"/>
+              <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:12.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value="" cssclass=".Combo[status=focused]"/>
+              <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:12.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025" cssclass=".Combo[status=focused]"/>
+              <Static id="StaticSite" taborder="4" text="사업장" left="490.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditSite" taborder="5" left="StaticSite:12.00" top="13" width="127" height="20"/>
+              <Static id="StaticAttach" taborder="6" text="첨부유형" left="330.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboAttach" taborder="7" text="PDF" left="StaticAttach:12.00" top="13" width="60" height="20" innerdataset="dsAttach" codecolumn="CODE" datacolumn="NAME" index="0" value="pdf" cssclass=".Combo[status=focused]"/>
+              <Static id="StaticTitle" taborder="8" text="등록명" left="710.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditTitle" taborder="9" left="771.00" top="13" width="200" height="20"/>
+              <Static id="StaticUser" taborder="10" text="등록자" left="1000.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditUser" taborder="11" left="1061.00" top="13" width="98" height="20"/>
+              <Button id="ButtonSearch" taborder="12" text="검색" left="1617.00" top="8" width="62" height="28" cssclass="btn_WF_search02" onclick="divSearch_ButtonSearch_onclick"/>
             </Layout>
           </Layouts>
         </Div>
+        <Grid id="Grid00" taborder="1" left="9" top="106" width="1710" height="684"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[/**
@@ -20,7 +32,46 @@
 */
 this.DashSvc_M01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	alert("대시보드 메인 화면 입니다.");
+	//초기화 함수
+	this.fnInit();
+};
+
+//페이지 접근 시 초기 세팅
+this.fnInit = function()
+{
+	var objDate = new nexacro.Date();
+	var nYear = objDate.getFullYear();
+	var nMonth = (objDate.getMonth()+1);
+	
+	//접근 시, 현재 년, 월로 설정
+	this.divSearch.form.ComboYear.set_value(nYear);
+	this.divSearch.form.ComboMonth.set_value(nMonth);
+};
+
+//검색버튼
+this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//this.fnTranSearch();
+};
+
+//조회 트랜잭션
+this.fnTranSearch = function()
+{
+	var strSvcId 	 = "Search";
+	var strSvcUrl 	 = "";
+	var inData 		 = "";
+	var outData 	 = "";
+	var strArg 		 = "";
+	var callBackFunc = "";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
 };
 ]]></Script>
     <Objects>
@@ -45,6 +96,90 @@ this.DashSvc_M01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
           <Row>
             <Col id="CODE">2025</Col>
             <Col id="NAME">2025</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMonth">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="NAME">1월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="NAME">2월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="NAME">3월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="NAME">4월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="NAME">5월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="NAME">6월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">7</Col>
+            <Col id="NAME">7월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">8</Col>
+            <Col id="NAME">8월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">9</Col>
+            <Col id="NAME">9월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="NAME">10월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">11</Col>
+            <Col id="NAME">11월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">12</Col>
+            <Col id="NAME">12월</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAttach">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">pdf</Col>
+            <Col id="NAME">PDF</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">hwp</Col>
+            <Col id="NAME">HWP</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">doc</Col>
+            <Col id="NAME">DOC</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">xls</Col>
+            <Col id="NAME">XLS</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">ppt</Col>
+            <Col id="NAME">PPT</Col>
           </Row>
         </Rows>
       </Dataset>
