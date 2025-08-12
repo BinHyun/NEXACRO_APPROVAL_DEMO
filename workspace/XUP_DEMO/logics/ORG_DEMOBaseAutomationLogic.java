@@ -71,7 +71,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class demoBaseAutomationLogic extends BaseAutomationLogic {
+public class ORG_DEMOBaseAutomationLogic extends BaseAutomationLogic {
 
 	public ParameterSet execute(ParameterSet inputParameterSet) throws AutomationFailException{
 		ParameterSet outputParameterSet = new ParameterSet();
@@ -92,12 +92,15 @@ public class demoBaseAutomationLogic extends BaseAutomationLogic {
 	private void initParameterSet(ParameterSet globalParameterSet) {
 		DataSet dataset1 = new DataSet("dataset1");
 
-		dataset1.addColumn("EMP_ID", PlatformDataType.STRING, 255);
-		dataset1.addColumn("NAME", PlatformDataType.STRING, 255);
-		dataset1.addColumn("GENDER", PlatformDataType.STRING, 255);
-		dataset1.addColumn("DEPARTMENT", PlatformDataType.STRING, 255);
-		dataset1.addColumn("SALARY", PlatformDataType.STRING, 255);
-		dataset1.addColumn("YEARS_WORKED", PlatformDataType.STRING, 255);
+		dataset1.addColumn("EMP_NO", PlatformDataType.STRING, 255);
+		dataset1.addColumn("USER_NM", PlatformDataType.STRING, 255);
+		dataset1.addColumn("SITE_ID", PlatformDataType.STRING, 255);
+		dataset1.addColumn("SITE_NM", PlatformDataType.STRING, 255);
+		dataset1.addColumn("DEPT_ID", PlatformDataType.STRING, 255);
+		dataset1.addColumn("DEPT_NM", PlatformDataType.STRING, 255);
+		dataset1.addColumn("POSITION_ID", PlatformDataType.STRING, 255);
+		dataset1.addColumn("POSITION_NM", PlatformDataType.STRING, 255);
+		dataset1.addColumn("POSITION_ORDER", PlatformDataType.STRING, 255);
 
 		globalParameterSet.add(dataset1);
 	}
@@ -114,7 +117,7 @@ public class demoBaseAutomationLogic extends BaseAutomationLogic {
 		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("SELECT\n EMP_ID,\n NAME,\n GENDER,\n DEPARTMENT,\n SALARY,\n YEARS_WORKED\n FROM EMPLOYEE\n ");
+		info.setSqlSelect("SELECT\n EMP_NO,\n USER_NM,\n SITE_ID,\n SITE_NM,\n DEPT_ID,\n DEPT_NM,\n POSITION_ID,\n POSITION_NM,\n POSITION_ORDER\n FROM ORG_EMPLOYEE\n ");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
 		EventHandler eventHandler = new EventHandler();

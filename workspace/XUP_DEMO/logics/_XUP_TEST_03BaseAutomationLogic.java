@@ -71,11 +71,67 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class demoAutomationLogic extends demoBaseAutomationLogic {
+public class _XUP_TEST_03BaseAutomationLogic extends BaseAutomationLogic {
 
-	public void start(ParameterSet globalParameterSet)throws AutomationFailException {
+	public ParameterSet execute(ParameterSet inputParameterSet) throws AutomationFailException{
+		ParameterSet outputParameterSet = new ParameterSet();
+		ParameterSet globalParameterSet = new ParameterSet();
+		globalParameterSet.add(inputParameterSet);
+		initParameterSet(globalParameterSet);
+		start(globalParameterSet);
+		
+		EVD_FILE(globalParameterSet);
+
+		if(globalParameterSet.getParameter("dataset1") != null){
+			outputParameterSet.add(globalParameterSet.getParameter("dataset1"));
+		}
+		
+		end(globalParameterSet, outputParameterSet);
+		return outputParameterSet;
 	}
-	public void end(ParameterSet globalParameterSet, ParameterSet outputParameterSet)throws AutomationFailException {
+	private void initParameterSet(ParameterSet globalParameterSet) {
+		DataSet dataset1 = new DataSet("dataset1");
+
+		dataset1.addColumn("ATT_ID", PlatformDataType.STRING, 255);
+		dataset1.addColumn("EV_ID", PlatformDataType.STRING, 255);
+		dataset1.addColumn("ATT_TYPE_NM", PlatformDataType.STRING, 255);
+		dataset1.addColumn("FILE_NM", PlatformDataType.STRING, 255);
+		dataset1.addColumn("FILE_EXT", PlatformDataType.STRING, 255);
+		dataset1.addColumn("FILE_SIZE", PlatformDataType.STRING, 255);
+		dataset1.addColumn("FILE_PATH", PlatformDataType.STRING, 255);
+		dataset1.addColumn("CREATED_AT", PlatformDataType.STRING, 255);
+
+		globalParameterSet.add(dataset1);
 	}
+	public void start(ParameterSet globalParameterSet)throws AutomationFailException {//!findOffset_start!
+	}
+	public void end(ParameterSet globalParameterSet, ParameterSet outputParameterSet)throws AutomationFailException {//!findOffset_end!
+	}
+	public void EVD_FILE(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_EVD_FILE!
+		ParameterSet tmpParameterSet = new ParameterSet();
+
+		ResultNameSet resultNameSet = new ResultNameSet();
+		resultNameSet.add("RESULT0", "dataset1", null);
+
+		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
+		info.setDomainName("XUP_DEMO");
+		info.setDataSourceName("NEXACRO_DEMO");
+		info.setSqlSelect("SELECT\n ATT_ID,\n EV_ID,\n ATT_TYPE_NM,\n FILE_NM,\n FILE_EXT,\n FILE_SIZE,\n FILE_PATH,\n CREATED_AT\n FROM EVD_FILE\n ");
+		info.setResultNameSet(resultNameSet);
+		info.setParameterSet(tmpParameterSet);
+		EventHandler eventHandler = new EventHandler();
+		invoke(info, eventHandler, globalParameterSet);
+
+	}
+	public void EVD_FILEonAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void EVD_FILEonBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void EVD_FILEonExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
+		throw new AutomationFailException(e.getMessage(), e);
+	}
+
 
 }

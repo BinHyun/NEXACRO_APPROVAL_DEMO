@@ -1,4 +1,4 @@
-<RootXaModel id="0ecea42c-2d5d-4135-aece-1649ccbbf848" name="demo" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="demoAutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="616031515">
+<RootXaModel id="f9f16de2-ecd2-4d99-855d-cb5180a1217a" name="_XUP_TEST_01" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="_XUP_TEST_01AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="-1925829327">
   <constraint height="-1" width="-1" x="100" y="100"/>
   <sourceConnectionList/>
   <targetConnectionList/>
@@ -10,7 +10,7 @@
   <key></key>
   <epsClassType></epsClassType>
   <children>
-    <XaStart id="f3d3a060-95c7-4bd8-b927-ef1ef09c38be" name="start" alias="Start" selected="true" hide="false" askValue="_unknown" showAlias="false">
+    <XaStart id="f3d3a060-95c7-4bd8-b927-ef1ef09c38be" name="start" alias="Start" selected="false" hide="false" askValue="_unknown" showAlias="false">
       <constraint height="-1" width="-1" x="250" y="50"/>
       <sourceConnectionList>
         <XaConnection id="ac20cb86-ff67-4460-b603-7013c5f149f2" name="connection" alias="connection" selected="false" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
@@ -55,7 +55,7 @@
           <key></key>
           <epsClassType></epsClassType>
           <source class="XaStart" reference="../../.."/>
-          <target class="XaEnd" id="d41a701b-5fa7-4df8-9880-a3b540f858a2" name="end" alias="End" selected="true" hide="false" askValue="_unknown" showAlias="false">
+          <target class="XaEnd" id="d41a701b-5fa7-4df8-9880-a3b540f858a2" name="end" alias="End" selected="false" hide="false" askValue="_unknown" showAlias="false">
             <constraint height="-1" width="-1" x="250" y="250"/>
             <sourceConnectionList>
               <XaConnection id="3edb7722-753e-4bbf-8867-b2afc95872f8" name="connection" alias="connection" selected="false" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
@@ -91,7 +91,7 @@
             </sourceConnectionList>
             <targetConnectionList>
               <XaConnection reference="../../.."/>
-              <XaConnection id="65a56f7c-e465-48bc-8403-f2b383d53ffd" name="connection" alias="connection" selected="true" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
+              <XaConnection id="65a56f7c-e465-48bc-8403-f2b383d53ffd" name="connection" alias="connection" selected="false" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
                 <constraint height="-1" width="-1" x="25" y="100"/>
                 <sourceConnectionList/>
                 <targetConnectionList/>
@@ -102,8 +102,8 @@
                 <showWarnMark>false</showWarnMark>
                 <key></key>
                 <epsClassType></epsClassType>
-                <source class="XaInvokeSelect" id="c6e6cfc0-4287-458c-bd0a-1727da359e7c" name="user" alias="user" selected="true" hide="false" askValue="_unknown" showAlias="false" domainName="" datasourceName="NEXACRO_DEMO" invokedModelName="" invokedModelId="" invokedModelIfversion="0">
-                  <constraint height="-1" width="-1" x="250" y="138"/>
+                <source class="XaInvokeSelect" id="c6e6cfc0-4287-458c-bd0a-1727da359e7c" name="ORG_EMPLOYEE" alias="ORG_EMPLOYEE" selected="true" hide="false" askValue="_unknown" showAlias="true" domainName="" datasourceName="NEXACRO_DEMO" invokedModelName="" invokedModelId="" invokedModelIfversion="0">
+                  <constraint height="-1" width="-1" x="250" y="148"/>
                   <sourceConnectionList>
                     <XaConnection id="609f0161-b998-42e2-83e8-949052704cf0" name="connection" alias="connection" selected="true" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
                       <constraint height="-1" width="-1" x="25" y="100"/>
@@ -117,8 +117,8 @@
                       <key></key>
                       <epsClassType></epsClassType>
                       <source class="XaInvokeSelect" reference="../../.."/>
-                      <target class="XaAliasLabel" id="e1cb6dbf-4fbb-4c20-aa28-ebd76672478f" name="user" alias="user" selected="true" hide="false" askValue="_unknown" showAlias="false">
-                        <constraint height="-1" width="-1" x="300" y="118"/>
+                      <target class="XaAliasLabel" id="e1cb6dbf-4fbb-4c20-aa28-ebd76672478f" name="ORG_EMPLOYEE" alias="ORG_EMPLOYEE" selected="false" hide="false" askValue="_unknown" showAlias="true">
+                        <constraint height="-1" width="-1" x="300" y="128"/>
                         <sourceConnectionList/>
                         <targetConnectionList>
                           <XaConnection reference="../../.."/>
@@ -130,13 +130,13 @@
                         <showWarnMark>false</showWarnMark>
                         <key></key>
                         <epsClassType></epsClassType>
-                        <editPartSelected>false</editPartSelected>
+                        <editPartSelected>true</editPartSelected>
                       </target>
                       <bendpoints/>
                       <isKeepReference>false</isKeepReference>
                     </XaConnection>
                     <XaConnection reference="../../.."/>
-                    <XaConnection id="cb940310-0e1c-43d4-9517-e8acc4395a7d" name="connection" alias="connection" selected="true" hide="false" askValue="_unknown" showAlias="false" connType="data_out_connection" routingType="_bendpointConnRouter" rawName="RESULT0" showRawName="false">
+                    <XaConnection id="cb940310-0e1c-43d4-9517-e8acc4395a7d" name="connection" alias="connection" selected="false" hide="false" askValue="_unknown" showAlias="false" connType="data_out_connection" routingType="_bendpointConnRouter" rawName="" showRawName="false">
                       <constraint height="-1" width="-1" x="25" y="100"/>
                       <sourceConnectionList/>
                       <targetConnectionList/>
@@ -148,8 +148,8 @@
                       <key></key>
                       <epsClassType></epsClassType>
                       <source class="XaInvokeSelect" reference="../../.."/>
-                      <target class="XaDataSet" id="a8c2aece-cfe3-419a-a8b9-4e7a94e42b16" name="dataset1" alias="DataSet" selected="true" hide="false" askValue="_unknown" showAlias="false">
-                        <constraint height="-1" width="-1" x="400" y="157"/>
+                      <target class="XaDataSet" id="a8c2aece-cfe3-419a-a8b9-4e7a94e42b16" name="dataset1" alias="DataSet" selected="false" hide="false" askValue="_unknown" showAlias="false">
+                        <constraint height="-1" width="-1" x="400" y="167"/>
                         <sourceConnectionList/>
                         <targetConnectionList>
                           <XaConnection reference="../../.."/>
@@ -164,10 +164,10 @@
                         <inoutType>output</inoutType>
                         <rawName></rawName>
                         <onlyLocal>false</onlyLocal>
-                        <editPartSelected>true</editPartSelected>
+                        <editPartSelected>false</editPartSelected>
                         <isPost>false</isPost>
                         <columnList>
-                          <XaDataSetColumn id="7869be38-b890-4e1b-849c-c32162a7ddf9" name="EMP_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                          <XaDataSetColumn id="d1cb1bcb-23a9-4004-8b0d-4dda2cec6a26" name="EMP_NO" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
                             <targetConnectionList/>
@@ -180,10 +180,10 @@
                             <epsClassType></epsClassType>
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
-                            <seqid>16e84b28-fdab-4c0b-86a4-49519f39df85</seqid>
+                            <seqid>9de23ee3-3b91-46d3-86ce-e8c946cbb286</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
-                          <XaDataSetColumn id="451a7ade-ceab-41ca-b29f-f1efc79dc8c7" name="NAME" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                          <XaDataSetColumn id="cc2c664d-89e2-4c72-af42-b9848e896640" name="USER_NM" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
                             <targetConnectionList/>
@@ -196,10 +196,10 @@
                             <epsClassType></epsClassType>
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
-                            <seqid>9ca87e5a-0c4a-4b2a-8543-3f3ba40256e6</seqid>
+                            <seqid>7f8fe496-9bae-4c17-aed1-c9814bc24aa9</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
-                          <XaDataSetColumn id="6d6774da-8c9c-4d9b-9837-0d3dc93edb57" name="GENDER" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                          <XaDataSetColumn id="0bac1e26-9639-4d58-a21f-092d4ba3a279" name="SITE_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
                             <targetConnectionList/>
@@ -212,10 +212,10 @@
                             <epsClassType></epsClassType>
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
-                            <seqid>aaf21d5f-0bee-4ff9-bb34-753cb23e2f5e</seqid>
+                            <seqid>76bb2023-ab5f-4317-8e2e-642c38cb7c7d</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
-                          <XaDataSetColumn id="98adaa55-d7f0-4e3e-80c5-5ac81e2d7aa6" name="DEPARTMENT" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                          <XaDataSetColumn id="34174d2e-d0b2-4ed6-a39b-61ed2c5708e6" name="SITE_NM" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
                             <targetConnectionList/>
@@ -228,10 +228,10 @@
                             <epsClassType></epsClassType>
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
-                            <seqid>2932aad7-2a09-416a-9e27-ab94f38d8977</seqid>
+                            <seqid>8b537427-d1b3-40f6-9b13-664ece5e970e</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
-                          <XaDataSetColumn id="7ef2deb2-67e9-4b4a-a9b8-a59228ace7b5" name="SALARY" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                          <XaDataSetColumn id="6a71e95c-3cf4-4fbb-8903-c205f638eb1a" name="DEPT_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
                             <targetConnectionList/>
@@ -244,10 +244,10 @@
                             <epsClassType></epsClassType>
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
-                            <seqid>117c6aec-234a-4202-9138-2bbb8353b51b</seqid>
+                            <seqid>6509a31b-7957-433f-b782-9bcaecf54d25</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
-                          <XaDataSetColumn id="41cdb42c-d2e8-4d36-b007-ae3fcca6441d" name="YEARS_WORKED" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                          <XaDataSetColumn id="f1ae0f9a-b5b3-4860-bb80-f2399cc66165" name="DEPT_NM" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
                             <targetConnectionList/>
@@ -260,7 +260,55 @@
                             <epsClassType></epsClassType>
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
-                            <seqid>570ef2c2-714c-4db7-b171-d4f4866946d4</seqid>
+                            <seqid>86c3ff35-c51f-4fc5-8a09-33796c6e27c0</seqid>
+                            <parentDataSet reference="../../.."/>
+                          </XaDataSetColumn>
+                          <XaDataSetColumn id="d8ec6fb3-a431-4d56-a983-534ec2655f68" name="POSITION_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                            <constraint height="-1" width="-1" x="25" y="100"/>
+                            <sourceConnectionList/>
+                            <targetConnectionList/>
+                            <description></description>
+                            <required>false</required>
+                            <showErrorMark>false</showErrorMark>
+                            <showBreakPoint>false</showBreakPoint>
+                            <showWarnMark>false</showWarnMark>
+                            <key></key>
+                            <epsClassType></epsClassType>
+                            <ccsid>933</ccsid>
+                            <dbcs>N</dbcs>
+                            <seqid>15265601-bb00-4140-9cf7-449ebf28bcc8</seqid>
+                            <parentDataSet reference="../../.."/>
+                          </XaDataSetColumn>
+                          <XaDataSetColumn id="f1479e1c-6e4f-4ebe-b537-0d7a296738d7" name="POSITION_NM" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                            <constraint height="-1" width="-1" x="25" y="100"/>
+                            <sourceConnectionList/>
+                            <targetConnectionList/>
+                            <description></description>
+                            <required>false</required>
+                            <showErrorMark>false</showErrorMark>
+                            <showBreakPoint>false</showBreakPoint>
+                            <showWarnMark>false</showWarnMark>
+                            <key></key>
+                            <epsClassType></epsClassType>
+                            <ccsid>933</ccsid>
+                            <dbcs>N</dbcs>
+                            <seqid>5ede6921-ea98-403a-8351-9838d9c764c1</seqid>
+                            <parentDataSet reference="../../.."/>
+                          </XaDataSetColumn>
+                          <XaDataSetColumn id="94cb9d22-5bb9-472f-9264-ab3dc3001fca" name="POSITION_ORDER" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                            <constraint height="-1" width="-1" x="25" y="100"/>
+                            <sourceConnectionList/>
+                            <targetConnectionList/>
+                            <description></description>
+                            <required>false</required>
+                            <showErrorMark>false</showErrorMark>
+                            <showBreakPoint>false</showBreakPoint>
+                            <showWarnMark>false</showWarnMark>
+                            <key></key>
+                            <epsClassType></epsClassType>
+                            <ccsid>933</ccsid>
+                            <dbcs>N</dbcs>
+                            <seqid>cee5ebc9-0b22-47ed-9534-206a52516a02</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
                         </columnList>
@@ -275,7 +323,7 @@
                     </XaConnection>
                   </sourceConnectionList>
                   <targetConnectionList>
-                    <XaConnection id="c236a85e-30cc-41c0-a948-75aae17e2c56" name="connection" alias="connection" selected="true" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
+                    <XaConnection id="c236a85e-30cc-41c0-a948-75aae17e2c56" name="connection" alias="connection" selected="false" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
                       <constraint height="-1" width="-1" x="25" y="100"/>
                       <sourceConnectionList/>
                       <targetConnectionList/>
@@ -301,128 +349,7 @@
                   <epsClassType></epsClassType>
                   <needUniqueName>true</needUniqueName>
                   <rawInputDataList/>
-                  <rawOutputDataList>
-                    <XaDataSet id="7ae03439-ce59-4f16-b1c2-405f33f3d2e4" name="RESULT0" alias="RESULT0" selected="false" hide="false" askValue="_unknown" showAlias="false">
-                      <constraint height="-1" width="-1" x="25" y="100"/>
-                      <sourceConnectionList/>
-                      <targetConnectionList/>
-                      <description></description>
-                      <required>false</required>
-                      <showErrorMark>false</showErrorMark>
-                      <showBreakPoint>false</showBreakPoint>
-                      <showWarnMark>false</showWarnMark>
-                      <key></key>
-                      <epsClassType></epsClassType>
-                      <inoutType>normal</inoutType>
-                      <rawName>RESULT0</rawName>
-                      <onlyLocal>false</onlyLocal>
-                      <editPartSelected>false</editPartSelected>
-                      <isPost>false</isPost>
-                      <columnList>
-                        <XaDataSetColumn id="be402546-522a-454a-b1e0-1fdf81bb3df4" name="EMP_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="10" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>921a5ea5-6fad-4bfe-8ba2-a9d3e212c4d8</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                        <XaDataSetColumn id="89e8399b-587c-4946-8e63-09af3b152696" name="NAME" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="50" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>cb6612ca-62ca-4a11-853d-ec1b71a751c4</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                        <XaDataSetColumn id="9ad95d17-dc74-4faa-91bd-11ed1c8604b2" name="GENDER" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="1" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>c4754f61-b946-4ed4-a939-70bde7b8a31e</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                        <XaDataSetColumn id="207dfce9-594d-487e-9e8f-af432509ee24" name="DEPARTMENT" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="50" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>3ac9bbaa-ab5e-4d7d-9c82-ae2aaaca7046</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                        <XaDataSetColumn id="363206b8-86bf-4b3c-95c3-226084f0df4e" name="SALARY" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="bigdecimal" typeBinding="DECIMAL" size="12" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>00ca932c-57c6-4ce0-a9cf-95aed385dbc8</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                        <XaDataSetColumn id="25fb7987-20c6-4834-b4b5-a960b44e02e5" name="YEARS_WORKED" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="bigdecimal" typeBinding="DECIMAL" size="3" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>017f3eca-8b93-4b7b-bd6f-428d5e04c3a4</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                      </columnList>
-                      <rowList/>
-                      <isDynamicSchema>false</isDynamicSchema>
-                      <isEnableFirstRow>false</isEnableFirstRow>
-                      <firstRowSize>10000</firstRowSize>
-                      <easyUIAttr>{&quot;project_values&quot;:[],&quot;default_values&quot;:[],&quot;column&quot;:[],&quot;row&quot;:[],&quot;project_properties&quot;:[],&quot;properties&quot;:[],&quot;seqid&quot;:[],&quot;project_properties_seq&quot;:[]}</easyUIAttr>
-                    </XaDataSet>
-                  </rawOutputDataList>
+                  <rawOutputDataList/>
                   <warningCount>0</warningCount>
                   <ehOnBegin></ehOnBegin>
                   <ehOnEnd></ehOnEnd>
@@ -439,13 +366,16 @@
                   <firstRowParameterList/>
                   <isEnableAutoCommit>false</isEnableAutoCommit>
                   <sql>SELECT&#xd;
-	EMP_ID,&#xd;
-	NAME,&#xd;
-	GENDER,&#xd;
-	DEPARTMENT,&#xd;
-	SALARY,&#xd;
-	YEARS_WORKED&#xd;
-FROM EMPLOYEE</sql>
+	EMP_NO,&#xd;
+	USER_NM,&#xd;
+	SITE_ID,&#xd;
+	SITE_NM,&#xd;
+	DEPT_ID,&#xd;
+	DEPT_NM,&#xd;
+	POSITION_ID,&#xd;
+	POSITION_NM,&#xd;
+	POSITION_ORDER&#xd;
+FROM ORG_EMPLOYEE</sql>
                   <ehGetPatchValue>
 return patchValue;</ehGetPatchValue>
                   <ehGetAssignValue>
