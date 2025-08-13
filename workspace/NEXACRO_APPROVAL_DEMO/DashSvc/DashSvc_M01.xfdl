@@ -7,22 +7,66 @@
           <Layouts>
             <Layout>
               <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:12.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value="" cssclass=".Combo[status=focused]"/>
+              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:12.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
               <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:12.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025" cssclass=".Combo[status=focused]"/>
+              <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:12.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
               <Static id="StaticSite" taborder="4" text="사업장" left="490.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
               <Edit id="EditSite" taborder="5" left="StaticSite:12.00" top="13" width="127" height="20"/>
               <Static id="StaticAttach" taborder="6" text="첨부유형" left="330.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboAttach" taborder="7" text="PDF" left="StaticAttach:12.00" top="13" width="60" height="20" innerdataset="dsAttach" codecolumn="CODE" datacolumn="NAME" index="0" value="pdf" cssclass=".Combo[status=focused]"/>
-              <Static id="StaticTitle" taborder="8" text="등록명" left="710.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Edit id="EditTitle" taborder="9" left="771.00" top="13" width="200" height="20"/>
-              <Static id="StaticUser" taborder="10" text="등록자" left="1000.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Edit id="EditUser" taborder="11" left="1061.00" top="13" width="98" height="20"/>
+              <Combo id="ComboAttach" taborder="7" text="PDF" left="StaticAttach:12.00" top="13" width="60" height="20" innerdataset="dsAttach" codecolumn="CODE" datacolumn="NAME" index="0" value="pdf"/>
+              <Static id="StaticTitle" taborder="8" text="등록명" left="910.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditTitle" taborder="9" left="971.00" top="13" width="200" height="20"/>
+              <Static id="StaticUser" taborder="10" text="등록자" left="1200.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditUser" taborder="11" left="1261.00" top="13" width="98" height="20"/>
               <Button id="ButtonSearch" taborder="12" text="검색" left="1617.00" top="8" width="62" height="28" cssclass="btn_WF_search02" onclick="divSearch_ButtonSearch_onclick"/>
+              <Static id="StaticDept" taborder="13" text="부서" left="700.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditDept" taborder="14" left="StaticDept:2" top="13" width="127" height="20"/>
             </Layout>
           </Layouts>
         </Div>
-        <Grid id="Grid00" taborder="1" left="9" top="106" width="1710" height="684"/>
+        <Grid id="Grid00" taborder="1" left="9" top="106" width="1710" height="684" binddataset="dsList">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="55"/>
+                <Column size="50"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="55"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번"/>
+                <Cell col="1" text="등록연도"/>
+                <Cell col="2" text="등록월"/>
+                <Cell col="3" text="등록명"/>
+                <Cell col="4" text="첨부 파일명"/>
+                <Cell col="5" text="첨부 유형"/>
+                <Cell col="6" text="등록 사업장"/>
+                <Cell col="7" text="등록 부서"/>
+                <Cell col="8" text="등록자"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1" text="expr:currow+1" textAlign="center"/>
+                <Cell col="1" text="bind:YEAR" textAlign="center"/>
+                <Cell col="2" text="bind:MONTH" textAlign="center"/>
+                <Cell col="3" text="bind:TITLE"/>
+                <Cell col="4"/>
+                <Cell col="5" text="bind:ATT_TYPE_NM" textAlign="center"/>
+                <Cell col="6" text="bind:SITE_NM" textAlign="center"/>
+                <Cell col="7" text="bind:DEPT_NM" textAlign="center"/>
+                <Cell col="8" text="bind:USER_NM" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[/**
@@ -30,6 +74,14 @@
 * @Date         : 2025.08.09
 * @Author		: 김빈현
 */
+//기본 include
+include "Lib::lib_array.xjs";
+include "Lib::lib_base.xjs";
+include "Lib::lib_date.xjs";
+include "Lib::lib_number.xjs";
+include "Lib::lib_string.xjs";
+include "Lib::lib_transaction.xjs";
+
 this.DashSvc_M01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
 	//초기화 함수
@@ -46,11 +98,52 @@ this.fnInit = function()
 	//접근 시, 현재 년, 월로 설정
 	this.divSearch.form.ComboYear.set_value(nYear);
 	this.divSearch.form.ComboMonth.set_value(nMonth);
+	
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var YEAR = this.divSearch.form.ComboYear.value;
+	var MONTH = this.divSearch.form.ComboMonth.value;
+	//var FILE_EXT = this.divSearch.form.ComboAttach.value;
+	var SITE_NM = this.divSearch.form.EditSite.value;
+	var DEPT_NM = this.divSearch.form.EditDept.value;
+	var TITLE = this.divSearch.form.EditTitle.value;
+	var REG_USER_NM = this.divSearch.form.EditUser.value;
+	
+	this.dsCond.setColumn(0, "YEAR", YEAR);
+	this.dsCond.setColumn(0, "MONTH", MONTH);
+	//this.dsCond.setColumn(0, "FILE_EXT", FILE_EXT);
+	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
+	this.dsCond.setColumn(0, "TITLE", TITLE);
+	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
+	
+	this.fnTranSearch();
+	
 };
 
 //검색버튼
 this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var YEAR = this.divSearch.form.ComboYear.value;
+	var MONTH = this.divSearch.form.ComboMonth.value;
+	var FILE_EXT = this.divSearch.form.ComboAttach.value;
+	var SITE_NM = this.divSearch.form.EditSite.value;
+	var TITLE = this.divSearch.form.EditTitle.value;
+	var REG_USER_NM = this.divSearch.form.EditUser.value;
+	
+	this.dsCond.setColumn(0, "YEAR", YEAR);
+	this.dsCond.setColumn(0, "MONTH", MONTH);
+	this.dsCond.setColumn(0, "FILE_EXT", FILE_EXT);
+	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "TITLE", TITLE);
+	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
+	
+	trace("ds ==> " + this.dsCond.saveXML());
+	
 	//this.fnTranSearch();
 };
 
@@ -58,11 +151,11 @@ this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.Clic
 this.fnTranSearch = function()
 {
 	var strSvcId 	 = "Search";
-	var strSvcUrl 	 = "";
-	var inData 		 = "";
-	var outData 	 = "";
+	var strSvcUrl 	 = "XUP_DEMO::DASH_01";	
+	var inData 		 = "dsCond=dsCond";
+	var outData 	 = "dsList=dsList";
 	var strArg 		 = "";
-	var callBackFunc = "";
+	var callBackFunc = "fnCallback";
 	var isAsync 	 = true;
 	
 	this.gfnTransaction(strSvcId,
@@ -72,6 +165,24 @@ this.fnTranSearch = function()
 						strArg,
 						callBackFunc, 
 						isAsync);
+};
+
+//트랜잭션 callback
+this.fnCallback = function(sId,nErrorCode,sErrorMSG)
+{
+	if(nErrorCode == 0)
+	{
+		switch (sId) {
+			case "Search":
+				
+								
+				break;
+			
+			default:
+				
+				break;
+		}
+	}
 };
 ]]></Script>
     <Objects>
@@ -162,26 +273,49 @@ this.fnTranSearch = function()
         </ColumnInfo>
         <Rows>
           <Row>
-            <Col id="CODE">pdf</Col>
+            <Col id="CODE">PDF</Col>
             <Col id="NAME">PDF</Col>
           </Row>
           <Row>
-            <Col id="CODE">hwp</Col>
+            <Col id="CODE">HWP</Col>
             <Col id="NAME">HWP</Col>
           </Row>
           <Row>
-            <Col id="CODE">doc</Col>
+            <Col id="CODE">DOCX</Col>
             <Col id="NAME">DOC</Col>
           </Row>
           <Row>
-            <Col id="CODE">xls</Col>
+            <Col id="CODE">XLSX</Col>
             <Col id="NAME">XLS</Col>
           </Row>
           <Row>
-            <Col id="CODE">ppt</Col>
+            <Col id="CODE">PPTX</Col>
             <Col id="NAME">PPT</Col>
           </Row>
         </Rows>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="FILE_EXT" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="FILE_EXT" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
       </Dataset>
     </Objects>
   </Form>

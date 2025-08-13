@@ -31,7 +31,7 @@ this.gfnTransaction = function(strSvcId, strSvcUrl, inData, outData, strArg, cal
 			var arr = strSvcUrl.split("::");
 			var domain = arr[0];
 			var model = arr[1];
-			strSvcUrl = "http://localhost:8080/edu/service/demo.do?domain=" + domain + "&model=" + model;
+			strSvcUrl = "http://localhost:8080/xup/service/demo.do?domain=" + domain + "&model=" + model;
 		}
 	};
 	
