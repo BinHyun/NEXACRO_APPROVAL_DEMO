@@ -59,6 +59,15 @@ this.fnGetLeftMenu = function (sMenuId)
   
 	//필터링 없애기
 	objDsMenu.filter("");
+	
+	var rowCnt = this.dsLeft.rowcount;
+	var nRow = this.dsLeft.set_rowposition(1);
+	var sMenuId = this.dsLeft.getColumn(nRow, "MENU_ID");
+	
+	if(rowCnt > 0){
+		this.fnOpenMenu(sMenuId)
+	};
+	
 };
 
 /**

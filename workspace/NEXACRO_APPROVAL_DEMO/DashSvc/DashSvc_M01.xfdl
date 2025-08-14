@@ -13,7 +13,7 @@
               <Static id="StaticSite" taborder="4" text="사업장" left="490.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
               <Edit id="EditSite" taborder="5" left="StaticSite:12.00" top="13" width="127" height="20"/>
               <Static id="StaticAttach" taborder="6" text="첨부유형" left="330.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboAttach" taborder="7" text="PDF" left="StaticAttach:12.00" top="13" width="60" height="20" innerdataset="dsAttach" codecolumn="CODE" datacolumn="NAME" index="0" value="pdf"/>
+              <Combo id="ComboAttach" taborder="7" text="전체" left="StaticAttach:12.00" top="13" width="60" height="20" innerdataset="dsAttach" codecolumn="CODE" datacolumn="NAME" index="0" value="ALL"/>
               <Static id="StaticTitle" taborder="8" text="등록명" left="910.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
               <Edit id="EditTitle" taborder="9" left="971.00" top="13" width="200" height="20"/>
               <Static id="StaticUser" taborder="10" text="등록자" left="1200.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
@@ -24,7 +24,7 @@
             </Layout>
           </Layouts>
         </Div>
-        <Grid id="Grid00" taborder="1" left="9" top="106" width="1710" height="684" binddataset="dsList">
+        <Grid id="Grid00" taborder="1" left="9" top="106" width="1710" height="684" binddataset="dsList" autofittype="col">
           <Formats>
             <Format id="default">
               <Columns>
@@ -58,7 +58,7 @@
                 <Cell col="1" text="bind:YEAR" textAlign="center"/>
                 <Cell col="2" text="bind:MONTH" textAlign="center"/>
                 <Cell col="3" text="bind:TITLE"/>
-                <Cell col="4"/>
+                <Cell col="4" text="bind:FILE_NM"/>
                 <Cell col="5" text="bind:ATT_TYPE_NM" textAlign="center"/>
                 <Cell col="6" text="bind:SITE_NM" textAlign="center"/>
                 <Cell col="7" text="bind:DEPT_NM" textAlign="center"/>
@@ -132,19 +132,25 @@ this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.Clic
 	var MONTH = this.divSearch.form.ComboMonth.value;
 	var FILE_EXT = this.divSearch.form.ComboAttach.value;
 	var SITE_NM = this.divSearch.form.EditSite.value;
+	var DEPT_NM = this.divSearch.form.EditDept.value;
 	var TITLE = this.divSearch.form.EditTitle.value;
 	var REG_USER_NM = this.divSearch.form.EditUser.value;
 	
 	this.dsCond.setColumn(0, "YEAR", YEAR);
 	this.dsCond.setColumn(0, "MONTH", MONTH);
-	this.dsCond.setColumn(0, "FILE_EXT", FILE_EXT);
+	
+	if(FILE_EXT == "ALL"){
+		this.dsCond.setColumn(0, "FILE_EXT", "");
+	} else {
+		this.dsCond.setColumn(0, "FILE_EXT", FILE_EXT);
+	}
+
 	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
 	this.dsCond.setColumn(0, "TITLE", TITLE);
 	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
 	
-	trace("ds ==> " + this.dsCond.saveXML());
-	
-	//this.fnTranSearch();
+	this.fnTranSearch();
 };
 
 //조회 트랜잭션
@@ -273,6 +279,10 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
         </ColumnInfo>
         <Rows>
           <Row>
+            <Col id="CODE">ALL</Col>
+            <Col id="NAME">전체</Col>
+          </Row>
+          <Row>
             <Col id="CODE">PDF</Col>
             <Col id="NAME">PDF</Col>
           </Row>
@@ -285,8 +295,8 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
             <Col id="NAME">DOC</Col>
           </Row>
           <Row>
-            <Col id="CODE">XLSX</Col>
-            <Col id="NAME">XLS</Col>
+            <Col id="CODE">EXCEL</Col>
+            <Col id="NAME">EXCEL</Col>
           </Row>
           <Row>
             <Col id="CODE">PPTX</Col>
@@ -309,8 +319,8 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
         <ColumnInfo>
           <Column id="YEAR" type="STRING" size="256"/>
           <Column id="MONTH" type="STRING" size="256"/>
-          <Column id="FILE_EXT" type="STRING" size="256"/>
           <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="FILE_NM" type="STRING" size="256"/>
           <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
           <Column id="SITE_NM" type="STRING" size="256"/>
           <Column id="DEPT_NM" type="STRING" size="256"/>
