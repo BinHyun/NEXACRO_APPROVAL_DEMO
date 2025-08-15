@@ -1,4 +1,4 @@
-<RootXaModel id="939de387-6f84-4ef1-910a-11762d8f7ddb" name="DASH_01" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="DASH_01AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="-59850905">
+<RootXaModel id="939de387-6f84-4ef1-910a-11762d8f7ddb" name="DASH_01" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="DASH_01AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="-2043675784">
   <constraint height="-1" width="-1" x="100" y="100"/>
   <sourceConnectionList/>
   <targetConnectionList/>
@@ -229,6 +229,22 @@
                             <ccsid>933</ccsid>
                             <dbcs>N</dbcs>
                             <seqid>1e3ad8e8-0453-4801-8f06-609fede46490</seqid>
+                            <parentDataSet reference="../../.."/>
+                          </XaDataSetColumn>
+                          <XaDataSetColumn id="1db1bc0f-6b5c-4090-9c07-7b20a3797a3f" name="FILE_PATH" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                            <constraint height="-1" width="-1" x="25" y="100"/>
+                            <sourceConnectionList/>
+                            <targetConnectionList/>
+                            <description></description>
+                            <required>false</required>
+                            <showErrorMark>false</showErrorMark>
+                            <showBreakPoint>false</showBreakPoint>
+                            <showWarnMark>false</showWarnMark>
+                            <key></key>
+                            <epsClassType></epsClassType>
+                            <ccsid>933</ccsid>
+                            <dbcs>N</dbcs>
+                            <seqid>3344c3e3-075b-4ddf-8ece-b404180efa0a</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
                           <XaDataSetColumn id="4cc3c6de-9dbf-401f-9c2f-0fa758b93f0b" name="ATT_TYPE_NM" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
@@ -507,6 +523,7 @@
     EXTRACT(MONTH FROM D.REG_DT) AS MONTH,			/*등록월*/&#xd;
     D.EV_TITLE AS TITLE,							/*등록명*/&#xd;
     F.FILE_NM AS FILE_NM,							/*첨부 파일명*/&#xd;
+    F.FILE_PATH AS FILE_PATH,						/*첨부 파일 위치*/&#xd;
     F.ATT_TYPE_NM AS ATT_TYPE_NM,					/*첨부 파일 종류*/&#xd;
     D.SITE_NM AS SITE_NM,							/*사업장 명*/&#xd;
     D.DEPT_NM AS DEPT_NM,							/*부서 명*/&#xd;

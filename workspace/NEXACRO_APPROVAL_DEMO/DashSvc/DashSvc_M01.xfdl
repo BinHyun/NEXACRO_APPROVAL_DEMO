@@ -24,49 +24,57 @@
             </Layout>
           </Layouts>
         </Div>
-        <Grid id="Grid00" taborder="1" left="9" top="106" width="1710" height="684" binddataset="dsList" autofittype="col">
-          <Formats>
-            <Format id="default">
-              <Columns>
-                <Column size="48"/>
-                <Column size="55"/>
-                <Column size="50"/>
-                <Column size="200"/>
-                <Column size="150"/>
-                <Column size="70"/>
-                <Column size="70"/>
-                <Column size="70"/>
-                <Column size="55"/>
-              </Columns>
-              <Rows>
-                <Row size="24" band="head"/>
-                <Row size="24"/>
-              </Rows>
-              <Band id="head">
-                <Cell text="순번"/>
-                <Cell col="1" text="등록연도"/>
-                <Cell col="2" text="등록월"/>
-                <Cell col="3" text="등록명"/>
-                <Cell col="4" text="첨부 파일명"/>
-                <Cell col="5" text="첨부 유형"/>
-                <Cell col="6" text="등록 사업장"/>
-                <Cell col="7" text="등록 부서"/>
-                <Cell col="8" text="등록자"/>
-              </Band>
-              <Band id="body">
-                <Cell expr="currow+1" text="expr:currow+1" textAlign="center"/>
-                <Cell col="1" text="bind:YEAR" textAlign="center"/>
-                <Cell col="2" text="bind:MONTH" textAlign="center"/>
-                <Cell col="3" text="bind:TITLE"/>
-                <Cell col="4" text="bind:FILE_NM"/>
-                <Cell col="5" text="bind:ATT_TYPE_NM" textAlign="center"/>
-                <Cell col="6" text="bind:SITE_NM" textAlign="center"/>
-                <Cell col="7" text="bind:DEPT_NM" textAlign="center"/>
-                <Cell col="8" text="bind:USER_NM" textAlign="center"/>
-              </Band>
-            </Format>
-          </Formats>
-        </Grid>
+        <Div id="gridDiv" taborder="1" text="Div00" left="10" top="90" width="1710" height="700">
+          <Layouts>
+            <Layout>
+              <Grid id="Grid00" taborder="0" left="0.00" top="32" width="1710" height="658" binddataset="dsList" autofittype="col" oncellclick="gridDiv_Grid00_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="55"/>
+                      <Column size="50"/>
+                      <Column size="200"/>
+                      <Column size="150"/>
+                      <Column size="70"/>
+                      <Column size="70"/>
+                      <Column size="70"/>
+                      <Column size="55"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="등록연도"/>
+                      <Cell col="2" text="등록월"/>
+                      <Cell col="3" text="등록명"/>
+                      <Cell col="4" text="첨부 파일명"/>
+                      <Cell col="5" text="첨부 유형"/>
+                      <Cell col="6" text="등록 사업장"/>
+                      <Cell col="7" text="등록 부서"/>
+                      <Cell col="8" text="등록자"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1" text="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:YEAR" textAlign="center"/>
+                      <Cell col="2" text="bind:MONTH" textAlign="center"/>
+                      <Cell col="3" text="bind:TITLE" color="cornflowerblue" font="normal 12px/normal &quot;Arial,Malgun Gothic,Gulim&quot;" textDecoration="underline"/>
+                      <Cell col="4" text="bind:FILE_NM" color="cornflowerblue" textDecoration="underline"/>
+                      <Cell col="5" text="bind:ATT_TYPE_NM" textAlign="center"/>
+                      <Cell col="6" text="bind:SITE_NM" textAlign="center"/>
+                      <Cell col="7" text="bind:DEPT_NM" textAlign="center"/>
+                      <Cell col="8" text="bind:USER_NM" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="StaticYear" taborder="1" text="조회 목록" left="20.00" top="4" width="80" height="28" cssclass="sta_WF_notice01"/>
+              <Static id="StaticCnt" taborder="2" left="1610.00" top="4" width="70" height="28" textAlign="right"/>
+            </Layout>
+          </Layouts>
+        </Div>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[/**
@@ -153,6 +161,32 @@ this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.Clic
 	this.fnTranSearch();
 };
 
+//그리드 클릭 이벤트
+this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	
+	if(e.cell == 3){
+		alert("등록명");
+	};
+	
+	if(e.cell == 4){
+		var baseUrl = window.location.href;
+		
+		if (baseUrl.endsWith("/")) {
+			baseUrl = baseUrl.slice(0, -1);
+		}
+		
+		var FILE_NAME = this.dsList.getColumn(e.row, "FILE_NM");
+		var FILE_PATH = this.dsList.getColumn(e.row, "FILE_PATH");
+		var fullPath = baseUrl+FILE_PATH;
+		
+		var fileDown = new nexacro.FileDownTransfer();
+
+		// 다운로드 시작
+		fileDown.download(FILE_PATH, FILE_NAME);
+	};	
+};
+
 //조회 트랜잭션
 this.fnTranSearch = function()
 {
@@ -180,7 +214,8 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 	{
 		switch (sId) {
 			case "Search":
-				
+				var rowCnt = this.dsList.rowcount;
+				this.gridDiv.form.StaticCnt.set_text(rowCnt + " 건");
 								
 				break;
 			
@@ -189,8 +224,7 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				break;
 		}
 	}
-};
-]]></Script>
+};]]></Script>
     <Objects>
       <Dataset id="dsYear">
         <ColumnInfo>
@@ -321,6 +355,7 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
           <Column id="MONTH" type="STRING" size="256"/>
           <Column id="TITLE" type="STRING" size="256"/>
           <Column id="FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
           <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
           <Column id="SITE_NM" type="STRING" size="256"/>
           <Column id="DEPT_NM" type="STRING" size="256"/>
