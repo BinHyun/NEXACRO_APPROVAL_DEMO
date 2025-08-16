@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DashSvc_P01" width="750" height="450" titletext="New Form">
+    <Layouts>
+      <Layout height="450" width="750">
+        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="750" height="450" background="RED"/>
+      </Layout>
+    </Layouts>
+  </Form>
+</FDL>

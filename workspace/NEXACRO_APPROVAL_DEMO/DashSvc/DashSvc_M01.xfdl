@@ -166,7 +166,16 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 {
 	
 	if(e.cell == 3){
-		alert("등록명");
+		var objChildFrame = new ChildFrame();  
+		var objParentFrame = this.getOwnerFrame();
+	
+		objChildFrame.init("childframe00", 300, 300, "800px", "500px", null, null);
+		objChildFrame.titletext = "팝업";
+		objChildFrame.resizable = true;
+		objChildFrame.autosize  = false;
+		objChildFrame.formurl = "DashSvc::DashSvc_P01.xfdl";
+		objChildFrame.showModal( "ChildFrame", objParentFrame, null, this, this.fn_callback );
+		
 	};
 	
 	if(e.cell == 4){
