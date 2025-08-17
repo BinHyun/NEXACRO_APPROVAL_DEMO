@@ -1,4 +1,4 @@
-<RootXaModel id="939de387-6f84-4ef1-910a-11762d8f7ddb" name="DASH_01" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="DASH_01AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="-2043675784">
+<RootXaModel id="939de387-6f84-4ef1-910a-11762d8f7ddb" name="DASH_01" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="DASH_01AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="1273870519">
   <constraint height="-1" width="-1" x="100" y="100"/>
   <sourceConnectionList/>
   <targetConnectionList/>
@@ -263,6 +263,22 @@
                             <seqid>09420567-b31b-45b7-a6db-b87b86e90732</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
+                          <XaDataSetColumn id="c0f28d54-46f4-493b-9f29-44eb1eaf7259" name="EV_DESC" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                            <constraint height="-1" width="-1" x="25" y="100"/>
+                            <sourceConnectionList/>
+                            <targetConnectionList/>
+                            <description></description>
+                            <required>false</required>
+                            <showErrorMark>false</showErrorMark>
+                            <showBreakPoint>false</showBreakPoint>
+                            <showWarnMark>false</showWarnMark>
+                            <key></key>
+                            <epsClassType></epsClassType>
+                            <ccsid>933</ccsid>
+                            <dbcs>N</dbcs>
+                            <seqid>ecc9d5f9-aa7b-42bb-b8a0-3fde2a607b88</seqid>
+                            <parentDataSet reference="../../.."/>
+                          </XaDataSetColumn>
                           <XaDataSetColumn id="c738ea45-abb3-40b8-85d6-228b00bfb1a8" name="SITE_NM" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
                             <constraint height="-1" width="-1" x="25" y="100"/>
                             <sourceConnectionList/>
@@ -525,6 +541,7 @@
     F.FILE_NM AS FILE_NM,							/*첨부 파일명*/&#xd;
     F.FILE_PATH AS FILE_PATH,						/*첨부 파일 위치*/&#xd;
     F.ATT_TYPE_NM AS ATT_TYPE_NM,					/*첨부 파일 종류*/&#xd;
+    D.EV_DESC AS EV_DESC,							/*코멘트*/&#xd;
     D.SITE_NM AS SITE_NM,							/*사업장 명*/&#xd;
     D.DEPT_NM AS DEPT_NM,							/*부서 명*/&#xd;
     D.REG_USER_NM AS USER_NM						/*등록자 명*/&#xd;

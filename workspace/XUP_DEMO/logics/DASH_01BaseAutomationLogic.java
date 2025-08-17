@@ -98,6 +98,7 @@ public class DASH_01BaseAutomationLogic extends BaseAutomationLogic {
 		dsList.addColumn("FILE_NM", PlatformDataType.STRING, 255);
 		dsList.addColumn("FILE_PATH", PlatformDataType.STRING, 255);
 		dsList.addColumn("ATT_TYPE_NM", PlatformDataType.STRING, 255);
+		dsList.addColumn("EV_DESC", PlatformDataType.STRING, 255);
 		dsList.addColumn("SITE_NM", PlatformDataType.STRING, 255);
 		dsList.addColumn("DEPT_NM", PlatformDataType.STRING, 255);
 		dsList.addColumn("USER_NM", PlatformDataType.STRING, 255);
@@ -118,7 +119,7 @@ public class DASH_01BaseAutomationLogic extends BaseAutomationLogic {
 		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("SELECT\n EXTRACT(YEAR FROM D.REG_DT) AS YEAR, 			/*등록연도*/\n EXTRACT(MONTH FROM D.REG_DT) AS MONTH,			/*등록월*/\n D.EV_TITLE AS TITLE,							/*등록명*/\n F.FILE_NM AS FILE_NM,							/*첨부 파일명*/\n F.FILE_PATH AS FILE_PATH,						/*첨부 파일 위치*/\n F.ATT_TYPE_NM AS ATT_TYPE_NM,					/*첨부 파일 종류*/\n D.SITE_NM AS SITE_NM,							/*사업장 명*/\n D.DEPT_NM AS DEPT_NM,							/*부서 명*/\n D.REG_USER_NM AS USER_NM						/*등록자 명*/\n FROM EVD_DOC D, EVD_FILE F\n WHERE D.EV_ID = F.EV_ID\n AND EXTRACT(YEAR FROM D.REG_DT) = #dsCond.YEAR#\n AND EXTRACT(MONTH FROM D.REG_DT) = #dsCond.MONTH#\n \n <isNotEmpty property=\"dsCond.TITLE\">\n AND D.EV_TITLE LIKE '%'||#dsCond.TITLE# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.FILE_EXT\">\n AND F.ATT_TYPE_NM = #dsCond.FILE_EXT#\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.SITE_NM\">\n AND D.SITE_NM LIKE '%'|| #dsCond.SITE_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.DEPT_NM\">\n AND D.DEPT_NM LIKE '%'|| #dsCond.DEPT_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.REG_USER_NM\">\n AND D.REG_USER_NM LIKE '%'|| #dsCond.REG_USER_NM# ||'%'\n </isNotEmpty>\n \n ");
+		info.setSqlSelect("SELECT\n EXTRACT(YEAR FROM D.REG_DT) AS YEAR, 			/*등록연도*/\n EXTRACT(MONTH FROM D.REG_DT) AS MONTH,			/*등록월*/\n D.EV_TITLE AS TITLE,							/*등록명*/\n F.FILE_NM AS FILE_NM,							/*첨부 파일명*/\n F.FILE_PATH AS FILE_PATH,						/*첨부 파일 위치*/\n F.ATT_TYPE_NM AS ATT_TYPE_NM,					/*첨부 파일 종류*/\n D.EV_DESC AS EV_DESC,							/*코멘트*/\n D.SITE_NM AS SITE_NM,							/*사업장 명*/\n D.DEPT_NM AS DEPT_NM,							/*부서 명*/\n D.REG_USER_NM AS USER_NM						/*등록자 명*/\n FROM EVD_DOC D, EVD_FILE F\n WHERE D.EV_ID = F.EV_ID\n AND EXTRACT(YEAR FROM D.REG_DT) = #dsCond.YEAR#\n AND EXTRACT(MONTH FROM D.REG_DT) = #dsCond.MONTH#\n \n <isNotEmpty property=\"dsCond.TITLE\">\n AND D.EV_TITLE LIKE '%'||#dsCond.TITLE# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.FILE_EXT\">\n AND F.ATT_TYPE_NM = #dsCond.FILE_EXT#\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.SITE_NM\">\n AND D.SITE_NM LIKE '%'|| #dsCond.SITE_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.DEPT_NM\">\n AND D.DEPT_NM LIKE '%'|| #dsCond.DEPT_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.REG_USER_NM\">\n AND D.REG_USER_NM LIKE '%'|| #dsCond.REG_USER_NM# ||'%'\n </isNotEmpty>\n \n ");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
 		EventHandler eventHandler = new EventHandler();

@@ -1,10 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="DashSvc_P01" width="750" height="450" titletext="New Form">
+  <Form id="DashSvc_P01" width="750" height="280" titletext="" onload="DashSvc_P01_onload">
     <Layouts>
-      <Layout height="450" width="750">
-        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="750" height="450" background="RED"/>
+      <Layout height="280" width="750" flexcrossaxisalign="start" flexcrossaxiswrapalign="center" flexmainaxisalign="center" flexwrap="nowrap" tablecellalign="center center" tablecellincompalign="center center" tabledirection="horizontal" type="horizontal">
+        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="750" height="280">
+          <Layouts>
+            <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="center" flexmainaxisalign="center" tablecellalign="center center" tablecellincompalign="center center" tabledirection="horizontal" flexwrap="nowrap" type="default">
+              <Div id="divSearch" taborder="1" text="Div00" left="10.00" top="5" width="730" height="92" border="1px solid">
+                <Layouts>
+                  <Layout>
+                    <Static id="StaticYear" taborder="0" text="등록연도" left="10.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
+                    <Combo id="ComboYear" taborder="1" text="" left="81.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+                    <Static id="StaticMonth" taborder="2" text="등록월" left="170.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+                    <Combo id="ComboMonth" taborder="3" text="2025" left="231.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
+                    <Static id="StaticSite" taborder="4" text="사업장" left="320.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+                    <Edit id="EditSite" taborder="5" left="381.00" top="13" width="127" height="20"/>
+                    <Static id="StaticDept" taborder="6" text="부서" left="530.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+                    <Edit id="EditDept" taborder="7" left="581.00" top="13" width="127" height="20"/>
+                    <Static id="StaticTitle" taborder="8" text="등록명" left="10.00" top="48" width="49" height="28" cssclass="sta_WF_notice01"/>
+                    <Edit id="EditTitle" taborder="9" left="81.00" top="53" width="200" height="20"/>
+                    <Static id="StaticUser" taborder="10" text="등록자" left="320.00" top="48" width="49" height="28" cssclass="sta_WF_notice01"/>
+                    <Edit id="EditUser" taborder="11" left="381.00" top="53" width="98" height="20"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divContents" taborder="1" text="Div00" left="10.00" top="114" width="730" height="126" border="1px solid">
+                <Layouts>
+                  <Layout>
+                    <Static id="StaticFileNm" taborder="0" text="첨부파일명" left="10" top="10" width="71" height="28" cssclass="sta_WF_notice01"/>
+                    <Edit id="FileNm" taborder="1" left="101.00" top="14" width="180" height="20"/>
+                    <Static id="StaticDept00" taborder="2" text="첨부 코멘트" left="10.00" top="45" width="75" height="28" cssclass="sta_WF_notice01"/>
+                    <TextArea id="TextAreaDesc" taborder="3" left="101" top="50" width="178" height="65"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
       </Layout>
     </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.DashSvc_P01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var params = this.parent;
+	
+	var YEAR = params.YEAR;
+	var MONTH = params.MONTH;
+	var TITLE = params.TITLE;
+	var FILE_NM = params.FILE_NM;
+	var ATT_TYPE_NM = params.ATT_TYPE_NM;
+	var EV_DESC = params.EV_DESC
+	var SITE_NM = params.SITE_NM
+	var DEPT_NM = params.DEPT_NM
+	var USER_NM = params.USER_NM
+	
+	this.Div00.form.divSearch.form.ComboYear.set_value(YEAR);
+	this.Div00.form.divSearch.form.ComboMonth.set_value(MONTH);
+	this.Div00.form.divSearch.form.EditSite.set_value(SITE_NM);
+	this.Div00.form.divSearch.form.EditDept.set_value(DEPT_NM);
+	this.Div00.form.divSearch.form.EditTitle.set_value(TITLE);
+	this.Div00.form.divSearch.form.EditUser.set_value(USER_NM);
+	
+	this.Div00.form.divContents.form.FileNm.set_value(FILE_NM);
+	this.Div00.form.divContents.form.TextAreaDesc.set_value(EV_DESC);
+	
+	
+	this.Div00.form.divSearch.form.ComboYear.set_readonly(true);
+	this.Div00.form.divSearch.form.ComboMonth.set_readonly(true);
+	this.Div00.form.divSearch.form.EditSite.set_readonly(true);
+	this.Div00.form.divSearch.form.EditDept.set_readonly(true);
+	this.Div00.form.divSearch.form.EditTitle.set_readonly(true);
+	this.Div00.form.divSearch.form.EditUser.set_readonly(true);
+	
+	this.Div00.form.divContents.form.FileNm.set_readonly(true);
+	this.Div00.form.divContents.form.TextAreaDesc.set_readonly(true);
+};
+]]></Script>
   </Form>
 </FDL>

@@ -168,13 +168,30 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 	if(e.cell == 3){
 		var objChildFrame = new ChildFrame();  
 		var objParentFrame = this.getOwnerFrame();
+		
+		var rowPos = this.dsList.rowposition;
+		
+		var YEAR = this.dsList.getColumn(rowPos, "YEAR");
+		var MONTH = this.dsList.getColumn(rowPos, "MONTH");
+		var TITLE = this.dsList.getColumn(rowPos, "TITLE");
+		var FILE_NM = this.dsList.getColumn(rowPos, "FILE_NM");
+		var ATT_TYPE_NM = this.dsList.getColumn(rowPos, "ATT_TYPE_NM");
+		var EV_DESC = this.dsList.getColumn(rowPos, "EV_DESC");
+		var SITE_NM = this.dsList.getColumn(rowPos, "SITE_NM");
+		var DEPT_NM = this.dsList.getColumn(rowPos, "DEPT_NM");
+		var USER_NM = this.dsList.getColumn(rowPos, "USER_NM");
+		
+		var objParams = {YEAR:YEAR, MONTH:MONTH, TITLE:TITLE, FILE_NM:FILE_NM, 
+						 ATT_TYPE_NM:ATT_TYPE_NM, EV_DESC:EV_DESC, SITE_NM:SITE_NM, 
+						 DEPT_NM:DEPT_NM, USER_NM:USER_NM};
+		
 	
 		objChildFrame.init("childframe00", 300, 300, "800px", "500px", null, null);
 		objChildFrame.titletext = "팝업";
 		objChildFrame.resizable = true;
 		objChildFrame.autosize  = false;
 		objChildFrame.formurl = "DashSvc::DashSvc_P01.xfdl";
-		objChildFrame.showModal( "ChildFrame", objParentFrame, null, this, this.fn_callback );
+		objChildFrame.showModal( "ChildFrame", objParentFrame, objParams, this, this.fn_callback );
 		
 	};
 	
@@ -366,6 +383,7 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
           <Column id="FILE_NM" type="STRING" size="256"/>
           <Column id="FILE_PATH" type="STRING" size="256"/>
           <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
+          <Column id="EV_DESC" type="STRING" size="256"/>
           <Column id="SITE_NM" type="STRING" size="256"/>
           <Column id="DEPT_NM" type="STRING" size="256"/>
           <Column id="USER_NM" type="STRING" size="256"/>
