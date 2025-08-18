@@ -31,6 +31,7 @@
                     <Edit id="FileNm" taborder="1" left="101.00" top="14" width="180" height="20"/>
                     <Static id="StaticDept00" taborder="2" text="첨부 코멘트" left="10.00" top="45" width="75" height="28" cssclass="sta_WF_notice01"/>
                     <TextArea id="TextAreaDesc" taborder="3" left="101" top="50" width="178" height="65"/>
+                    <Static id="StaticFileNm00" taborder="4" text="첨부파일 다운로드" left="320.00" top="11" width="110" height="28" cssclass="sta_WF_notice01"/>
                   </Layout>
                 </Layouts>
               </Div>
