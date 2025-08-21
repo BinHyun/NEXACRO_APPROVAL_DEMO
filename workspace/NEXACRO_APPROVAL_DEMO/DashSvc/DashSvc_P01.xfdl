@@ -2,10 +2,10 @@
 <FDL version="2.1">
   <Form id="DashSvc_P01" width="750" height="280" titletext="" onload="DashSvc_P01_onload">
     <Layouts>
-      <Layout height="280" width="750" flexcrossaxisalign="start" flexcrossaxiswrapalign="center" flexmainaxisalign="center" flexwrap="nowrap" tablecellalign="center center" tablecellincompalign="center center" tabledirection="horizontal" type="horizontal">
+      <Layout height="280" width="750" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
         <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="750" height="280">
           <Layouts>
-            <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="center" flexmainaxisalign="center" tablecellalign="center center" tablecellincompalign="center center" tabledirection="horizontal" flexwrap="nowrap" type="default">
+            <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="center" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" flexwrap="nowrap" type="default">
               <Div id="divSearch" taborder="1" text="Div00" left="10.00" top="5" width="730" height="92" border="1px solid">
                 <Layouts>
                   <Layout>
@@ -31,7 +31,9 @@
                     <Edit id="FileNm" taborder="1" left="101.00" top="14" width="180" height="20"/>
                     <Static id="StaticDept00" taborder="2" text="첨부 코멘트" left="10.00" top="45" width="75" height="28" cssclass="sta_WF_notice01"/>
                     <TextArea id="TextAreaDesc" taborder="3" left="101" top="50" width="178" height="65"/>
-                    <Static id="StaticFileNm00" taborder="4" text="첨부파일 다운로드" left="320.00" top="11" width="110" height="28" cssclass="sta_WF_notice01"/>
+                    <Static id="StaticFileNm00" taborder="4" text="첨부파일 유형" left="320.00" top="11" width="110" height="28" cssclass="sta_WF_notice01"/>
+                    <Static id="StaticFileNm00_00" taborder="5" text="첨부파일 다운로드" left="320.00" top="45" width="110" height="28" cssclass="sta_WF_notice01"/>
+                    <Edit id="EditUser" taborder="6" left="419.00" top="15" width="98" height="20"/>
                   </Layout>
                 </Layouts>
               </Div>
