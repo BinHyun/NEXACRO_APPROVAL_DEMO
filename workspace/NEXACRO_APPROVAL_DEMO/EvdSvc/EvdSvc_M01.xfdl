@@ -1,18 +1,394 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="EvdSvc_M01" width="1280" height="720" titletext="New Form" onload="EvdSvc_M01_onload">
+  <Form id="EvdSvc_M01" width="1730" height="805" titletext="New Form" cssclass="sta_main_text11C" onload="EvdSvc_M01_onload">
     <Layouts>
-      <Layout height="720" width="1280"/>
+      <Layout height="805" width="1730">
+        <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" border="1px solid">
+          <Layouts>
+            <Layout>
+              <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:12.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+              <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:12.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
+              <Static id="StaticSite" taborder="4" text="사업장" left="490.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditSite" taborder="5" left="StaticSite:12.00" top="13" width="127" height="20"/>
+              <Static id="StaticAttach" taborder="6" text="첨부유형" left="330.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboAttach" taborder="7" text="전체" left="StaticAttach:12.00" top="13" width="60" height="20" innerdataset="dsAttach" codecolumn="CODE" datacolumn="NAME" index="0" value="ALL"/>
+              <Static id="StaticTitle" taborder="8" text="등록명" left="910.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditTitle" taborder="9" left="971.00" top="13" width="200" height="20"/>
+              <Static id="StaticUser" taborder="10" text="등록자" left="1200.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditUser" taborder="11" left="1261.00" top="13" width="98" height="20"/>
+              <Button id="ButtonSearch" taborder="12" text="검색" left="1617.00" top="8" width="62" height="28" cssclass="btn_WF_search02" onclick="divSearch_ButtonSearch_onclick"/>
+              <Static id="StaticDept" taborder="13" text="부서" left="700.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditDept" taborder="14" left="StaticDept:2" top="13" width="127" height="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="gridDiv" taborder="1" text="Div00" left="10" top="90" width="1710" height="700">
+          <Layouts>
+            <Layout>
+              <Grid id="Grid00" taborder="0" left="0.00" top="32" width="1710" height="658" binddataset="dsList" autofittype="col" oncellclick="gridDiv_Grid00_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="55"/>
+                      <Column size="50"/>
+                      <Column size="200"/>
+                      <Column size="150"/>
+                      <Column size="70"/>
+                      <Column size="70"/>
+                      <Column size="70"/>
+                      <Column size="55"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="등록연도"/>
+                      <Cell col="2" text="등록월"/>
+                      <Cell col="3" text="등록명"/>
+                      <Cell col="4" text="첨부 파일명"/>
+                      <Cell col="5" text="첨부 유형"/>
+                      <Cell col="6" text="등록 사업장"/>
+                      <Cell col="7" text="등록 부서"/>
+                      <Cell col="8" text="등록자"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1" text="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:YEAR" textAlign="center"/>
+                      <Cell col="2" text="bind:MONTH" textAlign="center"/>
+                      <Cell col="3" text="bind:TITLE" color="cornflowerblue" font="normal 12px/normal &quot;Arial,Malgun Gothic,Gulim&quot;" textDecoration="underline"/>
+                      <Cell col="4" text="bind:FILE_NM" color="cornflowerblue" textDecoration="underline"/>
+                      <Cell col="5" text="bind:ATT_TYPE_NM" textAlign="center"/>
+                      <Cell col="6" text="bind:SITE_NM" textAlign="center"/>
+                      <Cell col="7" text="bind:DEPT_NM" textAlign="center"/>
+                      <Cell col="8" text="bind:USER_NM" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="StaticYear" taborder="1" text="조회 목록" left="20.00" top="4" width="80" height="28" cssclass="sta_WF_notice01"/>
+              <Static id="StaticCnt" taborder="2" left="1610.00" top="4" width="70" height="28" textAlign="right"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[/**
 * @description  : 증빙 관리 > 증빙 관리 메인 화면
-* @Date         : 2025.08.09
+* @Date         : 2025.08.22
 * @Author		: 김빈현
 */
+//기본 include
+include "Lib::lib_array.xjs";
+include "Lib::lib_base.xjs";
+include "Lib::lib_date.xjs";
+include "Lib::lib_number.xjs";
+include "Lib::lib_string.xjs";
+include "Lib::lib_transaction.xjs";
+
 this.EvdSvc_M01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	alert("증빙 관리 메인 화면 입니다.");
+	//초기화 함수
+	this.fnInit();
+};
+
+//페이지 접근 시 초기 세팅
+this.fnInit = function()
+{
+	var objDate = new nexacro.Date();
+	var nYear = objDate.getFullYear();
+	var nMonth = (objDate.getMonth()+1);
+	
+	//접근 시, 현재 년, 월로 설정
+	this.divSearch.form.ComboYear.set_value(nYear);
+	this.divSearch.form.ComboMonth.set_value(nMonth);
+	
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var YEAR = this.divSearch.form.ComboYear.value;
+	var MONTH = this.divSearch.form.ComboMonth.value;
+	//var FILE_EXT = this.divSearch.form.ComboAttach.value;
+	var SITE_NM = this.divSearch.form.EditSite.value;
+	var DEPT_NM = this.divSearch.form.EditDept.value;
+	var TITLE = this.divSearch.form.EditTitle.value;
+	var REG_USER_NM = this.divSearch.form.EditUser.value;
+	
+	this.dsCond.setColumn(0, "YEAR", YEAR);
+	this.dsCond.setColumn(0, "MONTH", MONTH);
+	//this.dsCond.setColumn(0, "FILE_EXT", FILE_EXT);
+	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
+	this.dsCond.setColumn(0, "TITLE", TITLE);
+	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
+	
+	this.fnTranSearch();
+	
+};
+
+//검색버튼
+this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var YEAR = this.divSearch.form.ComboYear.value;
+	var MONTH = this.divSearch.form.ComboMonth.value;
+	var FILE_EXT = this.divSearch.form.ComboAttach.value;
+	var SITE_NM = this.divSearch.form.EditSite.value;
+	var DEPT_NM = this.divSearch.form.EditDept.value;
+	var TITLE = this.divSearch.form.EditTitle.value;
+	var REG_USER_NM = this.divSearch.form.EditUser.value;
+	
+	this.dsCond.setColumn(0, "YEAR", YEAR);
+	this.dsCond.setColumn(0, "MONTH", MONTH);
+	
+	if(FILE_EXT == "ALL"){
+		this.dsCond.setColumn(0, "FILE_EXT", "");
+	} else {
+		this.dsCond.setColumn(0, "FILE_EXT", FILE_EXT);
+	}
+
+	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
+	this.dsCond.setColumn(0, "TITLE", TITLE);
+	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
+	
+	this.fnTranSearch();
+};
+
+//그리드 클릭 이벤트
+this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	
+	if(e.cell == 3){
+		var objChildFrame = new ChildFrame();  
+		var objParentFrame = this.getOwnerFrame();
+		
+		var rowPos = this.dsList.rowposition;
+		
+		var YEAR = this.dsList.getColumn(rowPos, "YEAR");
+		var MONTH = this.dsList.getColumn(rowPos, "MONTH");
+		var TITLE = this.dsList.getColumn(rowPos, "TITLE");
+		var FILE_NM = this.dsList.getColumn(rowPos, "FILE_NM");
+		var ATT_TYPE_NM = this.dsList.getColumn(rowPos, "ATT_TYPE_NM");
+		var EV_DESC = this.dsList.getColumn(rowPos, "EV_DESC");
+		var SITE_NM = this.dsList.getColumn(rowPos, "SITE_NM");
+		var DEPT_NM = this.dsList.getColumn(rowPos, "DEPT_NM");
+		var USER_NM = this.dsList.getColumn(rowPos, "USER_NM");
+		
+		var objParams = {YEAR:YEAR, MONTH:MONTH, TITLE:TITLE, FILE_NM:FILE_NM, 
+						 ATT_TYPE_NM:ATT_TYPE_NM, EV_DESC:EV_DESC, SITE_NM:SITE_NM, 
+						 DEPT_NM:DEPT_NM, USER_NM:USER_NM};
+		
+	
+		objChildFrame.init("childframe00", 300, 300, "800px", "500px", null, null);
+		objChildFrame.titletext = "팝업";
+		objChildFrame.resizable = true;
+		objChildFrame.formurl = "EvdSvc::EvdSvc_P01.xfdl";
+		objChildFrame.showModal( "ChildFrame", objParentFrame, objParams, this, this.fn_callback );
+		
+	};
+	
+	if(e.cell == 4){
+		var baseUrl = window.location.href;
+		
+		if (baseUrl.endsWith("/")) {
+			baseUrl = baseUrl.slice(0, -1);
+		}
+		
+		var FILE_NAME = this.dsList.getColumn(e.row, "FILE_NM");
+		var FILE_PATH = this.dsList.getColumn(e.row, "FILE_PATH");
+		var fullPath = baseUrl+FILE_PATH;
+		
+		var fileDown = new nexacro.FileDownTransfer();
+
+		// 다운로드 시작
+		fileDown.download(FILE_PATH, FILE_NAME);
+	};	
+};
+
+//조회 트랜잭션
+this.fnTranSearch = function()
+{
+	var strSvcId 	 = "Search";
+	var strSvcUrl 	 = "XUP_DEMO::EVD_01";	
+	var inData 		 = "dsCond=dsCond";
+	var outData 	 = "dsList=dsList";
+	var strArg 		 = "";
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+};
+
+//트랜잭션 callback
+this.fnCallback = function(sId,nErrorCode,sErrorMSG)
+{
+	if(nErrorCode == 0)
+	{
+		switch (sId) {
+			case "Search":
+				var rowCnt = this.dsList.rowcount;
+				this.gridDiv.form.StaticCnt.set_text(rowCnt + " 건");
+								
+				break;
+			
+			default:
+				
+				break;
+		}
+	}
 };
 ]]></Script>
+    <Objects>
+      <Dataset id="dsYear">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">2022</Col>
+            <Col id="NAME">2022</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2023</Col>
+            <Col id="NAME">2023</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2024</Col>
+            <Col id="NAME">2024</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2025</Col>
+            <Col id="NAME">2025</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMonth">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="NAME">1월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="NAME">2월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="NAME">3월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="NAME">4월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="NAME">5월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="NAME">6월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">7</Col>
+            <Col id="NAME">7월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">8</Col>
+            <Col id="NAME">8월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">9</Col>
+            <Col id="NAME">9월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="NAME">10월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">11</Col>
+            <Col id="NAME">11월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">12</Col>
+            <Col id="NAME">12월</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAttach">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">ALL</Col>
+            <Col id="NAME">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">PDF</Col>
+            <Col id="NAME">PDF</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">HWP</Col>
+            <Col id="NAME">HWP</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">DOCX</Col>
+            <Col id="NAME">DOC</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">EXCEL</Col>
+            <Col id="NAME">EXCEL</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">PPTX</Col>
+            <Col id="NAME">PPT</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="FILE_EXT" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
+          <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
+          <Column id="EV_DESC" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
   </Form>
 </FDL>
