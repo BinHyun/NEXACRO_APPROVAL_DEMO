@@ -106,6 +106,9 @@ this.fnOpenMenu = function (sMenuId)
 	var nFRow = objDsMenu.findRow("MENU_ID",sMenuId);
 	var sMenuNm = objDsMenu.getColumn(nFRow, "MENU_NM");
 	var sMenuPath = objDsMenu.getColumn(nFRow, "MENU_PATH");
+	
+	var pattern = "_P";
+	var result = sMenuPath.match(pattern);
 
 	//이미 오픈된 메뉴인지 확인
 	var nFRowOpen = objDsOpenMenu.findRow("MENU_ID", sMenuId);
@@ -139,23 +142,36 @@ this.fnOpenMenu = function (sMenuId)
 		var oParam  = {menunm : sMenuNm,
 					   menupath : sMenuPath
 					  };
-             
-		//workframe에 자식으로 추가 
-		objWorkFrame.addChild(objChildFrame.name, objChildFrame); 
+		
+		if(result == null) {
+			//workframe에 자식으로 추가 
+			objWorkFrame.addChild(objChildFrame.name, objChildFrame); 
     
-		//업무 화면용 ChildFrame에 공통 속성 적용
-		objChildFrame.set_openstatus('maximize');
-		objChildFrame.set_showtitlebar('false');
-		objChildFrame.set_formurl("Frame::Frame_Work.xfdl");
-		objChildFrame.param = oParam;
-		objChildFrame.show(); 
+			//업무 화면용 ChildFrame에 공통 속성 적용
+			objChildFrame.set_openstatus('maximize');
+			objChildFrame.set_showtitlebar('false');
+			objChildFrame.set_formurl("Frame::Frame_Work.xfdl");
+			objChildFrame.param = oParam;
+			objChildFrame.show(); 
 	
-		//열린화면 데이터셋에 정보 추가 함수 호출
-		this.fnAddOpenMenu(sMenuId);
-		objChildFrame.fnGetParam(oParam);
+			//열린화면 데이터셋에 정보 추가 함수 호출
+			this.fnAddOpenMenu(sMenuId);
+			objChildFrame.fnGetParam(oParam);
   
-		//MDI Frame에 정의된 MDI Tab 추가 함수 호출
-		//objMdiFrame.form.fnAddTabPage(sMenuId,sMenuNm);
+			//MDI Frame에 정의된 MDI Tab 추가 함수 호출
+			//objMdiFrame.form.fnAddTabPage(sMenuId,sMenuNm);
+		} else {
+			var objChildFrame = new ChildFrame();  
+			var objParentFrame = this.getOwnerFrame();
+			
+			objChildFrame.init("childframe00", 500, 200, "800px", "500px", null, null);
+			objChildFrame.titletext = "Test PopUp";
+			objChildFrame.resizable = true;
+			objChildFrame.formurl = sMenuPath;
+			objChildFrame.showModal( "ChildFrame", objParentFrame, "", this, this.fn_callback );
+		}
+             
+		
 	}
 };
 
