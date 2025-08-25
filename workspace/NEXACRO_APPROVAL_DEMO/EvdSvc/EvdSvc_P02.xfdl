@@ -12,9 +12,17 @@
                     <Static id="Static00" taborder="0" text="Static00" left="20" top="5" width="810" height="30" cssclass="sta_top_bg02"/>
                     <Static id="StaticEvId" taborder="1" text="&gt; 문서번호" left="20.00" top="5" width="82" height="30" cssclass="sta_cm_box02L"/>
                     <Edit id="EditEvId" taborder="2" left="StaticEvId:5.00" top="10" width="73" height="20" readonly="true"/>
-                    <Static id="StaticEvTitle" taborder="3" text="&gt; 문서제목" left="190.00" top="5" width="82" height="30" cssclass="sta_cm_box02L"/>
-                    <Edit id="EditEvTitle" taborder="4" left="StaticEvTitle:5.00" top="10" width="543" height="20" readonly="false" displaynulltext="제목을 입력해주세요."/>
+                    <Static id="StaticEvTitle" taborder="3" text="&gt; 문서제목" left="210.00" top="5" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Edit id="EditEvTitle" taborder="4" left="StaticEvTitle:5.00" top="10" width="505" height="20" readonly="false" displaynulltext="제목을 입력해주세요."/>
                     <Static id="Static00_00" taborder="5" text="Static00" left="20.00" top="36" width="810" height="30" cssclass="sta_top_bg02"/>
+                    <Static id="StaticEvYear" taborder="6" text="&gt; 등록년도" left="20.00" top="36" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Edit id="EditEvYear" taborder="7" left="StaticEvYear:5" top="40" width="73" height="20" readonly="true"/>
+                    <Static id="StaticEvMonth" taborder="8" text="&gt; 등록월" left="210.00" top="36" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Edit id="EditEvMonth" taborder="9" left="StaticEvMonth:5.00" top="40" width="73" height="20" readonly="true"/>
+                    <Static id="StaticEvSite" taborder="10" text="&gt; 등록사업소" left="400.00" top="36" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Combo id="ComboSite" taborder="11" text="본사" left="StaticEvSite:5.00" top="38" width="95" height="25" innerdataset="dsSite" codecolumn="SITE_ID" datacolumn="SITE_NM" index="0" value="S001" onitemchanged="div_divInfo_ComboSite_onitemchanged"/>
+                    <Static id="StaticEvDept" taborder="12" text="&gt; 등록부서" left="620.00" top="36" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Combo id="ComboDept" taborder="13" text="본사" left="707.00" top="38" width="95" height="25" innerdataset="dsDept" codecolumn="DEPT_ID" datacolumn="DEPT_NM" index="0" value="S001"/>
                   </Layout>
                 </Layouts>
               </Div>
@@ -76,8 +84,13 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 			case "Search":
 				var rowPos = this.dsDocId.rowposition;
 				var EV_ID = this.dsDocId.getColumn(rowPos, "DOC_ID");
-				
+				var objDate = new nexacro.Date();
+				var YEAR = objDate.getFullYear();      
+				var MONTH = objDate.getMonth() + 1;
+
 				this.div.form.divInfo.form.EditEvId.set_value(EV_ID);
+				this.div.form.divInfo.form.EditEvYear.set_value(YEAR+" 년");
+				this.div.form.divInfo.form.EditEvMonth.set_value(MONTH+" 월");
 				
 				break;
 			
@@ -86,7 +99,16 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				break;
 		}
 	}
-};]]></Script>
+};
+
+
+this.div_divInfo_ComboSite_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var site_cd = obj.value;
+	this.dsDept.filter("UPPO_SITE == '" + site_cd + "'");
+	this.div.form.divInfo.form.ComboDept.set_index(0);
+};
+]]></Script>
     <Objects>
       <Dataset id="dsDocId">
         <ColumnInfo>
@@ -97,6 +119,55 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
         <ColumnInfo>
           <Column id="EV_ID" type="STRING" size="256"/>
         </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSite">
+        <ColumnInfo>
+          <Column id="SITE_ID" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SITE_ID">S001</Col>
+            <Col id="SITE_NM">본사</Col>
+          </Row>
+          <Row>
+            <Col id="SITE_ID">S002</Col>
+            <Col id="SITE_NM">포항사업장</Col>
+          </Row>
+          <Row>
+            <Col id="SITE_ID">S003</Col>
+            <Col id="SITE_NM">당진사업장</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDept">
+        <ColumnInfo>
+          <Column id="UPPO_SITE" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DEPT_ID">D002</Col>
+            <Col id="DEPT_NM">인사부</Col>
+            <Col id="UPPO_SITE">S001</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_ID">D003</Col>
+            <Col id="DEPT_NM">생산팀</Col>
+            <Col id="UPPO_SITE">S002</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_ID">D004</Col>
+            <Col id="DEPT_NM">품질관리팀</Col>
+            <Col id="UPPO_SITE">S002</Col>
+          </Row>
+          <Row>
+            <Col id="UPPO_SITE">S003</Col>
+            <Col id="DEPT_ID">D005</Col>
+            <Col id="DEPT_NM">물류팀</Col>
+          </Row>
+        </Rows>
       </Dataset>
     </Objects>
   </Form>
