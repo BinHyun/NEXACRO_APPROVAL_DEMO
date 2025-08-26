@@ -23,6 +23,36 @@
                     <Combo id="ComboSite" taborder="11" text="본사" left="StaticEvSite:5.00" top="38" width="95" height="25" innerdataset="dsSite" codecolumn="SITE_ID" datacolumn="SITE_NM" index="0" value="S001" onitemchanged="div_divInfo_ComboSite_onitemchanged"/>
                     <Static id="StaticEvDept" taborder="12" text="&gt; 등록부서" left="620.00" top="36" width="82" height="30" cssclass="sta_cm_box02L"/>
                     <Combo id="ComboDept" taborder="13" text="본사" left="707.00" top="38" width="95" height="25" innerdataset="dsDept" codecolumn="DEPT_ID" datacolumn="DEPT_NM" index="0" value="S001"/>
+                    <Static id="Static00_00_00" taborder="14" text="Static00" left="20.00" top="67" width="810" height="30" cssclass="sta_top_bg02"/>
+                    <Static id="StaticEvNm" taborder="15" text="&gt; 등록자명" left="20.00" top="67" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Edit id="EditEvYear00" taborder="16" left="StaticEvNm:5" top="72" width="73" height="20" readonly="false"/>
+                    <Static id="StaticEvEmpNo" taborder="17" text="&gt; 등록자사번" left="210.00" top="67" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Edit id="EditEvEmpNo" taborder="18" left="StaticEvEmpNo:5" top="72" width="73" height="20" readonly="false"/>
+                    <Static id="StaticEvDesc" taborder="19" text="&gt; 문서요약" left="400.00" top="67" width="82" height="30" cssclass="sta_cm_box02L"/>
+                    <Edit id="EditEvEmpNo00" taborder="20" left="StaticEvDesc:5.00" top="72" width="315" height="20"/>
+                    <Grid id="Grid00" taborder="21" left="20" top="139" width="810" height="107" binddataset="dsFile">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="700"/>
+                            <Column size="100"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="24" band="head"/>
+                            <Row size="24"/>
+                          </Rows>
+                          <Band id="head">
+                            <Cell text="파일명"/>
+                            <Cell col="1" text="파일 사이즈"/>
+                          </Band>
+                          <Band id="body">
+                            <Cell text="bind:FILE_NM"/>
+                            <Cell col="1" text="bind:FILE_SIZE"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                    <Button id="ButtonFile" taborder="22" text="파일첨부" left="771" top="102" width="59" height="30" onclick="div_divInfo_ButtonFile_onclick"/>
                   </Layout>
                 </Layouts>
               </Div>
@@ -101,14 +131,63 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 	}
 };
 
+//컴포넌트 이벤트
 
+//등록사업소 선택 시 등록부서 필터
 this.div_divInfo_ComboSite_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
 {
 	var site_cd = obj.value;
 	this.dsDept.filter("UPPO_SITE == '" + site_cd + "'");
 	this.div.form.divInfo.form.ComboDept.set_index(0);
 };
-]]></Script>
+
+//파일 업로드 버튼
+this.div_divInfo_ButtonFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFileUpload = new FileDialog();  
+	objFileUpload.addEventHandler("onclose", this.FileDialog_onclose, this);
+	objFileUpload.open('파일 첨부', FileDialog.MULTILOAD);
+};
+
+//파일 업로드창 종료 이벤트
+this.FileDialog_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var uploadFile = e.virtualfiles;
+	
+	for (var i=0; i<uploadFile.length; i++){
+		var vFile = uploadFile[i];
+		vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+		vFile.addEventHandler("onerror", this.FileList_onerror , this);
+		vFile.open(null, 1);
+	};
+};
+
+//파일 업로드 성공 이벤트
+this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileEventInfo)
+{
+	switch (e.reason)
+	{
+		case 1:
+			obj.getFileSize();
+			break;
+		case 9:
+			var FILE_NM = obj.filename;
+			var FILE_SIZE = nexacro.round((e.filesize/1024)*100/100);
+		
+			var rowCnt = this.dsFile.addRow();
+			this.dsFile.setColumn(rowCnt, "FILE_NM", FILE_NM);
+			this.dsFile.setColumn(rowCnt, "FILE_SIZE", FILE_SIZE);
+			break;
+	}
+};
+
+//파일 업로드 실패 이벤트
+this.FileList_onerror = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileErrorEventInfo)
+{
+    trace("errortype: "+e.errortype);
+    trace("errormsg: "+e.errormsg);
+    trace("statuscode: "+e.statuscode);
+}]]></Script>
     <Objects>
       <Dataset id="dsDocId">
         <ColumnInfo>
@@ -168,6 +247,12 @@ this.div_divInfo_ComboSite_onitemchanged = function(obj:nexacro.Combo,e:nexacro.
             <Col id="DEPT_NM">물류팀</Col>
           </Row>
         </Rows>
+      </Dataset>
+      <Dataset id="dsFile">
+        <ColumnInfo>
+          <Column id="FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_SIZE" type="STRING" size="256"/>
+        </ColumnInfo>
       </Dataset>
     </Objects>
   </Form>
