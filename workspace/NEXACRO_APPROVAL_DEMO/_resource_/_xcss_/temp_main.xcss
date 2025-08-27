@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XCSS version="1.0"><![CDATA[.Static.sta_mian_smIocn01
+<XCSS version="1.1">
+  <CSSData><![CDATA[.Static.sta_mian_smIocn01
 {
 	background : url("imagerc::img_main_smIcon01.png") no-repeat left center;
 	color : #222222;
@@ -152,4 +153,55 @@
 	background : #ffffff;
 	-nexa-background-odd : #f7f7f7;
 	-nexa-text-align : center;
-}]]></XCSS>
+}.Div.div_WF_Search
+{
+    -nexa-border      : 1px solid #e0e3e6;
+    background        : #f2f7fc;
+}.Static.sta_WF_SearchLabel,
+.Static.sta_WF_SearchLabel[status=disabled]
+{
+    -nexa-padding         : 0px 10px 0px 8px;
+    -nexa-text-align      : left;
+    -nexa-vertical-align  : middle;
+    background            : URL("theme://images/btn_WF_Menunext_O.png") no-repeat left center;
+    color                 : #555555;
+    font                  : 11px "Malgun Gothic";
+}.Static.sta_WF_DeatilLabel,
+.Static.sta_WF_DeatilLabel[status=disabled]
+{
+    -nexa-border         : 1px solid #e4e4e4;
+    -nexa-text-align     : left;
+    -nexa-vertical-align : middle;
+    -nexa-padding        : 0px 4px 0px 10px;
+    -nexa-word-wrap      : char;
+    background           : #eeeeee;
+    color                : #555555;
+    font                 : 13px/16px "Malgun Gothic";
+}.Button.btn_WF_ModuleKustom
+{
+    -nexa-border        : 1px solid #636467;
+    -nexa-text-padding  : 0px 10px 0px 10px;
+    background          : #ffffff;
+    color               : #333333;
+}.Button.btn_WF_SearchDiv,
+.Button.btn_WF_SearchDiv[status=focused],
+.Button.btn_WF_SearchDiv[userstatus=selected]
+{
+    -nexa-border       : 0px none;
+    -nexa-padding      : 0px 10px 0px 27px;
+    -nexa-text-align   : left;
+    background         : URL("theme://images/btn_WFSA_Searc.png") no-repeat left center #ff7e00;
+    color              : #ffffff;
+    font               : bold 13px "Malgun Gothic";
+}.Static.sta_WF_DeatilBg
+{
+    -nexa-border        : 1px solid #e4e4e4;
+    -nexa-padding       : 0px 10px 0px 10px;
+    -nexa-word-wrap     : char;
+    background          : #ffffff;
+}]]></CSSData>
+  <CSSData type="desktop"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

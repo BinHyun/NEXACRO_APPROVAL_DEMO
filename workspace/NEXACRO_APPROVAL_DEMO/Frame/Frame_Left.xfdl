@@ -164,7 +164,7 @@ this.fnOpenMenu = function (sMenuId)
 			var objChildFrame = new ChildFrame();  
 			var objParentFrame = this.getOwnerFrame();
 			
-			objChildFrame.init("childframe00", 500, 200, "800px", "500px", null, null);
+			objChildFrame.init("childframe00", 500, 200, "800px", "300px", null, null);
 			objChildFrame.titletext = "Test PopUp";
 			objChildFrame.resizable = true;
 			objChildFrame.formurl = sMenuPath;

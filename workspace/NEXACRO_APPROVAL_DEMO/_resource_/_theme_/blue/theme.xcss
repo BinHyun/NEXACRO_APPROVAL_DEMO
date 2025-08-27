@@ -1127,13 +1127,15 @@
 {
 	-nexa-icon : URL('theme://images/btn_WF_Spindown_D.png');
 }
-/**********************Static***********************************************/
-.Static,.StaticControl
+.Static.sta_WF_SearchLabel
 {
-	/*별도스타일없음*/
-}
-
-.Static[status=disabled],.StaticControl[status=disabled]
+    -nexa-padding         : 0px 10px 0px 30px;
+    -nexa-text-align      : left;
+    -nexa-vertical-align  : middle;
+    background            : URL("theme://images/btn_WF_Stepitem.png") no-repeat left center;
+    color                 : #555555;
+    font                  : bold 13px "Malgun Gothic";
+}.Static[status=disabled],.StaticControl[status=disabled]
 {
 	color : #999999;
 }

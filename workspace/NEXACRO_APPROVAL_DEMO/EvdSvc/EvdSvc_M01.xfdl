@@ -3,11 +3,11 @@
   <Form id="EvdSvc_M01" width="1730" height="805" titletext="New Form" cssclass="sta_main_text11C" onload="EvdSvc_M01_onload">
     <Layouts>
       <Layout height="805" width="1730">
-        <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" border="1px solid">
+        <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" cssclass="div_WF_Search" border="1px solid">
           <Layouts>
             <Layout>
-              <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="59" height="28" cssclass="sta_main_box01"/>
-              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:12.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+              <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="69" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:2.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
               <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
               <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:12.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
               <Static id="StaticSite" taborder="4" text="사업장" left="490.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
