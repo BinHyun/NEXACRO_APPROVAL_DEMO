@@ -179,6 +179,13 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 			var rowCnt = this.dsFile.addRow();
 			this.dsFile.setColumn(rowCnt, "FILE_NM", FILE_NM);
 			this.dsFile.setColumn(rowCnt, "FILE_SIZE", FILE_SIZE);
+			
+			//실제 업로드 부분
+			var objFileUp = new nexacro.FileUpTransfer();
+			objFileUp.url = "http://localhost:8080/NEXACRO_APPROVAL_DEMO/file/upload";
+			objFileUp.setEventHandler( "onsuccess", this.FileUpTransfer_onsuccess, this);
+			objFileUp.addEventHandler("onerror", this.FileUpTransfer_onerror , this);
+
 			break;
 	}
 };
@@ -201,6 +208,18 @@ this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEvent
 	} else {
 		return false
 	};
+};
+
+this.FileUpTransfer_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferEventinfo)
+{
+	alert("code ==> " + e.code);
+	alert("message ==> " + e.message);
+};
+
+this.FileUpTransfer_onerror = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferErrorEventInfo)
+{
+	alert("errormsg ==> " + e.errormsg);
+	alert("statuscode ==> " + e.statuscode);
 };
 ]]></Script>
     <Objects>
