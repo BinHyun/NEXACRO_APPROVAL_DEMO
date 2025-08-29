@@ -175,16 +175,26 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 		case 9:
 			var FILE_NM = obj.filename;
 			var FILE_SIZE = nexacro.round((e.filesize/1024)*100/100);
+			var FILE_PATH = obj.fullpath;
+			
+			//trace("FILE_PATH ==> " + FILE_PATH);
+			
 		
 			var rowCnt = this.dsFile.addRow();
 			this.dsFile.setColumn(rowCnt, "FILE_NM", FILE_NM);
 			this.dsFile.setColumn(rowCnt, "FILE_SIZE", FILE_SIZE);
 			
 			//실제 업로드 부분
+			var uploadurl = "http://localhost:8080/xup/file/upload.do";
 			var objFileUp = new nexacro.FileUpTransfer();
-			objFileUp.url = "http://localhost:8080/NEXACRO_APPROVAL_DEMO/file/upload";
+			objFileUp.addFile("nexacroUploadFiles", FILE_PATH);
+			
 			objFileUp.setEventHandler( "onsuccess", this.FileUpTransfer_onsuccess, this);
 			objFileUp.addEventHandler("onerror", this.FileUpTransfer_onerror , this);
+			
+			//trace(objFileUp.existFile(obj));
+			
+			objFileUp.upload(uploadurl);
 
 			break;
 	}
