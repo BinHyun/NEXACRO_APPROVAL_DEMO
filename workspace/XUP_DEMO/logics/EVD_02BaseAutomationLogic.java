@@ -93,6 +93,7 @@ public class EVD_02BaseAutomationLogic extends BaseAutomationLogic {
 		DataSet dsDocId = new DataSet("dsDocId");
 
 		dsDocId.addColumn("DOC_ID", PlatformDataType.STRING, 255);
+		dsDocId.addColumn("FILE_ID", PlatformDataType.STRING, 255);
 
 		globalParameterSet.add(dsDocId);
 	}
@@ -109,7 +110,7 @@ public class EVD_02BaseAutomationLogic extends BaseAutomationLogic {
 		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("\n SELECT 'EV-' ||\n LPAD( NVL(MAX(TO_NUMBER(REGEXP_SUBSTR(EV_ID, '[0-9]+'))), 0) + 1\n , 4, '0') AS doc_id\n FROM   EVD_DOC\n ");
+		info.setSqlSelect("\n SELECT 'EV-' ||\n LPAD( NVL(MAX(TO_NUMBER(REGEXP_SUBSTR(D.EV_ID, '[0-9]+'))), 0) + 1\n , 4, '0') AS DOC_ID,\n 'AT-' ||\n LPAD( NVL(MAX(TO_NUMBER(REGEXP_SUBSTR(F.ATT_ID, '[0-9]+'))), 0) + 1\n , 4, '0') AS FILE_ID\n \n FROM   EVD_DOC D, EVD_FILE F\n ");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
 		EventHandler eventHandler = new EventHandler();

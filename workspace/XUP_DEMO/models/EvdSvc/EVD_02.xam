@@ -1,4 +1,4 @@
-<RootXaModel id="b0971c6f-39bf-43ab-9111-da3dd028098e" name="EVD_02" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="EVD_02AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="-1497925871">
+<RootXaModel id="b0971c6f-39bf-43ab-9111-da3dd028098e" name="EVD_02" alias="demo" selected="false" hide="false" askValue="_unknown" showAlias="false" version="1.5.0" logicClassName="EVD_02AutomationLogic" charset="UTF-8" usedCache="false" cachePolicy="" sgType="10" viewType="all" allRefDatasources="NEXACRO_DEMO" allRefModels="" ifversion="1406499232">
   <constraint height="-1" width="-1" x="100" y="100"/>
   <sourceConnectionList/>
   <targetConnectionList/>
@@ -10,7 +10,7 @@
   <key></key>
   <epsClassType></epsClassType>
   <children>
-    <XaStart id="f3d3a060-95c7-4bd8-b927-ef1ef09c38be" name="start" alias="Start" selected="true" hide="false" askValue="_unknown" showAlias="false">
+    <XaStart id="f3d3a060-95c7-4bd8-b927-ef1ef09c38be" name="start" alias="Start" selected="false" hide="false" askValue="_unknown" showAlias="false">
       <constraint height="-1" width="-1" x="250" y="50"/>
       <sourceConnectionList>
         <XaConnection id="ac20cb86-ff67-4460-b603-7013c5f149f2" name="connection" alias="connection" selected="false" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
@@ -55,7 +55,7 @@
           <key></key>
           <epsClassType></epsClassType>
           <source class="XaStart" reference="../../.."/>
-          <target class="XaEnd" id="d41a701b-5fa7-4df8-9880-a3b540f858a2" name="end" alias="End" selected="true" hide="false" askValue="_unknown" showAlias="false">
+          <target class="XaEnd" id="d41a701b-5fa7-4df8-9880-a3b540f858a2" name="end" alias="End" selected="false" hide="false" askValue="_unknown" showAlias="false">
             <constraint height="-1" width="-1" x="250" y="250"/>
             <sourceConnectionList>
               <XaConnection id="3edb7722-753e-4bbf-8867-b2afc95872f8" name="connection" alias="connection" selected="false" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
@@ -91,7 +91,7 @@
             </sourceConnectionList>
             <targetConnectionList>
               <XaConnection reference="../../.."/>
-              <XaConnection id="65a56f7c-e465-48bc-8403-f2b383d53ffd" name="connection" alias="connection" selected="true" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
+              <XaConnection id="65a56f7c-e465-48bc-8403-f2b383d53ffd" name="connection" alias="connection" selected="false" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
                 <constraint height="-1" width="-1" x="25" y="100"/>
                 <sourceConnectionList/>
                 <targetConnectionList/>
@@ -105,7 +105,7 @@
                 <source class="XaInvokeSelect" id="c6e6cfc0-4287-458c-bd0a-1727da359e7c" name="user" alias="EVD_DOC" selected="true" hide="false" askValue="_unknown" showAlias="true" domainName="" datasourceName="NEXACRO_DEMO" invokedModelName="" invokedModelId="" invokedModelIfversion="0">
                   <constraint height="-1" width="-1" x="250" y="148"/>
                   <sourceConnectionList>
-                    <XaConnection id="609f0161-b998-42e2-83e8-949052704cf0" name="connection" alias="connection" selected="true" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
+                    <XaConnection id="609f0161-b998-42e2-83e8-949052704cf0" name="connection" alias="connection" selected="false" hide="true" askValue="_unknown" showAlias="false" connType="name_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
                       <constraint height="-1" width="-1" x="25" y="100"/>
                       <sourceConnectionList/>
                       <targetConnectionList/>
@@ -117,7 +117,7 @@
                       <key></key>
                       <epsClassType></epsClassType>
                       <source class="XaInvokeSelect" reference="../../.."/>
-                      <target class="XaAliasLabel" id="e1cb6dbf-4fbb-4c20-aa28-ebd76672478f" name="user" alias="EVD_DOC" selected="true" hide="false" askValue="_unknown" showAlias="true">
+                      <target class="XaAliasLabel" id="e1cb6dbf-4fbb-4c20-aa28-ebd76672478f" name="user" alias="EVD_DOC" selected="false" hide="false" askValue="_unknown" showAlias="true">
                         <constraint height="-1" width="-1" x="300" y="128"/>
                         <sourceConnectionList/>
                         <targetConnectionList>
@@ -148,7 +148,7 @@
                       <key></key>
                       <epsClassType></epsClassType>
                       <source class="XaInvokeSelect" reference="../../.."/>
-                      <target class="XaDataSet" id="cbf168c9-7db2-42d3-9f4b-335667be6f8d" name="dsDocId" alias="DataSet" selected="true" hide="false" askValue="_unknown" showAlias="false">
+                      <target class="XaDataSet" id="cbf168c9-7db2-42d3-9f4b-335667be6f8d" name="dsDocId" alias="DataSet" selected="false" hide="false" askValue="_unknown" showAlias="false">
                         <constraint height="-1" width="-1" x="395" y="167"/>
                         <sourceConnectionList/>
                         <targetConnectionList>
@@ -183,6 +183,22 @@
                             <seqid>0f305856-d846-4c03-97d3-d60096ccab44</seqid>
                             <parentDataSet reference="../../.."/>
                           </XaDataSetColumn>
+                          <XaDataSetColumn id="9d2cc804-b4eb-4679-9dcf-a5d8b66148f0" name="FILE_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="255" value="" isConst="false">
+                            <constraint height="-1" width="-1" x="25" y="100"/>
+                            <sourceConnectionList/>
+                            <targetConnectionList/>
+                            <description></description>
+                            <required>false</required>
+                            <showErrorMark>false</showErrorMark>
+                            <showBreakPoint>false</showBreakPoint>
+                            <showWarnMark>false</showWarnMark>
+                            <key></key>
+                            <epsClassType></epsClassType>
+                            <ccsid>933</ccsid>
+                            <dbcs>N</dbcs>
+                            <seqid>c622357a-f595-4036-97b1-df5861e16522</seqid>
+                            <parentDataSet reference="../../.."/>
+                          </XaDataSetColumn>
                         </columnList>
                         <rowList/>
                         <isDynamicSchema>false</isDynamicSchema>
@@ -195,7 +211,7 @@
                     </XaConnection>
                   </sourceConnectionList>
                   <targetConnectionList>
-                    <XaConnection id="c236a85e-30cc-41c0-a948-75aae17e2c56" name="connection" alias="connection" selected="true" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
+                    <XaConnection id="c236a85e-30cc-41c0-a948-75aae17e2c56" name="connection" alias="connection" selected="false" hide="false" askValue="_unknown" showAlias="false" connType="process_connection" routingType="_manhattanConnRouter" rawName="" showRawName="false">
                       <constraint height="-1" width="-1" x="25" y="100"/>
                       <sourceConnectionList/>
                       <targetConnectionList/>
@@ -221,48 +237,7 @@
                   <epsClassType></epsClassType>
                   <needUniqueName>true</needUniqueName>
                   <rawInputDataList/>
-                  <rawOutputDataList>
-                    <XaDataSet id="c67a0bfd-724e-4ef2-a4d0-aadf794ee200" name="RESULT0" alias="RESULT0" selected="false" hide="false" askValue="_unknown" showAlias="false">
-                      <constraint height="-1" width="-1" x="25" y="100"/>
-                      <sourceConnectionList/>
-                      <targetConnectionList/>
-                      <description></description>
-                      <required>false</required>
-                      <showErrorMark>false</showErrorMark>
-                      <showBreakPoint>false</showBreakPoint>
-                      <showWarnMark>false</showWarnMark>
-                      <key></key>
-                      <epsClassType></epsClassType>
-                      <inoutType>normal</inoutType>
-                      <rawName>RESULT0</rawName>
-                      <onlyLocal>false</onlyLocal>
-                      <editPartSelected>false</editPartSelected>
-                      <isPost>false</isPost>
-                      <columnList>
-                        <XaDataSetColumn id="c9a46580-a130-4831-8f07-7b7e21bc4d86" name="DOC_ID" alias="" selected="false" hide="false" askValue="_unknown" showAlias="false" parentName="" type="string" typeBinding="VARCHAR" size="7" value="" isConst="false">
-                          <constraint height="-1" width="-1" x="25" y="100"/>
-                          <sourceConnectionList/>
-                          <targetConnectionList/>
-                          <description></description>
-                          <required>false</required>
-                          <showErrorMark>false</showErrorMark>
-                          <showBreakPoint>false</showBreakPoint>
-                          <showWarnMark>false</showWarnMark>
-                          <key></key>
-                          <epsClassType></epsClassType>
-                          <ccsid>933</ccsid>
-                          <dbcs>N</dbcs>
-                          <seqid>d85930b6-0af1-4ed0-bf59-ffdee89a1dc0</seqid>
-                          <parentDataSet reference="../../.."/>
-                        </XaDataSetColumn>
-                      </columnList>
-                      <rowList/>
-                      <isDynamicSchema>false</isDynamicSchema>
-                      <isEnableFirstRow>false</isEnableFirstRow>
-                      <firstRowSize>10000</firstRowSize>
-                      <easyUIAttr>{&quot;project_values&quot;:[],&quot;default_values&quot;:[],&quot;column&quot;:[],&quot;row&quot;:[],&quot;project_properties&quot;:[],&quot;properties&quot;:[],&quot;seqid&quot;:[],&quot;project_properties_seq&quot;:[]}</easyUIAttr>
-                    </XaDataSet>
-                  </rawOutputDataList>
+                  <rawOutputDataList/>
                   <warningCount>0</warningCount>
                   <ehOnBegin></ehOnBegin>
                   <ehOnEnd></ehOnEnd>
@@ -280,9 +255,13 @@
                   <isEnableAutoCommit>false</isEnableAutoCommit>
                   <sql>&#xd;
 SELECT &apos;EV-&apos; ||&#xd;
-        LPAD( NVL(MAX(TO_NUMBER(REGEXP_SUBSTR(EV_ID, &apos;[0-9]+&apos;))), 0) + 1&#xd;
-           , 4, &apos;0&apos;) AS doc_id&#xd;
-FROM   EVD_DOC&#xd;
+        LPAD( NVL(MAX(TO_NUMBER(REGEXP_SUBSTR(D.EV_ID, &apos;[0-9]+&apos;))), 0) + 1&#xd;
+           , 4, &apos;0&apos;) AS DOC_ID,&#xd;
+        &apos;AT-&apos; ||&#xd;
+        LPAD( NVL(MAX(TO_NUMBER(REGEXP_SUBSTR(F.ATT_ID, &apos;[0-9]+&apos;))), 0) + 1&#xd;
+           , 4, &apos;0&apos;) AS FILE_ID&#xd;
+        &#xd;
+FROM   EVD_DOC D, EVD_FILE F&#xd;
 </sql>
                   <ehGetPatchValue>
 return patchValue;</ehGetPatchValue>

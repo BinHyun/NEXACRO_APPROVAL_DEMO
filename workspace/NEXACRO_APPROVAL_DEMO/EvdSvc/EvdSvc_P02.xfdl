@@ -13,7 +13,7 @@
                     <Static id="StaticEvId" taborder="1" left="20.00" top="5" width="82" height="30" text="문서번호" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvId" taborder="2" left="StaticEvId:5.00" top="10" width="73" height="20" readonly="true"/>
                     <Static id="StaticEvTitle" taborder="3" text="문서제목" left="210.00" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
-                    <Edit id="EditEvTitle" taborder="4" left="StaticEvTitle:5.00" top="10" width="505" height="20" readonly="false" displaynulltext="제목을 입력해주세요."/>
+                    <Edit id="EditEvTitle" taborder="4" left="StaticEvTitle:5.00" top="10" width="505" height="20" readonly="false"/>
                     <Static id="Static00_00" taborder="5" text="Static00" left="20.00" top="36" width="810" height="30" cssclass="sta_WF_DeatilBg"/>
                     <Static id="StaticEvYear" taborder="6" text="등록년도" left="20.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvYear" taborder="7" left="StaticEvYear:5" top="40" width="73" height="20" readonly="true"/>
@@ -57,7 +57,7 @@
                 </Layouts>
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="780.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
-              <Button id="ButtonSave" taborder="2" text="저장" left="720.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom"/>
+              <Button id="ButtonSave" taborder="2" text="저장" left="720.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="false"/>
             </Layout>
           </Layouts>
         </Div>
@@ -143,70 +143,26 @@ this.div_divInfo_ComboSite_onitemchanged = function(obj:nexacro.Combo,e:nexacro.
 	this.div.form.divInfo.form.ComboDept.set_index(0);
 };
 
-//파일 업로드 버튼
-this.div_divInfo_ButtonFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var objFileUpload = new FileDialog();  
-	objFileUpload.addEventHandler("onclose", this.FileDialog_onclose, this);
-	objFileUpload.open('파일 첨부', FileDialog.MULTILOAD);
-};
-
-//파일 업로드창 종료 이벤트
-this.FileDialog_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
-{
-	var uploadFile = e.virtualfiles;
+//저장버튼
+this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var validationList = [];
 	
-	for (var i=0; i<uploadFile.length; i++){
-		var vFile = uploadFile[i];
-		vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
-		vFile.addEventHandler("onerror", this.FileList_onerror , this);
-		vFile.open(null, 1);
-	};
+	var EV_ID = this.div.form.divInfo.form.EditEvId.value;					//문서번호
+	var EV_TITLE = this.div.form.divInfo.form.EditEvTitle.value;			//문서제목
+	var EV_DESC = this.div.form.divInfo.form.EditEvEmpNo00.value;	    	//문서요약
+	var REG_EMP_NO = this.div.form.divInfo.form.EditEvEmpNo.value;			//등록자 사번
+	var REG_USER_NM = this.div.form.divInfo.form.EditEvYear00.value;		//등록자명
+	var SITE_ID = this.div.form.divInfo.form.ComboSite.value;				//등록사업소 ID
+	var SITE_NM = this.div.form.divInfo.form.ComboSite.text;				//등록사업소 명
+	var DEPT_ID = this.div.form.divInfo.form.ComboDept.value;				//등록부서 ID
+	var DEPT_NM = this.div.form.divInfo.form.ComboDept.text;				//등록부서 명
+	
+	validationList.push(EV_ID, EV_TITLE, REG_EMP_NO, REG_USER_NM, SITE_ID, SITE_NM, DEPT_ID, DEPT_NM);
+	this.validationChk(validationList);
+
+	//필수입력값 체크
 };
-
-//파일 업로드 성공 이벤트
-this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileEventInfo)
-{
-	switch (e.reason)
-	{
-		case 1:
-			obj.getFileSize();
-			break;
-		case 9:
-			var FILE_NM = obj.filename;
-			var FILE_SIZE = nexacro.round((e.filesize/1024)*100/100);
-			var FILE_PATH = obj.fullpath;
-			
-			//trace("FILE_PATH ==> " + FILE_PATH);
-			
-		
-			var rowCnt = this.dsFile.addRow();
-			this.dsFile.setColumn(rowCnt, "FILE_NM", FILE_NM);
-			this.dsFile.setColumn(rowCnt, "FILE_SIZE", FILE_SIZE);
-			
-			//실제 업로드 부분
-			var uploadurl = "http://localhost:8080/xup/file/upload.do";
-			var objFileUp = new nexacro.FileUpTransfer();
-			objFileUp.addFile("nexacroUploadFiles", FILE_PATH);
-			
-			objFileUp.setEventHandler( "onsuccess", this.FileUpTransfer_onsuccess, this);
-			objFileUp.addEventHandler("onerror", this.FileUpTransfer_onerror , this);
-			
-			//trace(objFileUp.existFile(obj));
-			
-			objFileUp.upload(uploadurl);
-
-			break;
-	}
-};
-
-//파일 업로드 실패 이벤트
-this.FileList_onerror = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileErrorEventInfo)
-{
-    trace("errortype: "+e.errortype);
-    trace("errormsg: "+e.errormsg);
-    trace("statuscode: "+e.statuscode);
-}
 
 //취소버튼
 this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -220,27 +176,165 @@ this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEvent
 	};
 };
 
-this.FileUpTransfer_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferEventinfo)
+//파일 첨부 버튼
+this.div_divInfo_ButtonFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	alert("code ==> " + e.code);
-	alert("message ==> " + e.message);
+	var objFileUpload = new FileDialog();  
+	objFileUpload.addEventHandler("onclose", this.FileDialog_onclose, this);
+	objFileUpload.open('파일 첨부', FileDialog.MULTILOAD);
 };
 
+//파일 첨부 종료 이벤트
+this.FileDialog_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var uploadFile = e.virtualfiles;
+
+	for (var i=0; i<uploadFile.length; i++){
+		var vFile = uploadFile[i];
+		vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+		vFile.addEventHandler("onerror", this.FileList_onerror , this);
+		vFile.open(null, 1);
+	};
+};
+
+//파일 첨부 성공 이벤트 (업로드를 위한 기본정보 세팅)
+this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileEventInfo)
+{
+	switch (e.reason)
+	{
+		case 1:
+			obj.getFileSize();
+			break;
+		case 9:
+			var objDate = new nexacro.Date();
+			var YEAR = objDate.getFullYear();  
+			var MONTH = objDate.getMonth() + 1;
+			var DOC_ID = this.div.form.divInfo.form.EditEvId.value;
+			
+			if(MONTH < 10){
+				MONTH = "0" + MONTH;
+			};
+			
+			var ATT_ID = this.dsDocId.getColumn(this.dsDocId.rowposition, "FILE_ID");
+			var FILE_NM = obj.filename;
+			var FILE_SIZE = this.formatFileSize(e.filesize);
+			var FILE_PATH = "/upload/"+YEAR+"/"+MONTH+"/"+DOC_ID+"/"+FILE_NM;
+			var FILE_EXT =  FILE_NM.split(".")[1].toUpperCase();
+			var ATT_TYPE_NM = this.convertFile(FILE_EXT);
+			
+			var rowCnt = this.dsFile.addRow();
+			this.dsFile.setColumn(rowCnt, "ATT_ID", ATT_ID);
+			this.dsFile.setColumn(rowCnt, "EV_ID", DOC_ID);
+			this.dsFile.setColumn(rowCnt, "ATT_TYPE_NM", ATT_TYPE_NM);
+			this.dsFile.setColumn(rowCnt, "FILE_NM", FILE_NM);
+			this.dsFile.setColumn(rowCnt, "FILE_EXT", FILE_EXT);
+			this.dsFile.setColumn(rowCnt, "FILE_SIZE", FILE_SIZE);
+			this.dsFile.setColumn(rowCnt, "FILE_PATH", FILE_PATH);
+			
+			//실제 업로드 부분
+			var uploadurl = "http://localhost:8080/xup/file/upload.do?year="+YEAR+"&"+"month="+MONTH+"&"+"docId="+DOC_ID;
+			
+			var objFileUp = new nexacro.FileUpTransfer();
+			objFileUp.addFile("nexacroUploadFiles", obj);
+			
+			objFileUp.addEventHandler("onsuccess", this.FileUpTransfer_onsuccess, this);
+			objFileUp.addEventHandler("onerror", this.FileUpTransfer_onerror, this);
+			
+			objFileUp.upload(uploadurl);
+
+			break;
+	}
+};
+
+//파일 첨부 실패 이벤트
+this.FileList_onerror = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileErrorEventInfo)
+{
+   alert("파일 등록이 실패 하였습니다.");
+}
+
+//첨부파일 전송 성공 이벤트
+this.FileUpTransfer_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferEventinfo)
+{
+	alert("되나?")
+	this.div.form.ButtonSave.set_visible(true);
+};
+
+//첨부파일 전송 실패 이벤트
 this.FileUpTransfer_onerror = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferErrorEventInfo)
 {
-	alert("errormsg ==> " + e.errormsg);
-	alert("statuscode ==> " + e.statuscode);
+	trace("errormsg ==> " + e.errormsg);
+	trace("statuscode ==> " + e.statuscode);
+};
+
+//자체제작 함수
+//파일 사이즈 구하기
+this.formatFileSize = function(bytes)
+{
+    var sizes = ["bytes", "KB", "MB", "GB", "TB"];
+    if (bytes === 0) return "0 bytes";
+
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    var size = bytes / Math.pow(1024, i);
+
+    // 소수 둘째자리까지 표시
+    return nexacro.round(size * 100) / 100 + " " + sizes[i];
+};
+
+//파일 확장자에 따른 파일 타입 구하기
+this.convertFile = function(type)
+{
+	switch(type)
+	{
+		case "XLSX":
+			return "EXCEL";
+			break;
+		
+		case "PPTX":
+			return "PPT";
+			break;
+		
+		case "PDF":
+			return "PDF";
+			break;
+			
+		case "DOCX":
+			return "DOC";
+			break;	
+			
+		case "HWP":
+			return "HWP";
+			break;	
+	};
+};
+
+//저장 전 필수 입력값 체크
+this.validationChk = function(validationList)
+{
+	var chkList = validationList;
+	for(var i=0; i<chkList; i++){
+		alert(chkList[i]);
+	};
+
 };
 ]]></Script>
     <Objects>
       <Dataset id="dsDocId">
         <ColumnInfo>
           <Column id="DOC_ID" type="STRING" size="256"/>
+          <Column id="FILE_ID" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
       <Dataset id="dsCond">
         <ColumnInfo>
           <Column id="EV_ID" type="STRING" size="256"/>
+          <Column id="EV_TITLE" type="STRING" size="256"/>
+          <Column id="EV_DESC" type="STRING" size="256"/>
+          <Column id="REG_EMP_NO" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+          <Column id="SITE_ID" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
       <Dataset id="dsSite">
@@ -294,8 +388,13 @@ this.FileUpTransfer_onerror = function(obj:nexacro.FileUploadTransfer,e:nexacro.
       </Dataset>
       <Dataset id="dsFile">
         <ColumnInfo>
+          <Column id="ATT_ID" type="STRING" size="256"/>
+          <Column id="EV_ID" type="STRING" size="256"/>
+          <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
           <Column id="FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_EXT" type="STRING" size="256"/>
           <Column id="FILE_SIZE" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
     </Objects>
