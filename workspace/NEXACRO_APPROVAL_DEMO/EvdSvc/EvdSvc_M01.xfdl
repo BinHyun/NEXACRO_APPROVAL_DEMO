@@ -249,8 +249,7 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				break;
 		}
 	}
-};
-]]></Script>
+};]]></Script>
     <Objects>
       <Dataset id="dsYear">
         <ColumnInfo>

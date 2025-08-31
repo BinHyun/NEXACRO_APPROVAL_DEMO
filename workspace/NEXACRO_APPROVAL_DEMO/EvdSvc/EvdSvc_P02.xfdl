@@ -27,7 +27,7 @@
                     <Static id="StaticEvNm" taborder="15" text="등록자명" left="20.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvYear00" taborder="16" left="StaticEvNm:5" top="72" width="73" height="20" readonly="false"/>
                     <Static id="StaticEvEmpNo" taborder="17" text="등록자사번" left="210.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
-                    <Edit id="EditEvEmpNo" taborder="18" left="StaticEvEmpNo:5" top="72" width="73" height="20" readonly="false"/>
+                    <Edit id="EditEvEmpNo" taborder="18" left="StaticEvEmpNo:5" top="72" width="73" height="20" readonly="false" inputmode="upper"/>
                     <Static id="StaticEvDesc" taborder="19" text="문서요약" left="400.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvEmpNo00" taborder="20" left="StaticEvDesc:5.00" top="72" width="315" height="20"/>
                     <Grid id="Grid00" taborder="21" left="20" top="139" width="810" height="107" binddataset="dsFile">
@@ -88,6 +88,7 @@ this.fnInit = function()
 	this.fnTranGetDocId();
 };
 
+//최초 접근시 문서번호 생성
 this.fnTranGetDocId = function()
 {
 	var strSvcId 	 = "Search";
@@ -107,6 +108,25 @@ this.fnTranGetDocId = function()
 						isAsync);
 };
 
+this.fnTranSave = function()
+{
+	var strSvcId 	 = "Save";
+	var strSvcUrl 	 = "XUP_DEMO::EVD_03";	
+	var inData 		 = "dsCond=dsCond dsFile=dsFile";
+	var outData 	 = "dsResult1=RESULT0 dsResult2=RESULT1";
+	var strArg 		 = "";
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+}
+
 //트랜잭션 callback
 this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 {
@@ -125,6 +145,22 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				this.div.form.divInfo.form.EditEvMonth.set_value(MONTH+" 월");
 				
 				break;
+				
+				case "Save":
+					var nRow1 = this.dsResult1.rowposition;
+					var nRow2 = this.dsResult2.rowposition;
+					
+					var result1 = this.dsResult1.getColumn(nRow1, "RESULT");
+					var result2 = this.dsResult2.getColumn(nRow2, "RESULT");
+					
+					if(result1 == 1 && result2 == 1){
+						alert("저장이 완료 되었습니다.");
+						
+						//부모창 새로고침
+						this.close();
+					};
+					
+					break;
 			
 			default:
 				
@@ -146,8 +182,6 @@ this.div_divInfo_ComboSite_onitemchanged = function(obj:nexacro.Combo,e:nexacro.
 //저장버튼
 this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {	
-	var validationList = [];
-	
 	var EV_ID = this.div.form.divInfo.form.EditEvId.value;					//문서번호
 	var EV_TITLE = this.div.form.divInfo.form.EditEvTitle.value;			//문서제목
 	var EV_DESC = this.div.form.divInfo.form.EditEvEmpNo00.value;	    	//문서요약
@@ -158,10 +192,37 @@ this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
 	var DEPT_ID = this.div.form.divInfo.form.ComboDept.value;				//등록부서 ID
 	var DEPT_NM = this.div.form.divInfo.form.ComboDept.text;				//등록부서 명
 	
-	validationList.push(EV_ID, EV_TITLE, REG_EMP_NO, REG_USER_NM, SITE_ID, SITE_NM, DEPT_ID, DEPT_NM);
-	this.validationChk(validationList);
+	var validationList = [
+		{ field: "문서번호", value: EV_ID },
+		{ field: "문서제목", value: EV_TITLE },
+		{ field: "등록자사번", value: REG_EMP_NO },
+		{ field: "등록자명", value: REG_USER_NM },
+		{ field: "사업소ID", value: SITE_ID },
+		{ field: "사업소명", value: SITE_NM },
+		{ field: "부서ID", value: DEPT_ID },
+		{ field: "부서명", value: DEPT_NM }
+	];
 
 	//필수입력값 체크
+	var validation = this.validationChk(validationList);
+	
+	if(validation){
+		var nRow = this.dsCond.addRow();
+		
+		this.dsCond.setColumn(nRow, "EV_ID", EV_ID);
+		this.dsCond.setColumn(nRow, "EV_TITLE", EV_TITLE);
+		this.dsCond.setColumn(nRow, "EV_DESC", EV_DESC);
+		this.dsCond.setColumn(nRow, "REG_EMP_NO", REG_EMP_NO);
+		this.dsCond.setColumn(nRow, "REG_USER_NM", REG_USER_NM);
+		this.dsCond.setColumn(nRow, "SITE_ID", SITE_ID);
+		this.dsCond.setColumn(nRow, "SITE_NM", SITE_NM);
+		this.dsCond.setColumn(nRow, "DEPT_ID", DEPT_ID);
+		this.dsCond.setColumn(nRow, "DEPT_NM", DEPT_NM);
+		
+		this.fnTranSave();
+	};
+	
+
 };
 
 //취소버튼
@@ -235,11 +296,10 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 			var uploadurl = "http://localhost:8080/xup/file/upload.do?year="+YEAR+"&"+"month="+MONTH+"&"+"docId="+DOC_ID;
 			
 			var objFileUp = new nexacro.FileUpTransfer();
-			objFileUp.addFile("nexacroUploadFiles", obj);
-			
-			objFileUp.addEventHandler("onsuccess", this.FileUpTransfer_onsuccess, this);
+			objFileUp.setEventHandler("onsuccess", this.FileUpTransfer_onsuccess, this);
 			objFileUp.addEventHandler("onerror", this.FileUpTransfer_onerror, this);
 			
+			objFileUp.addFile("nexacroUploadFiles", obj);
 			objFileUp.upload(uploadurl);
 
 			break;
@@ -255,15 +315,18 @@ this.FileList_onerror = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFileE
 //첨부파일 전송 성공 이벤트
 this.FileUpTransfer_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferEventinfo)
 {
-	alert("되나?")
-	this.div.form.ButtonSave.set_visible(true);
+	if(e.code == "200"){
+		this.div.form.ButtonSave.set_visible(true);
+	} else {
+		alert(e.message);
+	}	
 };
 
 //첨부파일 전송 실패 이벤트
 this.FileUpTransfer_onerror = function(obj:nexacro.FileUploadTransfer,e:nexacro.FileUploadTransferErrorEventInfo)
 {
-	trace("errormsg ==> " + e.errormsg);
-	trace("statuscode ==> " + e.statuscode);
+	alert("errormsg ==> " + e.errormsg);
+	alert("statuscode ==> " + e.statuscode);
 };
 
 //자체제작 함수
@@ -304,18 +367,26 @@ this.convertFile = function(type)
 		case "HWP":
 			return "HWP";
 			break;	
+		
+		default:
+			break;
 	};
 };
 
 //저장 전 필수 입력값 체크
-this.validationChk = function(validationList)
+this.validationChk = function(list)
 {
-	var chkList = validationList;
-	for(var i=0; i<chkList; i++){
-		alert(chkList[i]);
-	};
-
+	 for (var i = 0; i < list.length; i++) {
+        if (!list[i].value || list[i].value.trim() == "") {
+            alert(list[i].field + "은(는) 필수 입력 항목입니다.");
+            return false;
+        }
+    }
+	
+    return true;
 };
+
+
 ]]></Script>
     <Objects>
       <Dataset id="dsDocId">
@@ -395,6 +466,22 @@ this.validationChk = function(validationList)
           <Column id="FILE_EXT" type="STRING" size="256"/>
           <Column id="FILE_SIZE" type="STRING" size="256"/>
           <Column id="FILE_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult1">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult2">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
         </ColumnInfo>
       </Dataset>
     </Objects>
