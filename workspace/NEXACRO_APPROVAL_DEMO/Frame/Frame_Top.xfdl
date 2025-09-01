@@ -30,7 +30,7 @@ this.fnGetTopMenu = function ()
 	var objDsMenu = objApp.gdsMenu;
   
 	//MENU_LVL이 0인 값으로 데이터셋 필터링
-	objDsMenu.filter("MENU_LEVEL == 0");
+	//objDsMenu.filter("MENU_LEVEL == 0");
   
 	//필터처리된 데이터셋을 복사
 	//CopyData 메서드 매개변수에 "true" 설정하여 필터링 된 데이터만 복사
@@ -88,7 +88,7 @@ this.fnCreateTopMenu = function ()
 		//버튼의 특정 이벤트에 onclick 핸들러 함수를 추가
 		objButton.addEventHandler("onclick",this.btnTopMenu_onclick,this);
     
-		objButton.show();
+		//objButton.show();
     
 		//두번째 버튼부터는 이전 버튼과 nGap 만큼의 간격으로 생성되도록 Left 값 설정
 		//PositionBase

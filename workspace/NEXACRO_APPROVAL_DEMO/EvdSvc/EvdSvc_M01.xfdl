@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="EvdSvc_M01" width="1730" height="805" titletext="New Form" cssclass="sta_main_text11C" onload="EvdSvc_M01_onload">
+  <Form id="EvdSvc_M01" width="1730" height="750" titletext="New Form" cssclass="sta_main_text11C" onload="EvdSvc_M01_onload">
     <Layouts>
-      <Layout height="805" width="1730">
+      <Layout height="750" width="1730">
         <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" cssclass="div_WF_Search" border="1px solid">
           <Layouts>
             <Layout>
@@ -24,10 +24,10 @@
             </Layout>
           </Layouts>
         </Div>
-        <Div id="gridDiv" taborder="1" text="Div00" left="10" top="90" width="1710" height="700">
+        <Div id="gridDiv" taborder="1" text="Div00" left="10.00" top="98" width="1710" height="642">
           <Layouts>
             <Layout>
-              <Grid id="Grid00" taborder="0" left="0.00" top="32" width="1710" height="658" binddataset="dsList" autofittype="col" oncellclick="gridDiv_Grid00_oncellclick">
+              <Grid id="Grid00" taborder="0" left="0" top="32" width="1710" height="610" binddataset="dsList" autofittype="col" oncellclick="gridDiv_Grid00_oncellclick">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -70,8 +70,9 @@
                   </Format>
                 </Formats>
               </Grid>
-              <Static id="StaticYear" taborder="1" text="조회 목록" left="20.00" top="4" width="80" height="28" cssclass="sta_WF_notice01"/>
-              <Static id="StaticCnt" taborder="2" left="1610.00" top="4" width="70" height="28" textAlign="right"/>
+              <Static id="StaticYear" taborder="1" text="조회 목록" left="10" top="0" width="80" height="28" cssclass="sta_WF_notice01"/>
+              <Static id="StaticCnt" taborder="2" left="1550.00" top="0" width="70" height="28" textAlign="right"/>
+              <Button id="addBtn" taborder="3" text="신규등록" left="1635" top="5" width="70" height="20" cssclass="btn_WF_ModuleKustom"/>
             </Layout>
           </Layouts>
         </Div>
@@ -212,6 +213,19 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 	};	
 };
 
+//팝업 호출
+this.gridDiv_addBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objChildFrame = new ChildFrame();  
+	var objParentFrame = this.getOwnerFrame();
+			
+	objChildFrame.init("childframe00", 500, 200, "800px", "300px", null, null);
+	objChildFrame.titletext = "신규 등록";
+	objChildFrame.resizable = true;
+	objChildFrame.formurl = "EvdSvc::EvdSvc_P02.xfdl";
+	objChildFrame.showModal( "ChildFrame", objParentFrame, "", this, this.fn_callback );
+};
+
 //조회 트랜잭션
 this.fnTranSearch = function()
 {
@@ -249,7 +263,16 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				break;
 		}
 	}
-};]]></Script>
+};
+
+//팝업 callback
+this.fn_callback = function(popupId, returnStr)
+{
+	//저장 성공 시
+	if(returnStr == "save_success"){
+		this.reload();
+	}
+}]]></Script>
     <Objects>
       <Dataset id="dsYear">
         <ColumnInfo>

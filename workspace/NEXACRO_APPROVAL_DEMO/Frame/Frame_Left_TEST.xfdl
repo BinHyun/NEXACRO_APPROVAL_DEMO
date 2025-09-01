@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Frame_Left" width="200" height="705" titletext="New Form" onload="Frame_Left_onload">
+  <Form id="Frame_Left" width="200" height="700" titletext="New Form" onload="Frame_Left_onload">
     <Layouts>
-      <Layout height="705" width="200">
+      <Layout height="700" width="200">
         <Static id="staMain" taborder="0" text="Main Title Menu" left="0" top="0" width="100%" height="40" cssclass="sta_LF_title01"/>
-        <Grid id="gridLeftMenu" taborder="1" left="0" top="40" cssclass="grd_LF_treeMenu" autofittype="col" right="0" treeusecheckbox="false" treeinitstatus="expand,all" binddataset="dsLeft" oncellclick="gridLeftMenu_oncellclick" bottom="0">
+        <Grid id="gridLeftMenu" taborder="1" left="0" top="40" autofittype="col" right="0" treeusecheckbox="false" treeinitstatus="expand,all" binddataset="dsLeft" oncellclick="gridLeftMenu_oncellclick" height="700">
           <Formats>
             <Format id="default">
               <Columns>
@@ -52,13 +52,15 @@ this.fnGetLeftMenu = function (sMenuId)
 	var objDsMenu = objApp.gdsMenu;
   
 	//선택된 0레벨 메뉴의 하위 메뉴정보로 필터링
-	objDsMenu.filter("MENU_ID.indexOf('"+sMenuId+"') == 0 && MENU_LEVEL > 0");
+	objDsMenu.filter("MENU_LEVEL >= 0");
+  
+	trace("objDs ==> " + objDsMenu.saveXML()); 
   
 	//필터 처리된 데이터셋을 복사
 	this.dsLeft.copyData(objDsMenu,true);
-  
+
 	//필터링 없애기
-	objDsMenu.filter("");
+	//objDsMenu.filter("");
 	
 	var rowCnt = this.dsLeft.rowcount;
 	var nRow = this.dsLeft.set_rowposition(1);
@@ -75,10 +77,13 @@ this.fnGetLeftMenu = function (sMenuId)
 */
 this.gridLeftMenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
 {
+	var objApp = nexacro.getApplication();
+	var objMenu = objApp.gdsMenu;
+	
 	//그리드에 바인딩 된 데이터셋으로 가져오기
 	var objDsMenu = obj.getBindDataset();
 	var sMenuId = objDsMenu.getColumn(e.row, "MENU_ID");
-  
+
 	//업무 화면 여는 함수 호출
 	this.fnOpenMenu(sMenuId);
 };

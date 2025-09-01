@@ -157,7 +157,7 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 						alert("저장이 완료 되었습니다.");
 						
 						//부모창 새로고침
-						this.close();
+						this.close("save_success");
 					};
 					
 					break;
@@ -219,10 +219,9 @@ this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
 		this.dsCond.setColumn(nRow, "DEPT_ID", DEPT_ID);
 		this.dsCond.setColumn(nRow, "DEPT_NM", DEPT_NM);
 		
+		//저장 트랜잭션
 		this.fnTranSave();
 	};
-	
-
 };
 
 //취소버튼
