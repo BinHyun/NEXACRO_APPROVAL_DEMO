@@ -5,7 +5,7 @@
       <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" titletext="LeftFrame" openalign="left" width="1700" height="900">
         <VFrameSet id="VFSet01" showtitlebar="false" separatesize="1000,*">
           <Frames>
-            <HFrameSet id="HFSet01" showtitlebar="false" separatesize="190,*">
+            <HFrameSet id="HFSet01" showtitlebar="false" separatesize="180,*">
               <Frames>
                 <ChildFrame id="LeftFrame" formurl="Frame::Frame_Left_TEST.xfdl" showtitlebar="false"/>
                 <VFrameSet id="VFSet02" showtitlebar="false" separatesize="1000,*">
@@ -20,7 +20,6 @@
         </VFrameSet>
       </MainFrame>
     </Layout>
-    <Style url="xcssrc::temp_main.xcss"/>
   </Application>
   <Script type="xscript5.1"><![CDATA[
 this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)

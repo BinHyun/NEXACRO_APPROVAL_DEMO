@@ -72,7 +72,7 @@
               </Grid>
               <Static id="StaticYear" taborder="1" text="조회 목록" left="10" top="0" width="80" height="28" cssclass="sta_WF_notice01"/>
               <Static id="StaticCnt" taborder="2" left="1550.00" top="0" width="70" height="28" textAlign="right"/>
-              <Button id="addBtn" taborder="3" text="신규등록" left="1635" top="5" width="70" height="20" cssclass="btn_WF_ModuleKustom"/>
+              <Button id="addBtn" taborder="3" text="신규등록" left="1635" top="5" width="70" height="20" cssclass="btn_WF_ModuleKustom" onclick="gridDiv_addBtn_onclick"/>
             </Layout>
           </Layouts>
         </Div>
@@ -216,14 +216,15 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 //팝업 호출
 this.gridDiv_addBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var objChildFrame = new ChildFrame();  
-	var objParentFrame = this.getOwnerFrame();
-			
-	objChildFrame.init("childframe00", 500, 200, "800px", "300px", null, null);
-	objChildFrame.titletext = "신규 등록";
-	objChildFrame.resizable = true;
-	objChildFrame.formurl = "EvdSvc::EvdSvc_P02.xfdl";
-	objChildFrame.showModal( "ChildFrame", objParentFrame, "", this, this.fn_callback );
+  	var objChildFrame = new ChildFrame();  
+  	var objParentFrame = this.getOwnerFrame();
+  			
+  	objChildFrame.init("ChildFrame", 550, 250, 880, 340);
+  	objChildFrame.titletext = "신규 등록";
+  	objChildFrame.resizable = true;
+ 	//objChildFrame.autosize = true;
+  	objChildFrame.formurl = "EvdSvc::EvdSvc_P02.xfdl";
+  	objChildFrame.showModal( "ChildFrame", objParentFrame, null, this, this.fn_callback );
 };
 
 //조회 트랜잭션

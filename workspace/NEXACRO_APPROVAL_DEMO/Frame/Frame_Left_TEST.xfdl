@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="Frame_Left" width="200" height="700" titletext="New Form" onload="Frame_Left_onload">
+  <Form id="Frame_Left" width="180" height="700" titletext="New Form" onload="Frame_Left_onload">
     <Layouts>
-      <Layout height="700" width="200">
-        <Static id="staMain" taborder="0" text="Main Title Menu" left="0" top="0" width="100%" height="40" cssclass="sta_LF_title01"/>
+      <Layout height="700" width="180">
+        <Static id="staMain" taborder="0" text="Main Title Menu" left="0" top="0" width="100%" height="40" cssclass="sta_LF_title01" textAlign="center"/>
         <Grid id="gridLeftMenu" taborder="1" left="0" top="40" autofittype="col" right="0" treeusecheckbox="false" treeinitstatus="expand,all" binddataset="dsLeft" oncellclick="gridLeftMenu_oncellclick" height="700">
           <Formats>
             <Format id="default">
@@ -53,8 +53,6 @@ this.fnGetLeftMenu = function (sMenuId)
   
 	//선택된 0레벨 메뉴의 하위 메뉴정보로 필터링
 	objDsMenu.filter("MENU_LEVEL >= 0");
-  
-	trace("objDs ==> " + objDsMenu.saveXML()); 
   
 	//필터 처리된 데이터셋을 복사
 	this.dsLeft.copyData(objDsMenu,true);

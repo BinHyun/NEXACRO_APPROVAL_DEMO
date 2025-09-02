@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="EvdSvc_P02" width="850" height="300" titletext="" onload="EvdSvc_P02_onload">
+  <Form id="EvdSvc_P02" width="855" height="310" titletext="" onload="EvdSvc_P02_onload" scrolltype="none">
     <Layouts>
-      <Layout height="300" width="850" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
+      <Layout height="310" width="855" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
         <Div id="div" taborder="0" text="Div00" left="0" top="0" width="850" height="300">
           <Layouts>
             <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="center" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" flexwrap="nowrap" type="default">
               <Div id="divInfo" taborder="0" text="Div00" left="0" top="0" width="850" height="250">
                 <Layouts>
                   <Layout>
-                    <Static id="Static00" taborder="0" text="Static00" left="20" top="5" width="810" height="30" cssclass="sta_WF_DeatilBg"/>
+                    <Static id="Static00" taborder="0" text="Static00" left="20" top="5" width="815" height="30" cssclass="sta_WF_DeatilBg"/>
                     <Static id="StaticEvId" taborder="1" left="20.00" top="5" width="82" height="30" text="문서번호" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvId" taborder="2" left="StaticEvId:5.00" top="10" width="73" height="20" readonly="true"/>
                     <Static id="StaticEvTitle" taborder="3" text="문서제목" left="210.00" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvTitle" taborder="4" left="StaticEvTitle:5.00" top="10" width="505" height="20" readonly="false"/>
-                    <Static id="Static00_00" taborder="5" text="Static00" left="20.00" top="36" width="810" height="30" cssclass="sta_WF_DeatilBg"/>
+                    <Static id="Static00_00" taborder="5" text="Static00" left="20.00" top="36" width="815" height="30" cssclass="sta_WF_DeatilBg"/>
                     <Static id="StaticEvYear" taborder="6" text="등록년도" left="20.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvYear" taborder="7" left="StaticEvYear:5" top="40" width="73" height="20" readonly="true"/>
                     <Static id="StaticEvMonth" taborder="8" text="등록월" left="210.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
@@ -23,14 +23,14 @@
                     <Combo id="ComboSite" taborder="11" text="본사" left="StaticEvSite:5.00" top="38" width="95" height="25" innerdataset="dsSite" codecolumn="SITE_ID" datacolumn="SITE_NM" index="0" value="S001" onitemchanged="div_divInfo_ComboSite_onitemchanged"/>
                     <Static id="StaticEvDept" taborder="12" text="등록부서" left="620.00" top="36" width="82" height="30" cssclass="sta_cm_box02L"/>
                     <Combo id="ComboDept" taborder="13" text="본사" left="707.00" top="38" width="95" height="25" innerdataset="dsDept" codecolumn="DEPT_ID" datacolumn="DEPT_NM" index="0" value="S001"/>
-                    <Static id="Static00_00_00" taborder="14" text="Static00" left="20.00" top="67" width="810" height="30" cssclass="sta_WF_DeatilBg"/>
+                    <Static id="Static00_00_00" taborder="14" text="Static00" left="20.00" top="67" width="815" height="30" cssclass="sta_WF_DeatilBg"/>
                     <Static id="StaticEvNm" taborder="15" text="등록자명" left="20.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvYear00" taborder="16" left="StaticEvNm:5" top="72" width="73" height="20" readonly="false"/>
                     <Static id="StaticEvEmpNo" taborder="17" text="등록자사번" left="210.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvEmpNo" taborder="18" left="StaticEvEmpNo:5" top="72" width="73" height="20" readonly="false" inputmode="upper"/>
                     <Static id="StaticEvDesc" taborder="19" text="문서요약" left="400.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
                     <Edit id="EditEvEmpNo00" taborder="20" left="StaticEvDesc:5.00" top="72" width="315" height="20"/>
-                    <Grid id="Grid00" taborder="21" left="20" top="139" width="810" height="107" binddataset="dsFile">
+                    <Grid id="Grid00" taborder="21" left="20.00" top="139" width="815" height="107" binddataset="dsFile">
                       <Formats>
                         <Format id="default">
                           <Columns>
@@ -52,12 +52,12 @@
                         </Format>
                       </Formats>
                     </Grid>
-                    <Button id="ButtonFile" taborder="22" text="파일첨부" left="773.00" top="110" width="55" height="20" onclick="div_divInfo_ButtonFile_onclick" cssclass="btn_WF_ModuleKustom"/>
+                    <Button id="ButtonFile" taborder="22" text="파일첨부" left="780.00" top="109" width="55" height="20" onclick="div_divInfo_ButtonFile_onclick" cssclass="btn_WF_ModuleKustom"/>
                   </Layout>
                 </Layouts>
               </Div>
-              <Button id="ButtonCancel" taborder="1" text="취소" left="780.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
-              <Button id="ButtonSave" taborder="2" text="저장" left="720.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="false"/>
+              <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
+              <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="260" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="false"/>
             </Layout>
           </Layouts>
         </Div>
