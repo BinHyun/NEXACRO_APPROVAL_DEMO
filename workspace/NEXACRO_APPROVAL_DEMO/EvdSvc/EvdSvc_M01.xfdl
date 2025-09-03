@@ -187,11 +187,11 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 						 DEPT_NM:DEPT_NM, USER_NM:USER_NM};
 		
 	
-		objChildFrame.init("childframe00", 300, 300, "800px", "500px", null, null);
-		objChildFrame.titletext = "팝업";
+		objChildFrame.init("childframe00", 550, 250, 850, 340);
+		objChildFrame.titletext = "등록자료 조회";
 		objChildFrame.resizable = true;
 		objChildFrame.formurl = "EvdSvc::EvdSvc_P01.xfdl";
-		objChildFrame.showModal( "ChildFrame", objParentFrame, objParams, this, this.fn_callback );
+		objChildFrame.showModal( "childframe00", objParentFrame, objParams, this, this.fn_callback );
 		
 	};
 	

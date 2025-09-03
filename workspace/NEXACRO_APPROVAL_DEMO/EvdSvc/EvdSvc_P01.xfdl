@@ -1,42 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="DashSvc_P01" width="750" height="280" titletext="" onload="DashSvc_P01_onload">
+  <Form id="DashSvc_P01" width="800" height="280" titletext="" onload="DashSvc_P01_onload">
     <Layouts>
-      <Layout height="280" width="750" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
-        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="750" height="280">
+      <Layout height="280" width="800" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
+        <Div id="div" taborder="0" text="Div00" left="0" top="0" width="800" height="260">
           <Layouts>
             <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="center" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" flexwrap="nowrap" type="default">
-              <Div id="divSearch" taborder="1" text="Div00" left="10.00" top="5" width="730" height="92" border="1px solid">
-                <Layouts>
-                  <Layout>
-                    <Static id="StaticYear" taborder="0" text="등록연도" left="10.00" top="8" width="59" height="28" cssclass="sta_WF_notice01"/>
-                    <Combo id="ComboYear" taborder="1" text="" left="81.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
-                    <Static id="StaticMonth" taborder="2" text="등록월" left="170.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-                    <Combo id="ComboMonth" taborder="3" text="2025" left="231.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
-                    <Static id="StaticSite" taborder="4" text="사업장" left="320.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-                    <Edit id="EditSite" taborder="5" left="381.00" top="13" width="127" height="20"/>
-                    <Static id="StaticDept" taborder="6" text="부서" left="530.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-                    <Edit id="EditDept" taborder="7" left="581.00" top="13" width="127" height="20"/>
-                    <Static id="StaticTitle" taborder="8" text="등록명" left="10.00" top="48" width="49" height="28" cssclass="sta_WF_notice01"/>
-                    <Edit id="EditTitle" taborder="9" left="81.00" top="53" width="200" height="20"/>
-                    <Static id="StaticUser" taborder="10" text="등록자" left="320.00" top="48" width="49" height="28" cssclass="sta_WF_notice01"/>
-                    <Edit id="EditUser" taborder="11" left="381.00" top="53" width="98" height="20"/>
-                  </Layout>
-                </Layouts>
-              </Div>
-              <Div id="divContents" taborder="1" text="Div00" left="10.00" top="114" width="730" height="126" border="1px solid">
-                <Layouts>
-                  <Layout>
-                    <Static id="StaticFileNm" taborder="0" text="첨부파일명" left="10" top="10" width="71" height="28" cssclass="sta_WF_notice01"/>
-                    <Edit id="FileNm" taborder="1" left="101.00" top="14" width="180" height="20"/>
-                    <Static id="StaticDept00" taborder="2" text="첨부 코멘트" left="10.00" top="45" width="75" height="28" cssclass="sta_WF_notice01"/>
-                    <TextArea id="TextAreaDesc" taborder="3" left="101" top="50" width="178" height="65"/>
-                    <Static id="StaticFileNm00" taborder="4" text="첨부파일 유형" left="320.00" top="11" width="110" height="28" cssclass="sta_WF_notice01"/>
-                    <Static id="StaticFileNm00_00" taborder="5" text="첨부파일 다운로드" left="320.00" top="45" width="110" height="28" cssclass="sta_WF_notice01"/>
-                    <Edit id="EditUser" taborder="6" left="419.00" top="15" width="98" height="20"/>
-                  </Layout>
-                </Layouts>
-              </Div>
+              <Static id="Static00" taborder="0" left="20.00" top="5" width="760" height="30" cssclass="sta_WF_DeatilBg"/>
+              <Static id="StaticYear" taborder="1" left="20" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel" text="등록연도"/>
+              <Combo id="ComboYear" taborder="2" text="" left="StaticYear:8" top="10" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+              <Static id="StaticMonth" taborder="3" left="180.00" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel" text="등록월"/>
+              <Combo id="ComboMonth" taborder="4" text="2025" left="StaticMonth:8.00" top="10" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
+              <Static id="StaticSite" taborder="5" left="340.00" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel" text="사업장"/>
+              <Edit id="EditSite" taborder="6" left="StaticSite:8.00" top="10" width="127" height="20"/>
+              <Static id="StaticDept" taborder="7" text="부서" left="560.00" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+              <Edit id="EditDept" taborder="8" left="StaticDept:8.00" top="10" width="127" height="20"/>
+              <Static id="Static00_00" taborder="9" left="20.00" top="36" width="760" height="30" cssclass="sta_WF_DeatilBg" text=""/>
+              <Static id="StaticTitle" taborder="10" text="등록명" left="20" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+              <Edit id="EditTitle" taborder="11" left="StaticTitle:8.00" top="41" width="218" height="20"/>
+              <Static id="StaticUser" taborder="12" text="등록자" left="340" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+              <Edit id="EditUser" taborder="13" left="StaticUser:8.00" top="41" width="127" height="20"/>
+              <Static id="Static00_00_00" taborder="14" left="20.00" top="67" width="760" height="30" cssclass="sta_WF_DeatilBg" text=""/>
+              <Static id="StaticFileNm" taborder="15" text="첨부파일명" left="20" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+              <Edit id="FileNm" taborder="16" left="StaticFileNm:8.00" top="72" width="218" height="20"/>
+              <Static id="StaticFileNm00_00" taborder="17" text="파일유형" left="560.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+              <Edit id="EditType" taborder="18" left="StaticFileNm00_00:8" top="41" width="127" height="20"/>
+              <Static id="StaticFileNm00" taborder="19" text="첨부코멘트" left="340" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+              <Edit id="editDesc" taborder="20" left="StaticFileNm00:8.00" top="72" width="347" height="20"/>
             </Layout>
           </Layouts>
         </Div>
@@ -57,26 +47,39 @@ this.DashSvc_P01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 	var DEPT_NM = params.DEPT_NM
 	var USER_NM = params.USER_NM
 	
-	this.Div00.form.divSearch.form.ComboYear.set_value(YEAR);
-	this.Div00.form.divSearch.form.ComboMonth.set_value(MONTH);
-	this.Div00.form.divSearch.form.EditSite.set_value(SITE_NM);
-	this.Div00.form.divSearch.form.EditDept.set_value(DEPT_NM);
-	this.Div00.form.divSearch.form.EditTitle.set_value(TITLE);
-	this.Div00.form.divSearch.form.EditUser.set_value(USER_NM);
+	this.div.form.ComboYear.set_value(YEAR);			//등록연도
+	this.div.form.ComboMonth.set_value(MONTH);			//등록월
+	this.div.form.EditSite.set_value(SITE_NM);			//사업장
+	this.div.form.EditDept.set_value(DEPT_NM);			//부서
+	this.div.form.EditTitle.set_value(TITLE);			//등록명
+	this.div.form.EditUser.set_value(USER_NM);			//등록자
+	this.div.form.EditType.set_value(ATT_TYPE_NM);		//파일유형
 	
-	this.Div00.form.divContents.form.FileNm.set_value(FILE_NM);
-	this.Div00.form.divContents.form.TextAreaDesc.set_value(EV_DESC);
+	this.div.form.FileNm.set_value(FILE_NM);			//첨부파일명
+	this.div.form.editDesc.set_value(EV_DESC);			//첨부코멘트
+	
+	this.div.form.ComboYear.set_readonly(true);
+	this.div.form.ComboMonth.set_readonly(true);
+	this.div.form.EditSite.set_readonly(true);
+	this.div.form.EditDept.set_readonly(true);
+	this.div.form.EditTitle.set_readonly(true);
+	this.div.form.EditUser.set_readonly(true);
+	this.div.form.EditType.set_readonly(true);
+	
+	this.div.form.FileNm.set_readonly(true);
+	this.div.form.editDesc.set_readonly(true);
 	
 	
-	this.Div00.form.divSearch.form.ComboYear.set_readonly(true);
-	this.Div00.form.divSearch.form.ComboMonth.set_readonly(true);
-	this.Div00.form.divSearch.form.EditSite.set_readonly(true);
-	this.Div00.form.divSearch.form.EditDept.set_readonly(true);
-	this.Div00.form.divSearch.form.EditTitle.set_readonly(true);
-	this.Div00.form.divSearch.form.EditUser.set_readonly(true);
-	
-	this.Div00.form.divContents.form.FileNm.set_readonly(true);
-	this.Div00.form.divContents.form.TextAreaDesc.set_readonly(true);
+	// WebBrowser 컴포넌트 생성
+	var objWebBrowser = new WebBrowser("WebBrowser00", 20, 110, 757, 140);
+
+	// Div에 추가 (예: Div00이 있다고 가정)
+	this.div.addChild("WebBrowser00", objWebBrowser);
+
+	// 화면에 보이도록 호출
+	objWebBrowser.show()
+
+	objWebBrowser.set_url("http://localhost:8080/upload/2025/Sample/sample.pdf");	
 };
 ]]></Script>
   </Form>
