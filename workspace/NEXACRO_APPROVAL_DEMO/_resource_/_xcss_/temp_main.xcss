@@ -164,7 +164,7 @@
     -nexa-text-align      : left;
     -nexa-vertical-align  : middle;
     background            : URL("theme://images/btn_WF_Menunext_O.png") no-repeat left center;
-    color                 : #555555;
+    color                 : #fffff;
     font                  : 11px "Malgun Gothic";
 }.Static.sta_WF_DeatilLabel,
 .Static.sta_WF_DeatilLabel[status=disabled]

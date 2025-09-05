@@ -2821,7 +2821,7 @@
     -nexa-text-align      : left;
     -nexa-vertical-align  : middle;
     background            : URL("theme://images/btn_WF_Menunext_O.png") no-repeat left center;
-    color                 : #555555;
+    color                 : #ffffff;
     font                  : 11px "Malgun Gothic";
 }]]></CSSData>
   <CSSData type="desktop"><![CDATA[]]></CSSData>

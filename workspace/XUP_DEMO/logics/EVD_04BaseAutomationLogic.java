@@ -71,7 +71,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EVD_01BaseAutomationLogic extends BaseAutomationLogic {
+public class EVD_04BaseAutomationLogic extends BaseAutomationLogic {
 
 	public ParameterSet execute(ParameterSet inputParameterSet) throws AutomationFailException{
 		ParameterSet outputParameterSet = new ParameterSet();
@@ -80,60 +80,55 @@ public class EVD_01BaseAutomationLogic extends BaseAutomationLogic {
 		initParameterSet(globalParameterSet);
 		start(globalParameterSet);
 		
-		user(globalParameterSet);
+		EVD_FILE(globalParameterSet);
 
-		if(globalParameterSet.getParameter("dsList") != null){
-			outputParameterSet.add(globalParameterSet.getParameter("dsList"));
+		if(globalParameterSet.getParameter("dsFile") != null){
+			outputParameterSet.add(globalParameterSet.getParameter("dsFile"));
 		}
 		
 		end(globalParameterSet, outputParameterSet);
 		return outputParameterSet;
 	}
 	private void initParameterSet(ParameterSet globalParameterSet) {
-		DataSet dsList = new DataSet("dsList");
+		DataSet dsFile = new DataSet("dsFile");
 
-		dsList.addColumn("EV_ID", PlatformDataType.STRING, 255);
-		dsList.addColumn("YEAR", PlatformDataType.STRING, 255);
-		dsList.addColumn("MONTH", PlatformDataType.STRING, 255);
-		dsList.addColumn("TITLE", PlatformDataType.STRING, 255);
-		dsList.addColumn("FILE_NM", PlatformDataType.STRING, 255);
-		dsList.addColumn("FILE_PATH", PlatformDataType.STRING, 255);
-		dsList.addColumn("ATT_TYPE_NM", PlatformDataType.STRING, 255);
-		dsList.addColumn("EV_DESC", PlatformDataType.STRING, 255);
-		dsList.addColumn("SITE_NM", PlatformDataType.STRING, 255);
-		dsList.addColumn("DEPT_NM", PlatformDataType.STRING, 255);
-		dsList.addColumn("USER_NM", PlatformDataType.STRING, 255);
+		dsFile.addColumn("ATT_ID", PlatformDataType.STRING, 255);
+		dsFile.addColumn("ATT_TYPE_NM", PlatformDataType.STRING, 255);
+		dsFile.addColumn("FILE_NM", PlatformDataType.STRING, 255);
+		dsFile.addColumn("FILE_EXT", PlatformDataType.STRING, 255);
+		dsFile.addColumn("FILE_SIZE", PlatformDataType.STRING, 255);
+		dsFile.addColumn("FILE_PATH", PlatformDataType.STRING, 255);
 
-		globalParameterSet.add(dsList);
+		globalParameterSet.add(dsFile);
 	}
 	public void start(ParameterSet globalParameterSet)throws AutomationFailException {//!findOffset_start!
 	}
 	public void end(ParameterSet globalParameterSet, ParameterSet outputParameterSet)throws AutomationFailException {//!findOffset_end!
 	}
-	public void user(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_user!
+	public void EVD_FILE(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_EVD_FILE!
 		ParameterSet tmpParameterSet = new ParameterSet();
-		tmpParameterSet.add(globalParameterSet.getParameter("dsCond"));
+		tmpParameterSet.add(globalParameterSet.getParameter("EV_ID"));
 
 		ResultNameSet resultNameSet = new ResultNameSet();
-		resultNameSet.add("RESULT0", "dsList", null);
+		resultNameSet.add("RESULT0", "dsFile", null);
 
 		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("SELECT\n D.EV_ID AS EV_ID,								/*문서 ID*/\n EXTRACT(YEAR FROM D.REG_DT) AS YEAR, 			/*등록연도*/\n EXTRACT(MONTH FROM D.REG_DT) AS MONTH,			/*등록월*/\n D.EV_TITLE AS TITLE,							/*등록명*/\n F.FILE_NM AS FILE_NM,							/*첨부 파일명*/\n F.FILE_PATH AS FILE_PATH,						/*첨부 파일 위치*/\n F.ATT_TYPE_NM AS ATT_TYPE_NM,					/*첨부 파일 종류*/\n D.EV_DESC AS EV_DESC,							/*코멘트*/\n D.SITE_NM AS SITE_NM,							/*사업장 명*/\n D.DEPT_NM AS DEPT_NM,							/*부서 명*/\n D.REG_USER_NM AS USER_NM						/*등록자 명*/\n FROM EVD_DOC D, EVD_FILE F\n WHERE D.EV_ID = F.EV_ID\n AND EXTRACT(YEAR FROM D.REG_DT) = #dsCond.YEAR#\n AND EXTRACT(MONTH FROM D.REG_DT) = #dsCond.MONTH#\n \n <isNotEmpty property=\"dsCond.TITLE\">\n AND D.EV_TITLE LIKE '%'||#dsCond.TITLE# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.FILE_EXT\">\n AND F.ATT_TYPE_NM = #dsCond.FILE_EXT#\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.SITE_NM\">\n AND D.SITE_NM LIKE '%'|| #dsCond.SITE_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.DEPT_NM\">\n AND D.DEPT_NM LIKE '%'|| #dsCond.DEPT_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.REG_USER_NM\">\n AND D.REG_USER_NM LIKE '%'|| #dsCond.REG_USER_NM# ||'%'\n </isNotEmpty>\n \n ");
+		info.setSqlSelect("SELECT\n ATT_ID,\n ATT_TYPE_NM,\n FILE_NM,\n FILE_EXT,\n FILE_SIZE,\n FILE_PATH\n FROM EVD_FILE\n WHERE EV_ID = #EV_ID#\n ");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
 		EventHandler eventHandler = new EventHandler();
 		invoke(info, eventHandler, globalParameterSet);
 
 	}
-	public void useronAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+	public void EVD_FILEonAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
 		
 	}
-	public void useronBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+	public void EVD_FILEonBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
 		
 	}
-	public void useronExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
+	public void EVD_FILEonExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
 		throw new AutomationFailException(e.getMessage(), e);
 	}
 

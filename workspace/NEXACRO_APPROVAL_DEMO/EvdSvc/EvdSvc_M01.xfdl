@@ -172,6 +172,7 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 		
 		var rowPos = this.dsList.rowposition;
 		
+		var EV_ID = this.dsList.getColumn(rowPos, "EV_ID");
 		var YEAR = this.dsList.getColumn(rowPos, "YEAR");
 		var MONTH = this.dsList.getColumn(rowPos, "MONTH");
 		var TITLE = this.dsList.getColumn(rowPos, "TITLE");
@@ -182,12 +183,12 @@ this.gridDiv_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
 		var DEPT_NM = this.dsList.getColumn(rowPos, "DEPT_NM");
 		var USER_NM = this.dsList.getColumn(rowPos, "USER_NM");
 		
-		var objParams = {YEAR:YEAR, MONTH:MONTH, TITLE:TITLE, FILE_NM:FILE_NM, 
+		var objParams = {EV_ID:EV_ID, YEAR:YEAR, MONTH:MONTH, TITLE:TITLE, FILE_NM:FILE_NM, 
 						 ATT_TYPE_NM:ATT_TYPE_NM, EV_DESC:EV_DESC, SITE_NM:SITE_NM, 
 						 DEPT_NM:DEPT_NM, USER_NM:USER_NM};
 		
 	
-		objChildFrame.init("childframe00", 550, 250, 850, 340);
+		objChildFrame.init("childframe00", 550, 100, 850, 340);
 		objChildFrame.titletext = "등록자료 조회";
 		objChildFrame.resizable = true;
 		objChildFrame.formurl = "EvdSvc::EvdSvc_P01.xfdl";
@@ -400,6 +401,7 @@ this.fn_callback = function(popupId, returnStr)
       </Dataset>
       <Dataset id="dsList">
         <ColumnInfo>
+          <Column id="EV_ID" type="STRING" size="256"/>
           <Column id="YEAR" type="STRING" size="256"/>
           <Column id="MONTH" type="STRING" size="256"/>
           <Column id="TITLE" type="STRING" size="256"/>

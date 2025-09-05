@@ -276,9 +276,12 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 			};
 			
 			var ATT_ID = this.dsDocId.getColumn(this.dsDocId.rowposition, "FILE_ID");
-			var FILE_NM = obj.filename;
+			var ORIGIN_FILE_NM = obj.filename.split('.');;
 			var FILE_SIZE = this.formatFileSize(e.filesize);
+			
+			var FILE_NM = ORIGIN_FILE_NM[0]+".pdf";
 			var FILE_PATH = "/upload/"+YEAR+"/"+MONTH+"/"+DOC_ID+"/"+FILE_NM;
+			
 			var FILE_EXT =  FILE_NM.split(".")[1].toUpperCase();
 			var ATT_TYPE_NM = this.convertFile(FILE_EXT);
 			
@@ -316,6 +319,7 @@ this.FileUpTransfer_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacr
 {
 	if(e.code == "200"){
 		this.div.form.ButtonSave.set_visible(true);
+		trace("dsFile ==> " + this.dsFile.saveXML());
 	} else {
 		alert(e.message);
 	}	

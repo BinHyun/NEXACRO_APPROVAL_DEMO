@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="DashSvc_P01" width="800" height="280" titletext="" onload="DashSvc_P01_onload">
+  <Form id="DashSvc_P01" width="805" height="650" titletext="" onload="DashSvc_P01_onload">
     <Layouts>
-      <Layout height="280" width="800" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
-        <Div id="div" taborder="0" text="Div00" left="0" top="0" width="800" height="260">
+      <Layout height="650" width="805" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
+        <Div id="div" taborder="0" text="Div00" left="0" top="0" width="800" height="620">
           <Layouts>
             <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="center" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" flexwrap="nowrap" type="default">
               <Static id="Static00" taborder="0" left="20.00" top="5" width="760" height="30" cssclass="sta_WF_DeatilBg"/>
@@ -27,16 +27,31 @@
               <Edit id="EditType" taborder="18" left="StaticFileNm00_00:8" top="41" width="127" height="20"/>
               <Static id="StaticFileNm00" taborder="19" text="첨부코멘트" left="340" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
               <Edit id="editDesc" taborder="20" left="StaticFileNm00:8.00" top="72" width="347" height="20"/>
+              <Static id="Static00_00_00_00" taborder="21" left="20.00" top="98" width="760" height="30" cssclass="sta_WF_DeatilBg" text=""/>
+              <Static id="Static01_00" taborder="22" text="미리보기" left="20" top="98" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
             </Layout>
           </Layouts>
         </Div>
       </Layout>
     </Layouts>
-    <Script type="xscript5.1"><![CDATA[
+    <Script type="xscript5.1"><![CDATA[/**
+* @description  : 증빙 관리 > 등록 자료 조회 > 등록자료 조회 팝업
+* @Date         : 2025.08.22
+* @Author		: 김빈현
+*/
+//기본 include
+include "Lib::lib_array.xjs";
+include "Lib::lib_base.xjs";
+include "Lib::lib_date.xjs";
+include "Lib::lib_number.xjs";
+include "Lib::lib_string.xjs";
+include "Lib::lib_transaction.xjs";
+
 this.DashSvc_P01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
 	var params = this.parent;
 	
+	var EV_ID = params.EV_ID;
 	var YEAR = params.YEAR;
 	var MONTH = params.MONTH;
 	var TITLE = params.TITLE;
@@ -69,9 +84,58 @@ this.DashSvc_P01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 	this.div.form.FileNm.set_readonly(true);
 	this.div.form.editDesc.set_readonly(true);
 	
+	this.fnTranGetFilePath(EV_ID);
+};
+
+//파일 저장경로 가져오기
+this.fnTranGetFilePath = function(EV_ID)
+{
+	var strSvcId 	 = "GetFilePath";
+	var strSvcUrl 	 = "XUP_DEMO::EVD_04";	
+	var inData 		 = "";
+	var outData 	 = "dsFile=dsFile";
+	var strArg 		 = "EV_ID="+EV_ID;
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+};
+
+//트랜잭션 callback
+this.fnCallback = function(sId,nErrorCode,sErrorMSG)
+{
+	if(nErrorCode == 0)
+	{
+		switch (sId) {
+			case "GetFilePath":
+				var nIdx = this.dsFile.rowposition;
+				var FILE_PATH = this.dsFile.getColumn(nIdx, "FILE_PATH");
+				
+				//WebBrowser 생성 함수 호출
+				this.makeWebBrowser(FILE_PATH);
+								
+				break;
+			
+			default:
+				
+				break;
+		}
+	}
+};
+
+//WebBrowser 생성
+this.makeWebBrowser = function(FILE_PATH)
+{
+	var FILE_PATH = window.location.href + FILE_PATH;
 	
 	// WebBrowser 컴포넌트 생성
-	var objWebBrowser = new WebBrowser("WebBrowser00", 20, 110, 757, 140);
+	var objWebBrowser = new WebBrowser("WebBrowser00", 20, 135, 755, 500);
 
 	// Div에 추가 (예: Div00이 있다고 가정)
 	this.div.addChild("WebBrowser00", objWebBrowser);
@@ -79,8 +143,20 @@ this.DashSvc_P01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 	// 화면에 보이도록 호출
 	objWebBrowser.show()
 
-	objWebBrowser.set_url("http://localhost:8080/upload/2025/Sample/sample.pdf");	
-};
+	objWebBrowser.set_url(FILE_PATH);	
+}
 ]]></Script>
+    <Objects>
+      <Dataset id="dsFile">
+        <ColumnInfo>
+          <Column id="ATT_ID" type="STRING" size="256"/>
+          <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
+          <Column id="FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_EXT" type="STRING" size="256"/>
+          <Column id="FILE_SIZE" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
   </Form>
 </FDL>
