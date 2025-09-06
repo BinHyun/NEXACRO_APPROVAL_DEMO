@@ -7,7 +7,7 @@
           <Frames>
             <HFrameSet id="HFSet01" showtitlebar="false" separatesize="180,*">
               <Frames>
-                <ChildFrame id="LeftFrame" formurl="Frame::Frame_Left_TEST.xfdl" showtitlebar="false"/>
+                <ChildFrame id="LeftFrame" formurl="Frame::Frame_Left.xfdl" showtitlebar="false"/>
                 <VFrameSet id="VFSet02" showtitlebar="false" separatesize="1000,*">
                   <Frames>
                     <FrameSet id="WorkFrame" showtitlebar="false"/>

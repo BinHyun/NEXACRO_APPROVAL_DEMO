@@ -7,7 +7,7 @@
           <Layouts>
             <Layout>
               <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="69" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:2.00" top="13" width="58" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:2.00" top="13" width="65" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
               <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
               <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:12.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
               <Static id="StaticSite" taborder="4" text="사업장" left="490.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
