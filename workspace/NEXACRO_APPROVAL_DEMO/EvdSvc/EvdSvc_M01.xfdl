@@ -223,7 +223,6 @@ this.gridDiv_addBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
   	objChildFrame.init("ChildFrame", 550, 250, 880, 340);
   	objChildFrame.titletext = "신규 등록";
   	objChildFrame.resizable = true;
- 	//objChildFrame.autosize = true;
   	objChildFrame.formurl = "EvdSvc::EvdSvc_P02.xfdl";
   	objChildFrame.showModal( "ChildFrame", objParentFrame, null, this, this.fn_callback );
 };

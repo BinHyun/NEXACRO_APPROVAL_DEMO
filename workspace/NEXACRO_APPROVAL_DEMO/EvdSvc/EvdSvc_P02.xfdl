@@ -262,20 +262,24 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 {
 	switch (e.reason)
 	{
-		case 1:
+		case 1: // 파일 open 직후: 파일 크기 조회
 			obj.getFileSize();
 			break;
-		case 9:
+		case 9: // 파일 정보 조회 완료: 메타 구성 + 업로드 전송
 			var objDate = new nexacro.Date();
 			var YEAR = objDate.getFullYear();  
 			var MONTH = objDate.getMonth() + 1;
+			
+			// 화면에서 현재 문서 ID 읽기
 			var DOC_ID = this.div.form.divInfo.form.EditEvId.value;
 			
 			if(MONTH < 10){
 				MONTH = "0" + MONTH;
 			};
 			
+			// 서버에서 채운 FILE_ID를 가져와 첨부 ID로 사용
 			var ATT_ID = this.dsDocId.getColumn(this.dsDocId.rowposition, "FILE_ID");
+			// 원본 파일명과 확장자
 			var ORIGIN_FILE_NM = obj.filename.split('.');;
 			var FILE_SIZE = this.formatFileSize(e.filesize);
 			
@@ -296,6 +300,10 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 			
 			//실제 업로드 부분
 			var uploadurl = "http://localhost:8080/xup/file/upload.do?year="+YEAR+"&"+"month="+MONTH+"&"+"docId="+DOC_ID;
+			     var uploadurl = "http://localhost:8080/xup/file/upload.do"
+                    + "?year=" + YEAR
+                    + "&month=" + MONTH
+                    + "&docId=" + DOC_ID;
 			
 			var objFileUp = new nexacro.FileUpTransfer();
 			objFileUp.setEventHandler("onsuccess", this.FileUpTransfer_onsuccess, this);
