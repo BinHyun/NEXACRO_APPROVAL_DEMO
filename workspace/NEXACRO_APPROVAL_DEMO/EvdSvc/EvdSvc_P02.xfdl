@@ -299,11 +299,11 @@ this.FileList_onsuccess = function(obj:nexacro.VirtualFile, e:nexacro.VirtualFil
 			this.dsFile.setColumn(rowCnt, "FILE_PATH", FILE_PATH);
 			
 			//실제 업로드 부분
-			var uploadurl = "http://localhost:8080/xup/file/upload.do?year="+YEAR+"&"+"month="+MONTH+"&"+"docId="+DOC_ID;
-			     var uploadurl = "http://localhost:8080/xup/file/upload.do"
-                    + "?year=" + YEAR
-                    + "&month=" + MONTH
-                    + "&docId=" + DOC_ID;
+			//var uploadurl = "http://localhost:8080/xup/file/upload.do?year="+YEAR+"&"+"month="+MONTH+"&"+"docId="+DOC_ID;
+			var uploadurl = "http://localhost:8080/xup/file/upload.do"
+							+ "?year=" + YEAR
+							+ "&month=" + MONTH
+							+ "&docId=" + DOC_ID;
 			
 			var objFileUp = new nexacro.FileUpTransfer();
 			objFileUp.setEventHandler("onsuccess", this.FileUpTransfer_onsuccess, this);
