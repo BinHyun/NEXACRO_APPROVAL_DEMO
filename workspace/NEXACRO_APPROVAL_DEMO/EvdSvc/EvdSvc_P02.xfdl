@@ -327,7 +327,6 @@ this.FileUpTransfer_onsuccess = function(obj:nexacro.FileUploadTransfer,e:nexacr
 {
 	if(e.code == "200"){
 		this.div.form.ButtonSave.set_visible(true);
-		trace("dsFile ==> " + this.dsFile.saveXML());
 	} else {
 		alert(e.message);
 	}	
