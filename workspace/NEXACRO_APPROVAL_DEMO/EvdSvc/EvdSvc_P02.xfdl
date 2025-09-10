@@ -219,7 +219,7 @@ this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
 		this.dsCond.setColumn(nRow, "DEPT_ID", DEPT_ID);
 		this.dsCond.setColumn(nRow, "DEPT_NM", DEPT_NM);
 		
-		//저장 트랜잭션
+		//저장 트랜잭션 호출
 		this.fnTranSave();
 	};
 };
@@ -383,7 +383,7 @@ this.convertFile = function(type)
 	};
 };
 
-//저장 전 필수 입력값 체크
+//필수 입력값 검증 함수
 this.validationChk = function(list)
 {
 	 for (var i = 0; i < list.length; i++) {
