@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="ApprSvc_M01" width="1280" height="720" titletext="New Form" onload="ApprSvc_M01_onload">
+  <Form id="ApprSvc_M01" width="1730" height="750" titletext="New Form" onload="ApprSvc_M01_onload">
     <Layouts>
-      <Layout height="720" width="1280"/>
+      <Layout height="750" width="1730">
+        <Div id="div" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" cssclass="div_WF_Search" border="1px solid">
+          <Layouts>
+            <Layout>
+              <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="69" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboYear" taborder="1" text="" left="91.00" top="13" width="65" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[/**
 * @description  : 결재 관리 > 결재 관리 메인 화면
