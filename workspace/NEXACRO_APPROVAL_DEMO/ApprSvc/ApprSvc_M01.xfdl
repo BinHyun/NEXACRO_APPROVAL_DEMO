@@ -3,11 +3,73 @@
   <Form id="ApprSvc_M01" width="1730" height="750" titletext="New Form" onload="ApprSvc_M01_onload">
     <Layouts>
       <Layout height="750" width="1730">
-        <Div id="div" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" cssclass="div_WF_Search" border="1px solid">
+        <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" cssclass="div_WF_Search" border="1px solid">
           <Layouts>
             <Layout>
               <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="69" height="28" cssclass="sta_WF_notice01"/>
               <Combo id="ComboYear" taborder="1" text="" left="91.00" top="13" width="65" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+              <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Combo id="ComboMonth" taborder="3" text="2025" left="241.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
+              <Static id="StaticSite" taborder="4" text="사업장" left="330.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditSite" taborder="5" left="391.00" top="13" width="127" height="20"/>
+              <Static id="StaticDept" taborder="6" text="부서" left="540.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditDept" taborder="7" left="591.00" top="13" width="127" height="20"/>
+              <Static id="StaticTitle" taborder="8" text="문서명" left="750.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditTitle" taborder="9" left="811.00" top="13" width="200" height="20"/>
+              <Static id="StaticUser" taborder="10" text="등록자" left="1040.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
+              <Edit id="EditUser" taborder="11" left="1101.00" top="13" width="98" height="20"/>
+              <Button id="ButtonSearch" taborder="12" text="검색" left="1617.00" top="8" width="62" height="28" cssclass="btn_WF_search02" onclick="divSearch_ButtonSearch_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="gridDiv" taborder="1" text="Div00" left="10" top="102" width="1710" height="638">
+          <Layouts>
+            <Layout>
+              <Grid id="pendingGrid" taborder="0" left="5" top="21" width="1700" height="180" autofittype="col" binddataset="dsPending">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="35"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="등록연도"/>
+                      <Cell col="2" text="등록월"/>
+                      <Cell col="3" text="문서명"/>
+                      <Cell col="4" text="등록 코멘트"/>
+                      <Cell col="5" text="등록사업장"/>
+                      <Cell col="6" text="등록부서"/>
+                      <Cell col="7" text="등록자"/>
+                      <Cell col="8" text="결재 상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:YEAR" textAlign="center"/>
+                      <Cell col="2" text="bind:MONTH" textAlign="center"/>
+                      <Cell col="3" text="bind:EV_TITLE"/>
+                      <Cell col="4" text="bind:EV_DESC"/>
+                      <Cell col="5" text="bind:SITE_NM" textAlign="center"/>
+                      <Cell col="6" text="bind:DEPT_NM" textAlign="center"/>
+                      <Cell col="7" text="bind:REG_USER_NM" textAlign="center"/>
+                      <Cell col="8" text="expr:APV_STATUS_CD == 'PENDING' ? '결재대기' : ''" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Grid id="progressGrid" taborder="1" left="5" top="238" width="1700" height="180"/>
+              <Grid id="compGrid" taborder="2" left="5" top="451" width="1700" height="180"/>
             </Layout>
           </Layouts>
         </Div>
@@ -18,10 +80,208 @@
 * @Date         : 2025.08.09
 * @Author		: 김빈현
 */
+//기본 include
+include "Lib::lib_array.xjs";
+include "Lib::lib_base.xjs";
+include "Lib::lib_date.xjs";
+include "Lib::lib_number.xjs";
+include "Lib::lib_string.xjs";
+include "Lib::lib_transaction.xjs";
+
 this.ApprSvc_M01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	alert("결재 관리 메인 화면 입니다.");
+	//초기화 함수
+	this.fnInit();
 };
-]]></Script>
+
+//페이지 접근 시 초기 세팅
+this.fnInit = function()
+{
+	var objDate = new nexacro.Date();
+	var nYear = objDate.getFullYear();
+	var nMonth = (objDate.getMonth()+1);
+	
+	//접근 시, 현재 년, 월로 설정
+	this.divSearch.form.ComboYear.set_value(nYear);
+	this.divSearch.form.ComboMonth.set_value(nMonth);
+	
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var YEAR = this.divSearch.form.ComboYear.value;				//연도
+	var MONTH = this.divSearch.form.ComboMonth.value;			//월
+	var TITLE = this.divSearch.form.EditTitle.value;			//문서명
+	var SITE_NM = this.divSearch.form.EditSite.value;			//사업장
+	var DEPT_NM = this.divSearch.form.EditDept.value;			//부서
+	var REG_USER_NM = this.divSearch.form.EditUser.value;		//등록자
+	
+	this.dsCond.setColumn(0, "YEAR", YEAR);
+	this.dsCond.setColumn(0, "MONTH", MONTH);
+	this.dsCond.setColumn(0, "TITLE", TITLE);
+	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
+	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
+
+	this.fnTranSearch();
+};
+
+//검색버튼
+this.divSearch_ButtonSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var YEAR = this.divSearch.form.ComboYear.value;
+	var MONTH = this.divSearch.form.ComboMonth.value;
+	var TITLE = this.divSearch.form.EditTitle.value;
+	var SITE_NM = this.divSearch.form.EditSite.value;
+	var DEPT_NM = this.divSearch.form.EditDept.value;
+	var REG_USER_NM = this.divSearch.form.EditUser.value;
+	
+	this.dsCond.setColumn(0, "YEAR", YEAR);
+	this.dsCond.setColumn(0, "MONTH", MONTH);
+	this.dsCond.setColumn(0, "TITLE", TITLE);
+	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
+	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
+	this.dsCond.setColumn(0, "REG_USER_NM", REG_USER_NM);
+	
+	this.fnTranSearch();
+};
+
+//조회 트랜잭션
+this.fnTranSearch = function()
+{
+	var strSvcId 	 = "Search";
+	var strSvcUrl 	 = "XUP_DEMO::APP_01";	
+	var inData 		 = "dsCond=dsCond";
+	var outData 	 = "dsPending=dsPending";
+	var strArg 		 = "";
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+};
+
+//트랜잭션 callback
+this.fnCallback = function(sId,nErrorCode,sErrorMSG)
+{
+	if(nErrorCode == 0)
+	{
+		switch (sId) {
+			default:	
+				break;
+		}
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsPending">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="EV_TITLE" type="STRING" size="256"/>
+          <Column id="EV_DESC" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+          <Column id="APV_STATUS_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYear">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">2022</Col>
+            <Col id="NAME">2022</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2023</Col>
+            <Col id="NAME">2023</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2024</Col>
+            <Col id="NAME">2024</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2025</Col>
+            <Col id="NAME">2025</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMonth">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="NAME">1월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="NAME">2월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="NAME">3월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="NAME">4월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="NAME">5월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="NAME">6월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">7</Col>
+            <Col id="NAME">7월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">8</Col>
+            <Col id="NAME">8월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">9</Col>
+            <Col id="NAME">9월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="NAME">10월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">11</Col>
+            <Col id="NAME">11월</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">12</Col>
+            <Col id="NAME">12월</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
   </Form>
 </FDL>
