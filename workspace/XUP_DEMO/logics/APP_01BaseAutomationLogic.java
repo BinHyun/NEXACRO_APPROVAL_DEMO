@@ -81,9 +81,17 @@ public class APP_01BaseAutomationLogic extends BaseAutomationLogic {
 		start(globalParameterSet);
 		
 		user(globalParameterSet);
+		select(globalParameterSet);
+		select1(globalParameterSet);
 
 		if(globalParameterSet.getParameter("dsPending") != null){
 			outputParameterSet.add(globalParameterSet.getParameter("dsPending"));
+		}
+		if(globalParameterSet.getParameter("dsProgress") != null){
+			outputParameterSet.add(globalParameterSet.getParameter("dsProgress"));
+		}
+		if(globalParameterSet.getParameter("dsCompleted") != null){
+			outputParameterSet.add(globalParameterSet.getParameter("dsCompleted"));
 		}
 		
 		end(globalParameterSet, outputParameterSet);
@@ -102,6 +110,32 @@ public class APP_01BaseAutomationLogic extends BaseAutomationLogic {
 		dsPending.addColumn("APV_STATUS_CD", PlatformDataType.STRING, 255);
 
 		globalParameterSet.add(dsPending);
+		DataSet dsProgress = new DataSet("dsProgress");
+
+		dsProgress.addColumn("YEAR", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("MONTH", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("EV_TITLE", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("EV_DESC", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("SITE_NM", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("DEPT_NM", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("REG_USER_NM", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("NEXT_APPROVER", PlatformDataType.STRING, 255);
+		dsProgress.addColumn("APV_STATUS_CD", PlatformDataType.STRING, 255);
+
+		globalParameterSet.add(dsProgress);
+		DataSet dsCompleted = new DataSet("dsCompleted");
+
+		dsCompleted.addColumn("YEAR", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("MONTH", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("EV_TITLE", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("EV_DESC", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("SITE_NM", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("DEPT_NM", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("REG_USER_NM", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("FINAL_APPROVER", PlatformDataType.STRING, 255);
+		dsCompleted.addColumn("APV_STATUS_CD", PlatformDataType.STRING, 255);
+
+		globalParameterSet.add(dsCompleted);
 	}
 	public void start(ParameterSet globalParameterSet)throws AutomationFailException {//!findOffset_start!
 	}
@@ -117,7 +151,7 @@ public class APP_01BaseAutomationLogic extends BaseAutomationLogic {
 		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("SELECT\n E.EV_ID AS EV_ID,								/*문서 ID*/\n A.APV_ID AS APV_ID,								/*결재 ID*/\n EXTRACT(YEAR FROM E.REG_DT) AS YEAR,			/*등록 연도*/\n EXTRACT(MONTH FROM E.REG_DT) AS MONTH,			/*등록 월*/\n E.EV_TITLE AS EV_TITLE,							/*문서명*/\n E.EV_DESC AS EV_DESC,							/*등록 코멘트*/\n E.SITE_NM AS SITE_NM,							/*등록사업장*/\n E.DEPT_NM AS DEPT_NM,							/*등록부서*/\n E.REG_USER_NM AS REG_USER_NM,					/*등록자*/\n A.APV_STATUS_CD AS APV_STATUS_CD				/*결재상태*/\n FROM EVD_DOC E, APV_DOC A\n WHERE EXTRACT(YEAR FROM E.REG_DT) = #dsCond.YEAR#\n AND EXTRACT(MONTH FROM E.REG_DT) = #dsCond.MONTH#\n AND E.EV_ID IS NOT NULL\n AND A.APV_ID IS NOT NULL\n AND E.EV_ID = A.EV_ID\n AND A.APV_STATUS_CD = 'PENDING'\n \n <isNotEmpty property=\"dsCond.TITLE\">\n AND E.EV_TITLE LIKE '%'||#dsCond.TITLE# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.SITE_NM\">\n AND E.SITE_NM LIKE '%'|| #dsCond.SITE_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.DEPT_NM\">\n AND E.DEPT_NM LIKE '%'|| #dsCond.DEPT_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.REG_USER_NM\">\n AND E.REG_USER_NM LIKE '%'|| #dsCond.REG_USER_NM# ||'%'\n </isNotEmpty>\n ");
+		info.setSqlSelect("SELECT\n E.EV_ID AS EV_ID,								/*문서 ID*/\n A.APV_ID AS APV_ID,								/*결재 ID*/\n EXTRACT(YEAR FROM E.REG_DT) AS YEAR,			/*등록 연도*/\n EXTRACT(MONTH FROM E.REG_DT) AS MONTH,			/*등록 월*/\n E.EV_TITLE AS EV_TITLE,							/*문서명*/\n E.EV_DESC AS EV_DESC,							/*등록 코멘트*/\n E.SITE_NM AS SITE_NM,							/*등록사업장*/\n E.DEPT_NM AS DEPT_NM,							/*등록부서*/\n E.REG_USER_NM AS REG_USER_NM,					/*등록자*/\n A.APV_STATUS_CD AS APV_STATUS_CD				/*결재상태*/\n FROM EVD_DOC E, APV_DOC A\n WHERE EXTRACT(YEAR FROM E.REG_DT) = #dsCond.YEAR#\n AND E.EV_ID IS NOT NULL\n AND A.APV_ID IS NOT NULL\n AND E.EV_ID = A.EV_ID\n AND A.APV_STATUS_CD = 'PENDING'\n \n <isNotEmpty property=\"dsCond.MONTH\">\n AND EXTRACT(MONTH FROM E.REG_DT) = #dsCond.MONTH#\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.TITLE\">\n AND E.EV_TITLE LIKE '%'||#dsCond.TITLE# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.SITE_NM\">\n AND E.SITE_NM LIKE '%'|| #dsCond.SITE_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.DEPT_NM\">\n AND E.DEPT_NM LIKE '%'|| #dsCond.DEPT_NM# ||'%'\n </isNotEmpty>\n \n <isNotEmpty property=\"dsCond.REG_USER_NM\">\n AND E.REG_USER_NM LIKE '%'|| #dsCond.REG_USER_NM# ||'%'\n </isNotEmpty>\n ");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
 		EventHandler eventHandler = new EventHandler();
@@ -131,6 +165,58 @@ public class APP_01BaseAutomationLogic extends BaseAutomationLogic {
 		
 	}
 	public void useronExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
+		throw new AutomationFailException(e.getMessage(), e);
+	}
+	public void select(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_select!
+		ParameterSet tmpParameterSet = new ParameterSet();
+		tmpParameterSet.add(globalParameterSet.getParameter("dsCond"));
+
+		ResultNameSet resultNameSet = new ResultNameSet();
+		resultNameSet.add("RESULT0", "dsProgress", null);
+
+		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
+		info.setDomainName("XUP_DEMO");
+		info.setDataSourceName("NEXACRO_DEMO");
+		info.setSqlSelect("SELECT\n E.EV_ID AS EV_ID,								/*문서 ID*/\n A.APV_ID AS APV_ID,								/*결재 ID*/\n EXTRACT(YEAR FROM E.REG_DT) AS YEAR,			/*등록 연도*/\n EXTRACT(MONTH FROM E.REG_DT) AS MONTH,			/*등록 월*/\n E.EV_TITLE AS EV_TITLE,							/*문서명*/\n E.EV_DESC AS EV_DESC,							/*등록 코멘트*/\n E.SITE_NM AS SITE_NM,							/*등록사업장*/\n E.DEPT_NM AS DEPT_NM,							/*등록부서*/\n E.REG_USER_NM AS REG_USER_NM,					/*등록자*/\n CASE\n WHEN L1_STATUS_CD = 'APPROVED' THEN L2_USER_NM\n WHEN L1_STATUS_CD = 'APPROVED' AND L2_STATUS_CD = 'PENDING' THEN L2_USER_NM\n WHEN L2_STATUS_CD = 'APPROVED' AND L3_STATUS_CD = 'PENDING' THEN L3_USER_NM\n WHEN L3_STATUS_CD = 'APPROVED' AND L4_STATUS_CD = 'PENDING' THEN L4_USER_NM\n WHEN L4_STATUS_CD = 'APPROVED' AND L5_STATUS_CD = 'PENDING' THEN L5_USER_NM\n ELSE NULL\n END AS NEXT_APPROVER,                           /*다음 결재자*/\n A.APV_STATUS_CD AS APV_STATUS_CD				/*결재상태*/\n FROM EVD_DOC E, APV_DOC A\n WHERE EXTRACT(YEAR FROM E.REG_DT) = #dsCond.YEAR#\n AND E.EV_ID IS NOT NULL\n AND A.APV_ID IS NOT NULL\n AND E.EV_ID = A.EV_ID\n AND A.APV_STATUS_CD = 'PROGRESS'\n ");
+		info.setResultNameSet(resultNameSet);
+		info.setParameterSet(tmpParameterSet);
+		EventHandler eventHandler = new EventHandler();
+		invoke(info, eventHandler, globalParameterSet);
+
+	}
+	public void selectonAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void selectonBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void selectonExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
+		throw new AutomationFailException(e.getMessage(), e);
+	}
+	public void select1(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_select1!
+		ParameterSet tmpParameterSet = new ParameterSet();
+		tmpParameterSet.add(globalParameterSet.getParameter("dsCond"));
+
+		ResultNameSet resultNameSet = new ResultNameSet();
+		resultNameSet.add("RESULT0", "dsCompleted", null);
+
+		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
+		info.setDomainName("XUP_DEMO");
+		info.setDataSourceName("NEXACRO_DEMO");
+		info.setSqlSelect("SELECT\n E.EV_ID AS EV_ID,								/*문서 ID*/\n A.APV_ID AS APV_ID,								/*결재 ID*/\n EXTRACT(YEAR FROM E.REG_DT) AS YEAR,			/*등록 연도*/\n EXTRACT(MONTH FROM E.REG_DT) AS MONTH,			/*등록 월*/\n E.EV_TITLE AS EV_TITLE,							/*문서명*/\n E.EV_DESC AS EV_DESC,							/*등록 코멘트*/\n E.SITE_NM AS SITE_NM,							/*등록사업장*/\n E.DEPT_NM AS DEPT_NM,							/*등록부서*/\n E.REG_USER_NM AS REG_USER_NM,					/*등록자*/\n CASE\n WHEN L1_STATUS_CD = 'APPROVED' THEN L2_USER_NM\n WHEN L1_STATUS_CD = 'APPROVED' AND L2_STATUS_CD = 'APPROVED' THEN L2_USER_NM\n WHEN L2_STATUS_CD = 'APPROVED' AND L3_STATUS_CD = 'APPROVED' THEN L3_USER_NM\n WHEN L3_STATUS_CD = 'APPROVED' AND L4_STATUS_CD = 'APPROVED' THEN L4_USER_NM\n WHEN L4_STATUS_CD = 'APPROVED' AND L5_STATUS_CD = 'APPROVED' THEN L5_USER_NM\n ELSE NULL\n END AS FINAL_APPROVER,                         /*최종 결재자*/\n A.APV_STATUS_CD AS APV_STATUS_CD				/*결재상태*/\n FROM EVD_DOC E, APV_DOC A\n WHERE EXTRACT(YEAR FROM E.REG_DT) = #dsCond.YEAR#\n AND E.EV_ID IS NOT NULL\n AND A.APV_ID IS NOT NULL\n AND E.EV_ID = A.EV_ID\n AND A.APV_STATUS_CD = 'COMPLETED'\n ");
+		info.setResultNameSet(resultNameSet);
+		info.setParameterSet(tmpParameterSet);
+		EventHandler eventHandler = new EventHandler();
+		invoke(info, eventHandler, globalParameterSet);
+
+	}
+	public void select1onAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void select1onBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void select1onExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
 		throw new AutomationFailException(e.getMessage(), e);
 	}
 

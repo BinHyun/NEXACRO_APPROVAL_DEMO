@@ -68,8 +68,98 @@
                   </Format>
                 </Formats>
               </Grid>
-              <Grid id="progressGrid" taborder="1" left="5" top="238" width="1700" height="180"/>
-              <Grid id="compGrid" taborder="2" left="5" top="451" width="1700" height="180"/>
+              <Grid id="progressGrid" taborder="1" left="5" top="238" width="1700" height="180" autofittype="col" binddataset="dsProgress">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="35"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="등록연도"/>
+                      <Cell col="2" text="등록월"/>
+                      <Cell col="3" text="문서명"/>
+                      <Cell col="4" text="등록 코멘트"/>
+                      <Cell col="5" text="등록사업장"/>
+                      <Cell col="6" text="등록부서"/>
+                      <Cell col="7" text="등록자"/>
+                      <Cell col="8" text="다음 결재자"/>
+                      <Cell col="9" text="결재상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:YEAR" textAlign="center"/>
+                      <Cell col="2" text="bind:MONTH" textAlign="center"/>
+                      <Cell col="3" text="bind:EV_TITLE"/>
+                      <Cell col="4" text="bind:EV_DESC"/>
+                      <Cell col="5" text="bind:SITE_NM" textAlign="center"/>
+                      <Cell col="6" text="bind:DEPT_NM" textAlign="center"/>
+                      <Cell col="7" text="bind:REG_USER_NM" textAlign="center"/>
+                      <Cell col="8" text="bind:NEXT_APPROVER" textAlign="center"/>
+                      <Cell col="9" text="expr:APV_STATUS_CD == 'PROGRESS'? '결재 진행중' : ''" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Grid id="compGrid" taborder="2" left="5" top="451" width="1700" height="180" autofittype="col" binddataset="dsCompleted">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="35"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="등록연도"/>
+                      <Cell col="2" text="등록월"/>
+                      <Cell col="3" text="문서명"/>
+                      <Cell col="4" text="등록 코멘트"/>
+                      <Cell col="5" text="등록사업장"/>
+                      <Cell col="6" text="등록부서"/>
+                      <Cell col="7" text="등록자"/>
+                      <Cell col="8" text="최종 결재자"/>
+                      <Cell col="9" text="결재상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:YEAR" textAlign="center"/>
+                      <Cell col="2" text="bind:MONTH" textAlign="center"/>
+                      <Cell col="3" text="bind:EV_TITLE"/>
+                      <Cell col="4" text="bind:EV_DESC"/>
+                      <Cell col="5" text="bind:SITE_NM" textAlign="center"/>
+                      <Cell col="6" text="bind:DEPT_NM" textAlign="center"/>
+                      <Cell col="7" text="bind:REG_USER_NM" textAlign="center"/>
+                      <Cell col="8" text="bind:FINAL_APPROVER" textAlign="center"/>
+                      <Cell col="9" text="expr:APV_STATUS_CD == 'COMPLETED'?'결재 완료' : ''" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
             </Layout>
           </Layouts>
         </Div>
@@ -116,7 +206,7 @@ this.fnInit = function()
 	var REG_USER_NM = this.divSearch.form.EditUser.value;		//등록자
 	
 	this.dsCond.setColumn(0, "YEAR", YEAR);
-	this.dsCond.setColumn(0, "MONTH", MONTH);
+	//this.dsCond.setColumn(0, "MONTH", MONTH);
 	this.dsCond.setColumn(0, "TITLE", TITLE);
 	this.dsCond.setColumn(0, "SITE_NM", SITE_NM);
 	this.dsCond.setColumn(0, "DEPT_NM", DEPT_NM);
@@ -154,7 +244,7 @@ this.fnTranSearch = function()
 	var strSvcId 	 = "Search";
 	var strSvcUrl 	 = "XUP_DEMO::APP_01";	
 	var inData 		 = "dsCond=dsCond";
-	var outData 	 = "dsPending=dsPending";
+	var outData 	 = "dsPending=dsPending dsProgress=dsProgress dsCompleted=dsCompleted";
 	var strArg 		 = "";
 	var callBackFunc = "fnCallback";
 	var isAsync 	 = true;
@@ -281,6 +371,32 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
             <Col id="NAME">12월</Col>
           </Row>
         </Rows>
+      </Dataset>
+      <Dataset id="dsProgress">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="255"/>
+          <Column id="MONTH" type="STRING" size="255"/>
+          <Column id="EV_TITLE" type="STRING" size="255"/>
+          <Column id="EV_DESC" type="STRING" size="255"/>
+          <Column id="SITE_NM" type="STRING" size="255"/>
+          <Column id="DEPT_NM" type="STRING" size="255"/>
+          <Column id="REG_USER_NM" type="STRING" size="255"/>
+          <Column id="NEXT_APPROVER" type="STRING" size="255"/>
+          <Column id="APV_STATUS_CD" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCompleted">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="255"/>
+          <Column id="MONTH" type="STRING" size="255"/>
+          <Column id="EV_TITLE" type="STRING" size="255"/>
+          <Column id="EV_DESC" type="STRING" size="255"/>
+          <Column id="SITE_NM" type="STRING" size="255"/>
+          <Column id="DEPT_NM" type="STRING" size="255"/>
+          <Column id="REG_USER_NM" type="STRING" size="255"/>
+          <Column id="FINAL_APPROVER" type="STRING" size="255"/>
+          <Column id="APV_STATUS_CD" type="STRING" size="255"/>
+        </ColumnInfo>
       </Dataset>
     </Objects>
   </Form>
