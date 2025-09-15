@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="AppSvc_P01" width="855" height="550" titletext="" onload="AppSvc_P01_onload" scrolltype="none">
+    <Layouts>
+      <Layout height="550" width="855" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
+        <Div id="div" taborder="0" text="Div00" left="0" top="0" width="850" height="530">
+          <Layouts>
+            <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="center" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" flexwrap="nowrap" type="default">
+              <Div id="divInfo" taborder="0" text="Div00" left="0" top="0" width="850" height="110">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="Static00" left="20" top="5" width="815" height="30" cssclass="sta_WF_DeatilBg"/>
+                    <Static id="StaticEvId" taborder="1" left="20.00" top="5" width="82" height="30" text="문서번호" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvId" taborder="2" left="StaticEvId:5.00" top="10" width="73" height="20" readonly="true"/>
+                    <Static id="StaticEvTitle" taborder="3" text="문서제목" left="210.00" top="5" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvTitle" taborder="4" left="StaticEvTitle:5.00" top="10" width="505" height="20" readonly="true"/>
+                    <Static id="Static00_00" taborder="5" text="Static00" left="20.00" top="36" width="815" height="30" cssclass="sta_WF_DeatilBg"/>
+                    <Static id="StaticEvYear" taborder="6" text="등록년도" left="20.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvYear" taborder="7" left="StaticEvYear:5" top="40" width="73" height="20" readonly="true"/>
+                    <Static id="StaticEvMonth" taborder="8" text="등록월" left="210.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvMonth" taborder="9" left="StaticEvMonth:5.00" top="40" width="73" height="20" readonly="true"/>
+                    <Static id="StaticEvSite" taborder="10" text="등록사업소" left="400.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Combo id="ComboSite" taborder="11" text="본사" left="StaticEvSite:5.00" top="38" width="105" height="25" innerdataset="dsSite" codecolumn="SITE_ID" datacolumn="SITE_NM" index="0" value="S001" onitemchanged="div_divInfo_ComboSite_onitemchanged" readonly="true"/>
+                    <Static id="StaticEvDept" taborder="12" text="등록부서" left="620.00" top="36" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Combo id="ComboDept" taborder="13" text="본사" left="707.00" top="38" width="95" height="25" innerdataset="dsDept" codecolumn="DEPT_ID" datacolumn="DEPT_NM" index="0" value="S001" readonly="true"/>
+                    <Static id="Static00_00_00" taborder="14" text="Static00" left="20.00" top="67" width="815" height="30" cssclass="sta_WF_DeatilBg"/>
+                    <Static id="StaticEvNm" taborder="15" text="등록자명" left="20.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvYear00" taborder="16" left="StaticEvNm:5" top="72" width="73" height="20" readonly="true"/>
+                    <Static id="StaticEvEmpNo" taborder="17" text="등록자사번" left="210.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvEmpNo" taborder="18" left="StaticEvEmpNo:5" top="72" width="73" height="20" readonly="true" inputmode="upper"/>
+                    <Static id="StaticEvDesc" taborder="19" text="문서요약" left="400.00" top="67" width="82" height="30" cssclass="sta_WF_DeatilLabel"/>
+                    <Edit id="EditEvEmpNo00" taborder="20" left="StaticEvDesc:5.00" top="72" width="315" height="20" readonly="true"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
+              <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
+              <Grid id="Grid00" taborder="3" left="20.00" top="120" width="375" height="410"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+* @description  : 결재 관리 > 결재 상신 / 경로 지정 > 결재선 지정
+* @Date         : 2025.09.15
+* @Author		: 김빈현
+*/
+//기본 include
+include "Lib::lib_array.xjs";
+include "Lib::lib_base.xjs";
+include "Lib::lib_date.xjs";
+include "Lib::lib_number.xjs";
+include "Lib::lib_string.xjs";
+include "Lib::lib_transaction.xjs";
+
+this.AppSvc_P01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//초기화 함수
+	this.fnInit();
+};
+
+//페이지 접근 시 초기 세팅
+this.fnInit = function()
+{
+	var params = this.parent;
+	
+	var EV_ID = params.EV_ID;
+	var EV_TITLE = params.EV_TITLE;
+	var YEAR = params.YEAR;
+	var MONTH = params.MONTH;
+	var SITE_ID = params.SITE_ID;
+	var SITE_NM = params.SITE_NM;
+	var DEPT_ID = params.DEPT_ID;
+	var DEPT_NM = params.DEPT_NM;
+	var REG_EMP_NO = params.REG_EMP_NO;
+	var REG_USER_NM = params.REG_USER_NM;
+	var EV_DESC = params.EV_DESC;
+	
+	this.div.form.divInfo.form.EditEvId.set_value(EV_ID);				//문서ID
+	this.div.form.divInfo.form.EditEvTitle.set_value(EV_TITLE);			//문서 제목
+	this.div.form.divInfo.form.EditEvYear.set_value(YEAR);				//등록연도
+	this.div.form.divInfo.form.EditEvMonth.set_value(MONTH);			//등록월
+	this.div.form.divInfo.form.ComboSite.set_value(SITE_ID);			//등록사업소
+	this.div.form.divInfo.form.ComboDept.set_value(DEPT_ID);			//등록부서
+	this.div.form.divInfo.form.EditEvYear00.set_value(REG_USER_NM);		//등록자명
+	this.div.form.divInfo.form.EditEvEmpNo.set_value(REG_EMP_NO);		//등록자 사번
+	this.div.form.divInfo.form.EditEvEmpNo00.set_value(EV_DESC);		//문서요약
+};		
+
+this.fnTranSave = function()
+{
+	var strSvcId 	 = "Save";
+	var strSvcUrl 	 = "XUP_DEMO::EVD_03";	
+	var inData 		 = "dsCond=dsCond dsFile=dsFile";
+	var outData 	 = "dsResult1=RESULT0 dsResult2=RESULT1";
+	var strArg 		 = "";
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+}
+
+//트랜잭션 callback
+this.fnCallback = function(sId,nErrorCode,sErrorMSG)
+{
+	if(nErrorCode == 0)
+	{
+		switch (sId) {
+			case "Search":
+				
+				
+				break;
+			
+			default:
+				
+				break;
+		}
+	}
+};
+
+//컴포넌트 이벤트
+
+//저장버튼
+this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var EV_ID = this.div.form.divInfo.form.EditEvId.value;					//문서번호
+	var EV_TITLE = this.div.form.divInfo.form.EditEvTitle.value;			//문서제목
+	var EV_DESC = this.div.form.divInfo.form.EditEvEmpNo00.value;	    	//문서요약
+	var REG_EMP_NO = this.div.form.divInfo.form.EditEvEmpNo.value;			//등록자 사번
+	var REG_USER_NM = this.div.form.divInfo.form.EditEvYear00.value;		//등록자명
+	var SITE_ID = this.div.form.divInfo.form.ComboSite.value;				//등록사업소 ID
+	var SITE_NM = this.div.form.divInfo.form.ComboSite.text;				//등록사업소 명
+	var DEPT_ID = this.div.form.divInfo.form.ComboDept.value;				//등록부서 ID
+	var DEPT_NM = this.div.form.divInfo.form.ComboDept.text;				//등록부서 명
+	
+	var validationList = [
+		{ field: "문서번호", value: EV_ID },
+		{ field: "문서제목", value: EV_TITLE },
+		{ field: "등록자사번", value: REG_EMP_NO },
+		{ field: "등록자명", value: REG_USER_NM },
+		{ field: "사업소ID", value: SITE_ID },
+		{ field: "사업소명", value: SITE_NM },
+		{ field: "부서ID", value: DEPT_ID },
+		{ field: "부서명", value: DEPT_NM }
+	];
+
+	//필수입력값 체크
+	var validation = this.validationChk(validationList);
+	
+	if(validation){
+		var nRow = this.dsCond.addRow();
+		
+		this.dsCond.setColumn(nRow, "EV_ID", EV_ID);
+		this.dsCond.setColumn(nRow, "EV_TITLE", EV_TITLE);
+		this.dsCond.setColumn(nRow, "EV_DESC", EV_DESC);
+		this.dsCond.setColumn(nRow, "REG_EMP_NO", REG_EMP_NO);
+		this.dsCond.setColumn(nRow, "REG_USER_NM", REG_USER_NM);
+		this.dsCond.setColumn(nRow, "SITE_ID", SITE_ID);
+		this.dsCond.setColumn(nRow, "SITE_NM", SITE_NM);
+		this.dsCond.setColumn(nRow, "DEPT_ID", DEPT_ID);
+		this.dsCond.setColumn(nRow, "DEPT_NM", DEPT_NM);
+		
+		//저장 트랜잭션 호출
+		this.fnTranSave();
+	};
+};
+
+//취소버튼
+this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var cancelConfirm = this.confirm("등록작업을 취소 하시겠습니까?");
+	
+	if(cancelConfirm){
+		this.close()
+	} else {
+		return false
+	};
+};]]></Script>
+    <Objects>
+      <Dataset id="dsDocId">
+        <ColumnInfo>
+          <Column id="DOC_ID" type="STRING" size="256"/>
+          <Column id="FILE_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="EV_ID" type="STRING" size="256"/>
+          <Column id="EV_TITLE" type="STRING" size="256"/>
+          <Column id="EV_DESC" type="STRING" size="256"/>
+          <Column id="REG_EMP_NO" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+          <Column id="SITE_ID" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSite">
+        <ColumnInfo>
+          <Column id="SITE_ID" type="STRING" size="256"/>
+          <Column id="SITE_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SITE_ID">S001</Col>
+            <Col id="SITE_NM">본사</Col>
+          </Row>
+          <Row>
+            <Col id="SITE_ID">S002</Col>
+            <Col id="SITE_NM">포항사업장</Col>
+          </Row>
+          <Row>
+            <Col id="SITE_ID">S003</Col>
+            <Col id="SITE_NM">당진사업장</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDept">
+        <ColumnInfo>
+          <Column id="UPPO_SITE" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DEPT_ID">D002</Col>
+            <Col id="DEPT_NM">인사부</Col>
+            <Col id="UPPO_SITE">S001</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_ID">D003</Col>
+            <Col id="DEPT_NM">생산팀</Col>
+            <Col id="UPPO_SITE">S002</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_ID">D004</Col>
+            <Col id="DEPT_NM">품질관리팀</Col>
+            <Col id="UPPO_SITE">S002</Col>
+          </Row>
+          <Row>
+            <Col id="UPPO_SITE">S003</Col>
+            <Col id="DEPT_ID">D005</Col>
+            <Col id="DEPT_NM">물류팀</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFile">
+        <ColumnInfo>
+          <Column id="ATT_ID" type="STRING" size="256"/>
+          <Column id="EV_ID" type="STRING" size="256"/>
+          <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
+          <Column id="FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_EXT" type="STRING" size="256"/>
+          <Column id="FILE_SIZE" type="STRING" size="256"/>
+          <Column id="FILE_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult1">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult2">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

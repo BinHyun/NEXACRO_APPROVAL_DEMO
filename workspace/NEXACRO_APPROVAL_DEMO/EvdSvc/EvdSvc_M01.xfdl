@@ -71,8 +71,9 @@
                 </Formats>
               </Grid>
               <Static id="StaticYear" taborder="1" text="조회 목록" left="10" top="0" width="80" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
-              <Static id="StaticCnt" taborder="2" left="1550.00" top="0" width="70" height="28" textAlign="right"/>
+              <Static id="StaticCnt01" taborder="2" left="1500.00" top="0" width="90" height="28" textAlign="right" cssclass="sta_WF_SearchLabel1" color="black" text="조회건수 :"/>
               <Button id="addBtn" taborder="3" text="신규등록" left="1635" top="5" width="70" height="20" cssclass="btn_WF_ModuleKustom" onclick="gridDiv_addBtn_onclick"/>
+              <Static id="StaticCnt" taborder="4" left="1580.00" top="0" width="30" height="28" textAlign="right" color="black"/>
             </Layout>
           </Layouts>
         </Div>
