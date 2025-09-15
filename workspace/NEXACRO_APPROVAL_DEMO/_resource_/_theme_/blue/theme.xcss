@@ -1218,7 +1218,7 @@
 }
 
 
-.Static[status=disabled],.StaticControl[status=disabled]
+.StaticControl[status=disabled]
 {
 	color : #999999;
 }
@@ -2814,13 +2814,23 @@
     background           : #eeeeee;
     color                : #555555;
     font                 : 13px/16px "Malgun Gothic";
-}.Static.sta_WF_SearchLabel,
-.Static.sta_WF_SearchLabel[status=disabled]
+}.Static.sta_WF_SearchLabel1,
+.Static.sta_WF_SearchLabel1[status=disabled]
 {
-    -nexa-padding         : 0px 10px 0px 8px;
+    -nexa-padding         : 0px 10px 0px 20px;
     -nexa-text-align      : left;
     -nexa-vertical-align  : middle;
-    background            : URL("theme://images/btn_WF_Menunext_O.png") no-repeat left center;
+    background            : URL("theme://images/chk_WF_Popupmenu.png") no-repeat left center;
+    color                 : #ffffff;
+    font                  : 11px "Malgun Gothic";
+}
+.Static.sta_WF_SearchLabel,
+.Static.sta_WF_SearchLabel[status=disabled]
+{
+    -nexa-padding         : 0px 10px 0px 20px;
+    -nexa-text-align      : left;
+    -nexa-vertical-align  : middle;
+    background            : URL("theme://images/btn_WF_Stepitem_S.png") no-repeat left center;
     color                 : #ffffff;
     font                  : 11px "Malgun Gothic";
 }]]></CSSData>

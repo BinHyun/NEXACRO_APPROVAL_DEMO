@@ -160,11 +160,11 @@
 }.Static.sta_WF_SearchLabel,
 .Static.sta_WF_SearchLabel[status=disabled]
 {
-    -nexa-padding         : 0px 10px 0px 8px;
+    -nexa-padding         : 0px 10px 0px 20px;
     -nexa-text-align      : left;
     -nexa-vertical-align  : middle;
-    background            : URL("theme://images/btn_WF_Menunext_O.png") no-repeat left center;
-    color                 : #fffff;
+    background            : URL("theme://images/btn_WF_Stepitem_S.png") no-repeat left center;
+    color                 : #000000;
     font                  : 11px "Malgun Gothic";
 }.Static.sta_WF_DeatilLabel,
 .Static.sta_WF_DeatilLabel[status=disabled]

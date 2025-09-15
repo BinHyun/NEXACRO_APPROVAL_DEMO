@@ -6,26 +6,26 @@
         <Div id="divSearch" taborder="0" text="Div00" left="10" top="38" width="1710" height="50" cssclass="div_WF_Search" border="1px solid">
           <Layouts>
             <Layout>
-              <Static id="StaticYear" taborder="0" text="등록연도" left="20.00" top="8" width="69" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboYear" taborder="1" text="" left="91.00" top="13" width="65" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
-              <Static id="StaticMonth" taborder="2" text="등록월" left="180.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Combo id="ComboMonth" taborder="3" text="2025" left="241.00" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
-              <Static id="StaticSite" taborder="4" text="사업장" left="330.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Edit id="EditSite" taborder="5" left="391.00" top="13" width="127" height="20"/>
-              <Static id="StaticDept" taborder="6" text="부서" left="540.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Edit id="EditDept" taborder="7" left="591.00" top="13" width="127" height="20"/>
-              <Static id="StaticTitle" taborder="8" text="문서명" left="750.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Edit id="EditTitle" taborder="9" left="811.00" top="13" width="200" height="20"/>
-              <Static id="StaticUser" taborder="10" text="등록자" left="1040.00" top="8" width="49" height="28" cssclass="sta_WF_notice01"/>
-              <Edit id="EditUser" taborder="11" left="1101.00" top="13" width="98" height="20"/>
+              <Static id="StaticYear" taborder="0" left="20.00" top="8" width="69" height="28" usedecorate="false" cssclass="sta_WF_SearchLabel" text="등록연도" color="black"/>
+              <Combo id="ComboYear" taborder="1" text="" left="StaticYear:5" top="13" width="65" height="20" innerdataset="dsYear" codecolumn="CODE" datacolumn="NAME" value=""/>
+              <Static id="StaticMonth" taborder="2" text="등록월" left="ComboYear:25" top="8" width="59" height="28" cssclass="sta_WF_SearchLabel" color="black"/>
+              <Combo id="ComboMonth" taborder="3" text="2025" left="StaticMonth:5" top="13" width="58" height="20" innerdataset="dsMonth" codecolumn="CODE" datacolumn="NAME" index="3" value="2025"/>
+              <Static id="StaticSite" taborder="4" text="사업장" left="ComboMonth:25" top="8" width="59" height="28" cssclass="sta_WF_SearchLabel" color="black"/>
+              <Edit id="EditSite" taborder="5" left="StaticSite:5" top="13" width="127" height="20"/>
+              <Static id="StaticDept" taborder="6" text="부서" left="EditSite:25" top="8" width="49" height="28" cssclass="sta_WF_SearchLabel" color="black"/>
+              <Edit id="EditDept" taborder="7" left="StaticDept:5" top="13" width="127" height="20"/>
+              <Static id="StaticTitle" taborder="8" text="문서명" left="EditDept:25.00" top="8" width="58" height="28" cssclass="sta_WF_SearchLabel" color="black"/>
+              <Edit id="EditTitle" taborder="9" left="StaticTitle:5" top="13" width="200" height="20"/>
+              <Static id="StaticUser" taborder="10" text="등록자" left="EditTitle:25.00" top="8" width="53" height="28" cssclass="sta_WF_SearchLabel" color="black"/>
+              <Edit id="EditUser" taborder="11" left="StaticUser:5" top="13" width="98" height="20"/>
               <Button id="ButtonSearch" taborder="12" text="검색" left="1617.00" top="8" width="62" height="28" cssclass="btn_WF_search02" onclick="divSearch_ButtonSearch_onclick"/>
             </Layout>
           </Layouts>
         </Div>
-        <Div id="gridDiv" taborder="1" text="Div00" left="10" top="102" width="1710" height="638">
+        <Div id="gridDiv" taborder="1" text="Div00" left="10.00" top="92" width="1710" height="648">
           <Layouts>
             <Layout>
-              <Grid id="pendingGrid" taborder="0" left="5" top="21" width="1700" height="180" autofittype="col" binddataset="dsPending">
+              <Grid id="pendingGrid" taborder="0" left="5.00" top="31" width="1700" height="180" autofittype="col" binddataset="dsPending">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -68,7 +68,7 @@
                   </Format>
                 </Formats>
               </Grid>
-              <Grid id="progressGrid" taborder="1" left="5" top="238" width="1700" height="180" autofittype="col" binddataset="dsProgress">
+              <Grid id="progressGrid" taborder="1" left="5.00" top="248" width="1700" height="180" autofittype="col" binddataset="dsProgress">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -114,7 +114,7 @@
                   </Format>
                 </Formats>
               </Grid>
-              <Grid id="compGrid" taborder="2" left="5" top="451" width="1700" height="180" autofittype="col" binddataset="dsCompleted">
+              <Grid id="compGrid" taborder="2" left="5.00" top="461" width="1700" height="180" autofittype="col" binddataset="dsCompleted">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -160,6 +160,9 @@
                   </Format>
                 </Formats>
               </Grid>
+              <Static id="Static00" taborder="3" text="결재 대기 목록" left="5.00" top="5" width="105" height="20" cssclass="sta_WF_SearchLabel1" color="black"/>
+              <Static id="Static00_00" taborder="4" text="결재 진행중 목록" left="5.00" top="220" width="105" height="20" cssclass="sta_WF_SearchLabel1" color="black"/>
+              <Static id="Static00_00_00" taborder="5" text="결재 완료 목록" left="5.00" top="435" width="105" height="20" cssclass="sta_WF_SearchLabel1" color="black"/>
             </Layout>
           </Layouts>
         </Div>
