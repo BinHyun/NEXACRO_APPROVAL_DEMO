@@ -35,7 +35,21 @@
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
               <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
-              <Grid id="Grid00" taborder="3" left="20.00" top="120" width="375" height="410"/>
+              <Grid id="Grid00" taborder="3" left="20.00" top="120" width="250" height="410" binddataset="dsTree" treeinitstatus="expand,all">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="125"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell displaytype="treeitemcontrol" edittype="tree" text="bind:NM" treelevel="bind:LEVEL" treestartlevel="1"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
             </Layout>
           </Layouts>
         </Div>
@@ -86,14 +100,35 @@ this.fnInit = function()
 	this.div.form.divInfo.form.EditEvYear00.set_value(REG_USER_NM);		//등록자명
 	this.div.form.divInfo.form.EditEvEmpNo.set_value(REG_EMP_NO);		//등록자 사번
 	this.div.form.divInfo.form.EditEvEmpNo00.set_value(EV_DESC);		//문서요약
+	
+	this.fnTranTeam();
 };		
 
 this.fnTranSave = function()
 {
 	var strSvcId 	 = "Save";
 	var strSvcUrl 	 = "XUP_DEMO::EVD_03";	
-	var inData 		 = "dsCond=dsCond dsFile=dsFile";
+	var inData 		 = "dsCond=dsCond";
 	var outData 	 = "dsResult1=RESULT0 dsResult2=RESULT1";
+	var strArg 		 = "";
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+}
+
+this.fnTranTeam = function()
+{
+	var strSvcId 	 = "TeamInfo";
+	var strSvcUrl 	 = "XUP_DEMO::APP_03";	
+	var inData 		 = "";
+	var outData 	 = "dsSite=dsSite dsDept=dsDept";
 	var strArg 		 = "";
 	var callBackFunc = "fnCallback";
 	var isAsync 	 = true;
@@ -116,6 +151,38 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 			case "Search":
 				
 				
+				break;
+			
+			case "TeamInfo":
+				var siteRow = this.dsSite.rowcount;
+				var deptRow = this.dsDept.rowcount;
+				
+				for(var i=0; i<siteRow; i++){
+					var iRow = this.dsTree.addRow();
+					
+					var SITE_ID = this.dsSite.getColumn(i, "SITE_ID");
+					var SITE_NM = this.dsSite.getColumn(i, "SITE_NM");
+					
+					this.dsTree.setColumn(iRow, "ID", SITE_ID);
+					this.dsTree.setColumn(iRow, "NM", SITE_NM);
+					this.dsTree.setColumn(iRow, "LEVEL", 0);
+					
+					for(var j=0; j<deptRow; j++){
+						var UPPO_ID = this.dsDept.getColumn(j, "UPPO_SITE_ID");
+						
+						if(UPPO_ID == SITE_ID){
+							var nRow = this.dsTree.addRow();
+							var DEPT_ID = this.dsDept.getColumn(j, "DEPT_ID");
+							var DEPT_NM = this.dsDept.getColumn(j, "DEPT_NM");
+							
+							this.dsTree.setColumn(nRow, "ID", DEPT_ID);
+							this.dsTree.setColumn(nRow, "NM", DEPT_NM);
+							this.dsTree.setColumn(nRow, "LEVEL", 1);
+						}
+					}
+				};
+				
+				this.fnSetTreeItem();
 				break;
 			
 			default:
@@ -182,6 +249,18 @@ this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEvent
 	} else {
 		return false
 	};
+};
+
+this.fnSetTreeItem = function()
+{
+	var rowCnt = this.dsTree.rowcount;
+	
+	if(rowCnt > 0){
+		this.dsTree.filter("LEVEL >= 0");
+	} else {
+		alert("조직도를 불러 오는 과정에서 문제가 발생 하였습니다.");
+	}
+	
 };]]></Script>
     <Objects>
       <Dataset id="dsDocId">
@@ -225,7 +304,7 @@ this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEvent
       </Dataset>
       <Dataset id="dsDept">
         <ColumnInfo>
-          <Column id="UPPO_SITE" type="STRING" size="256"/>
+          <Column id="UPPO_SITE_ID" type="STRING" size="256"/>
           <Column id="DEPT_ID" type="STRING" size="256"/>
           <Column id="DEPT_NM" type="STRING" size="256"/>
         </ColumnInfo>
@@ -233,50 +312,41 @@ this.div_ButtonCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEvent
           <Row>
             <Col id="DEPT_ID">D002</Col>
             <Col id="DEPT_NM">인사부</Col>
-            <Col id="UPPO_SITE">S001</Col>
+            <Col id="UPPO_SITE_ID">S001</Col>
           </Row>
           <Row>
             <Col id="DEPT_ID">D003</Col>
             <Col id="DEPT_NM">생산팀</Col>
-            <Col id="UPPO_SITE">S002</Col>
+            <Col id="UPPO_SITE_ID">S002</Col>
           </Row>
           <Row>
             <Col id="DEPT_ID">D004</Col>
             <Col id="DEPT_NM">품질관리팀</Col>
-            <Col id="UPPO_SITE">S002</Col>
+            <Col id="UPPO_SITE_ID">S002</Col>
           </Row>
           <Row>
-            <Col id="UPPO_SITE">S003</Col>
+            <Col id="UPPO_SITE_ID">S003</Col>
             <Col id="DEPT_ID">D005</Col>
             <Col id="DEPT_NM">물류팀</Col>
           </Row>
         </Rows>
       </Dataset>
-      <Dataset id="dsFile">
+      <Dataset id="dsTree">
         <ColumnInfo>
-          <Column id="ATT_ID" type="STRING" size="256"/>
-          <Column id="EV_ID" type="STRING" size="256"/>
-          <Column id="ATT_TYPE_NM" type="STRING" size="256"/>
-          <Column id="FILE_NM" type="STRING" size="256"/>
-          <Column id="FILE_EXT" type="STRING" size="256"/>
-          <Column id="FILE_SIZE" type="STRING" size="256"/>
-          <Column id="FILE_PATH" type="STRING" size="256"/>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="NM" type="STRING" size="256"/>
+          <Column id="LEVEL" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
-      <Dataset id="dsResult1">
+      <Dataset id="dsInsa">
         <ColumnInfo>
-          <Column id="ROWINDEX" type="INT" size="255"/>
-          <Column id="STATUS" type="STRING" size="255"/>
-          <Column id="RESULT" type="INT" size="255"/>
-          <Column id="ERROR" type="STRING" size="255"/>
-        </ColumnInfo>
-      </Dataset>
-      <Dataset id="dsResult2">
-        <ColumnInfo>
-          <Column id="ROWINDEX" type="INT" size="255"/>
-          <Column id="STATUS" type="STRING" size="255"/>
-          <Column id="RESULT" type="INT" size="255"/>
-          <Column id="ERROR" type="STRING" size="255"/>
+          <Column id="UPPO_SITE_ID" type="STRING" size="50"/>
+          <Column id="DEPT_ID" type="STRING" size="100"/>
+          <Column id="DEPT_NM" type="STRING" size="255"/>
+          <Column id="EMP_ID" type="STRING" size="255"/>
+          <Column id="EMP_NM" type="STRING" size="255"/>
+          <Column id="POSITION_CD" type="STRING" size="255"/>
+          <Column id="POSITION_NM" type="STRING" size="255"/>
         </ColumnInfo>
       </Dataset>
     </Objects>

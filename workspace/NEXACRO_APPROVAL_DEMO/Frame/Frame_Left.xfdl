@@ -45,7 +45,7 @@ this.Frame_Left_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 * @param sMenuId         : 클릭한 상단 메뉴
 * @return                : 없음
 */
-this.fnGetLeftMenu = function (sMenuId)
+this.fnGetLeftMenu = function (sMenuId)	
 {
 	//글로벌 데이터셋 gdsMenu 가져오기
 	var objApp = nexacro.getApplication();
@@ -81,7 +81,7 @@ this.gridLeftMenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEve
 	//그리드에 바인딩 된 데이터셋으로 가져오기
 	var objDsMenu = obj.getBindDataset();
 	var sMenuId = objDsMenu.getColumn(e.row, "MENU_ID");
-
+	
 	//업무 화면 여는 함수 호출
 	this.fnOpenMenu(sMenuId);
 };
