@@ -82,12 +82,16 @@ public class APP_03BaseAutomationLogic extends BaseAutomationLogic {
 		
 		user(globalParameterSet);
 		select(globalParameterSet);
+		select1(globalParameterSet);
 
 		if(globalParameterSet.getParameter("dsSite") != null){
 			outputParameterSet.add(globalParameterSet.getParameter("dsSite"));
 		}
 		if(globalParameterSet.getParameter("dsDept") != null){
 			outputParameterSet.add(globalParameterSet.getParameter("dsDept"));
+		}
+		if(globalParameterSet.getParameter("dsInsa") != null){
+			outputParameterSet.add(globalParameterSet.getParameter("dsInsa"));
 		}
 		
 		end(globalParameterSet, outputParameterSet);
@@ -111,6 +115,17 @@ public class APP_03BaseAutomationLogic extends BaseAutomationLogic {
 		dsDept.addColumn("POSITION_NM", PlatformDataType.STRING, 255);
 
 		globalParameterSet.add(dsDept);
+		DataSet dsInsa = new DataSet("dsInsa");
+
+		dsInsa.addColumn("UPPO_SITE_ID", PlatformDataType.STRING, 50);
+		dsInsa.addColumn("DEPT_ID", PlatformDataType.STRING, 100);
+		dsInsa.addColumn("DEPT_NM", PlatformDataType.STRING, 255);
+		dsInsa.addColumn("EMP_ID", PlatformDataType.STRING, 255);
+		dsInsa.addColumn("EMP_NM", PlatformDataType.STRING, 255);
+		dsInsa.addColumn("POSITION_CD", PlatformDataType.STRING, 255);
+		dsInsa.addColumn("POSITION_NM", PlatformDataType.STRING, 255);
+
+		globalParameterSet.add(dsInsa);
 	}
 	public void start(ParameterSet globalParameterSet)throws AutomationFailException {//!findOffset_start!
 	}
@@ -150,7 +165,7 @@ public class APP_03BaseAutomationLogic extends BaseAutomationLogic {
 		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("SELECT\n DISTINCT\n SITE_ID AS UPPO_SITE_ID, 	/*사업소 ID*/\n DEPT_ID,					/*부서 ID*/\n DEPT_NM, 					/*부서 명*/\n EMP_ID,						/*사번*\n NAME AS EMP_NM,				/*이름*/\n POSITION_CD,				/*직급 코드*/\n POSITION_NM					/*직급 명*/\n FROM EMPLOYEE\n ORDER BY SITE_ID, DEPT_ID ASC\n ");
+		info.setSqlSelect("SELECT\n DISTINCT\n SITE_ID AS UPPO_SITE_ID, 	/*사업소 ID*/\n DEPT_ID,					/*부서 ID*/\n DEPT_NM 					/*부서 명*/\n FROM EMPLOYEE\n ORDER BY SITE_ID, DEPT_ID ASC\n ");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
 		EventHandler eventHandler = new EventHandler();
@@ -164,6 +179,31 @@ public class APP_03BaseAutomationLogic extends BaseAutomationLogic {
 		
 	}
 	public void selectonExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
+		throw new AutomationFailException(e.getMessage(), e);
+	}
+	public void select1(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_select1!
+		ParameterSet tmpParameterSet = new ParameterSet();
+
+		ResultNameSet resultNameSet = new ResultNameSet();
+		resultNameSet.add("RESULT0", "dsInsa", null);
+
+		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
+		info.setDomainName("XUP_DEMO");
+		info.setDataSourceName("NEXACRO_DEMO");
+		info.setSqlSelect("SELECT\n SITE_ID,			/*사업장 ID*/\n DEPT_ID,			/*부서 ID*/\n EMP_ID,				/*사번*/\n NAME AS EMP_NM,		/*이름*/\n POSITION_CD,		/*직급 코드*/\n POSITION_NM			/*직급 명*/\n FROM EMPLOYEE ORDER BY SITE_ID, POSITION_CD ASC\n ");
+		info.setResultNameSet(resultNameSet);
+		info.setParameterSet(tmpParameterSet);
+		EventHandler eventHandler = new EventHandler();
+		invoke(info, eventHandler, globalParameterSet);
+
+	}
+	public void select1onAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void select1onBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+		
+	}
+	public void select1onExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
 		throw new AutomationFailException(e.getMessage(), e);
 	}
 

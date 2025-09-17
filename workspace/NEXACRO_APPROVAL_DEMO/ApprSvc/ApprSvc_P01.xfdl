@@ -35,17 +35,17 @@
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
               <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
-              <Grid id="Grid00" taborder="3" left="20.00" top="120" width="250" height="410" binddataset="dsTree" treeinitstatus="expand,all">
+              <Grid id="Grid00" taborder="3" left="20.00" top="120" width="220" height="410" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col">
                 <Formats>
                   <Format id="default">
                     <Columns>
-                      <Column size="125"/>
+                      <Column size="200"/>
                     </Columns>
                     <Rows>
                       <Row size="30"/>
                     </Rows>
                     <Band id="body">
-                      <Cell displaytype="treeitemcontrol" edittype="tree" text="bind:NM" treelevel="bind:LEVEL" treestartlevel="1"/>
+                      <Cell displaytype="treeitemcontrol" edittype="tree" text="bind:NM" treelevel="bind:LEVEL" treestartlevel="0" treestate="bind:CHK" treecheck="bind:CHK"/>
                     </Band>
                   </Format>
                 </Formats>
@@ -128,7 +128,7 @@ this.fnTranTeam = function()
 	var strSvcId 	 = "TeamInfo";
 	var strSvcUrl 	 = "XUP_DEMO::APP_03";	
 	var inData 		 = "";
-	var outData 	 = "dsSite=dsSite dsDept=dsDept";
+	var outData 	 = "dsSite=dsSite dsDept=dsDept dsInsa=dsInsa";
 	var strArg 		 = "";
 	var callBackFunc = "fnCallback";
 	var isAsync 	 = true;
@@ -156,6 +156,7 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 			case "TeamInfo":
 				var siteRow = this.dsSite.rowcount;
 				var deptRow = this.dsDept.rowcount;
+				var insaRow = this.dsInsa.rowcount;
 				
 				for(var i=0; i<siteRow; i++){
 					var iRow = this.dsTree.addRow();
@@ -178,10 +179,27 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 							this.dsTree.setColumn(nRow, "ID", DEPT_ID);
 							this.dsTree.setColumn(nRow, "NM", DEPT_NM);
 							this.dsTree.setColumn(nRow, "LEVEL", 1);
+							
+							for(k=0; k<insaRow; k++){
+								var insa_DEPT_ID = this.dsInsa.getColumn(k, "DEPT_ID");
+								
+								if(insa_DEPT_ID == DEPT_ID){
+									var kRow = this.dsTree.addRow();
+									var EMP_ID = this.dsInsa.getColumn(k, "EMP_ID");
+									var EMP_NM = this.dsInsa.getColumn(k, "EMP_NM");
+									var POSITION_NM = this.dsInsa.getColumn(k, "POSITION_NM");
+									
+									var insertInsaInfo = EMP_NM + " " + POSITION_NM + "(" + EMP_ID + ")";
+									
+									this.dsTree.setColumn(kRow, "ID", EMP_ID);
+									this.dsTree.setColumn(kRow, "NM", insertInsaInfo);
+									this.dsTree.setColumn(kRow, "LEVEL", 2);
+									
+								}
+							}
 						}
 					}
 				};
-				
 				this.fnSetTreeItem();
 				break;
 			
@@ -255,8 +273,28 @@ this.fnSetTreeItem = function()
 {
 	var rowCnt = this.dsTree.rowcount;
 	
+	var params = this.parent;
+	var REG_EMP_NO = params.REG_EMP_NO;
+	
 	if(rowCnt > 0){
-		this.dsTree.filter("LEVEL >= 0");
+		//this.dsTree.filter("LEVEL >= 0");
+		var nRow = this.dsTree.findRow("ID", REG_EMP_NO);
+		this.dsTree.setColumn(nRow, "CHK", 1);
+		
+		//선택된 로우의 부모
+		var uppoRow = this.div.form.Grid00.getTreeParentRow(nRow);
+		this.dsTree.setColumn(uppoRow, "CHK", 1);
+		
+		//선택된 로우의 최상위 부모
+		var parentRow = this.div.form.Grid00.getTreeParentRow(uppoRow);
+		this.dsTree.setColumn(parentRow, "CHK", 1);
+		
+		//데이터셋에서 선택된 로우의 값을 가지고 그리드 상의 로우값을 찾는다.
+		//찾은 그리드상의 로우 값으로 그리드 tree의 상태값을 변경
+		var gridRow = this.div.form.Grid00.getTreeRow(uppoRow);
+		this.div.form.Grid00.setTreeStatus(gridRow, true);
+		
+		
 	} else {
 		alert("조직도를 불러 오는 과정에서 문제가 발생 하였습니다.");
 	}
@@ -333,6 +371,7 @@ this.fnSetTreeItem = function()
       </Dataset>
       <Dataset id="dsTree">
         <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
           <Column id="ID" type="STRING" size="256"/>
           <Column id="NM" type="STRING" size="256"/>
           <Column id="LEVEL" type="STRING" size="256"/>
@@ -340,9 +379,8 @@ this.fnSetTreeItem = function()
       </Dataset>
       <Dataset id="dsInsa">
         <ColumnInfo>
-          <Column id="UPPO_SITE_ID" type="STRING" size="50"/>
+          <Column id="SITE_ID" type="STRING" size="50"/>
           <Column id="DEPT_ID" type="STRING" size="100"/>
-          <Column id="DEPT_NM" type="STRING" size="255"/>
           <Column id="EMP_ID" type="STRING" size="255"/>
           <Column id="EMP_NM" type="STRING" size="255"/>
           <Column id="POSITION_CD" type="STRING" size="255"/>
