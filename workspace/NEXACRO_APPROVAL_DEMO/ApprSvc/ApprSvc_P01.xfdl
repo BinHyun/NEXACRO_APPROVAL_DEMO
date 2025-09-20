@@ -35,7 +35,7 @@
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
               <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
-              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col">
+              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col" oncelldblclick="div_Grid00_oncelldblclick" treeuseimage="false">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -51,7 +51,37 @@
                 </Formats>
               </Grid>
               <Static id="StaticYear" taborder="4" text="조직도" left="20" top="110" width="80" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
-              <Grid id="Grid01" taborder="5" left="319" top="140" width="516" height="255"/>
+              <Grid id="Grid01" taborder="5" left="319" top="140" width="516" height="255" autofittype="col" binddataset="dsApprove">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="50"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="50"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="사번"/>
+                      <Cell col="2" text="소속부서"/>
+                      <Cell col="3" text="이름"/>
+                      <Cell col="4" text="직급"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:EMP_ID" textAlign="center"/>
+                      <Cell col="2" text="bind:DEPT_NM" textAlign="center"/>
+                      <Cell col="3" text="bind:EMP_NM" textAlign="center"/>
+                      <Cell col="4" text="bind:POSITION_NM" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
               <Static id="StaticYear00" taborder="6" text="선택된 목록" left="319" top="110" width="91" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
             </Layout>
           </Layouts>
@@ -145,6 +175,25 @@ this.fnTranTeam = function()
 						isAsync);
 }
 
+this.fnTranSearchInsa = function(EMP_ID)
+{
+	var strSvcId 	 = "SearchInsa";
+	var strSvcUrl 	 = "XUP_DEMO::APP_04";	
+	var inData 		 = "";
+	var outData 	 = "dsTempInsa=dsTempInsa";
+	var strArg 		 = "EMP_ID="+EMP_ID;
+	var callBackFunc = "fnCallback";
+	var isAsync 	 = true;
+	
+	this.gfnTransaction(strSvcId,
+						strSvcUrl,
+						inData,
+						outData,
+						strArg,
+						callBackFunc, 
+						isAsync);
+}
+
 //트랜잭션 callback
 this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 {
@@ -205,6 +254,28 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				};
 				this.fnSetTreeItem();
 				break;
+					
+			case "SearchInsa":
+				var nRow = this.dsApprove.addRow();
+				var rowPos = this.dsTempInsa.rowposition;
+				
+				var EMP_ID = this.dsTempInsa.getColumn(rowPos, "EMP_ID");
+				var DEPT_ID = this.dsTempInsa.getColumn(rowPos, "DEPT_ID");
+				var DEPT_NM = this.dsTempInsa.getColumn(rowPos, "DEPT_NM");
+				var EMP_NM = this.dsTempInsa.getColumn(rowPos, "EMP_NM");
+				var POSITION_CD = this.dsTempInsa.getColumn(rowPos, "POSITION_CD");
+				var POSITION_NM = this.dsTempInsa.getColumn(rowPos, "POSITION_NM");
+				
+				this.dsApprove.setColumn(nRow, "EMP_ID", EMP_ID);
+				this.dsApprove.setColumn(nRow, "DEPT_ID", DEPT_ID);
+				this.dsApprove.setColumn(nRow, "DEPT_NM", DEPT_NM);
+				this.dsApprove.setColumn(nRow, "EMP_NM", EMP_NM);
+				this.dsApprove.setColumn(nRow, "POSITION_CD", POSITION_CD);
+				this.dsApprove.setColumn(nRow, "POSITION_NM", POSITION_NM);
+				
+				this.dsTempInsa.clearData();
+				
+				break;
 			
 			default:
 				
@@ -214,6 +285,29 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 };
 
 //컴포넌트 이벤트
+
+//조직도 더블클릭
+this.div_Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var nRow = this.dsTree.rowposition;
+	
+	var ID = this.dsTree.getColumn(nRow, "ID");
+	var NM = this.dsTree.getColumn(nRow, "NM");
+	var LEVEL = this.dsTree.getColumn(nRow, "LEVEL");
+	
+	var CHK = this.dsTree.getColumn(nRow, "CHK");
+	
+	if(LEVEL != 2){
+		alert("사업소 혹은 부서를 선택 할 순 없습니다.");
+	} else if(CHK == 1) {
+		alert("이미 선택 되었습니다.");
+	} else {
+		this.dsTree.setColumn(nRow, "CHK", 1);
+		this.fnTranSearchInsa(ID);
+	};
+};
+
+
 
 //저장버튼
 this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -297,12 +391,15 @@ this.fnSetTreeItem = function()
 		var gridRow = this.div.form.Grid00.getTreeRow(uppoRow);
 		this.div.form.Grid00.setTreeStatus(gridRow, true);
 		
+		//문서를 작성한 사람을 결재 라인의 제일 처음에 올린다.
+		this.fnTranSearchInsa(REG_EMP_NO);
 		
 	} else {
 		alert("조직도를 불러 오는 과정에서 문제가 발생 하였습니다.");
 	}
 	
-};]]></Script>
+};
+]]></Script>
     <Objects>
       <Dataset id="dsDocId">
         <ColumnInfo>
@@ -388,6 +485,26 @@ this.fnSetTreeItem = function()
           <Column id="EMP_NM" type="STRING" size="255"/>
           <Column id="POSITION_CD" type="STRING" size="255"/>
           <Column id="POSITION_NM" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApprove">
+        <ColumnInfo>
+          <Column id="EMP_ID" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="EMP_NM" type="STRING" size="256"/>
+          <Column id="POSITION_CD" type="STRING" size="256"/>
+          <Column id="POSITION_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTempInsa">
+        <ColumnInfo>
+          <Column id="EMP_ID" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="EMP_NM" type="STRING" size="256"/>
+          <Column id="POSITION_CD" type="STRING" size="256"/>
+          <Column id="POSITION_NM" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
     </Objects>
