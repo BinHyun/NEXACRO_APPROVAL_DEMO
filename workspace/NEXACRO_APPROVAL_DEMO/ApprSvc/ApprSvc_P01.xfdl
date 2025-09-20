@@ -35,7 +35,7 @@
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
               <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
-              <Grid id="Grid00" taborder="3" left="20.00" top="120" width="220" height="410" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col">
+              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -50,6 +50,9 @@
                   </Format>
                 </Formats>
               </Grid>
+              <Static id="StaticYear" taborder="4" text="조직도" left="20" top="110" width="80" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
+              <Grid id="Grid01" taborder="5" left="319" top="140" width="516" height="255"/>
+              <Static id="StaticYear00" taborder="6" text="선택된 목록" left="319" top="110" width="91" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
             </Layout>
           </Layouts>
         </Div>
