@@ -35,7 +35,7 @@
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
               <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
-              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col" oncelldblclick="div_Grid00_oncelldblclick" treeuseimage="false">
+              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col" treeuseimage="false" treeusebutton="use" oncelldblclick="div_Grid00_oncelldblclick">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -60,6 +60,7 @@
                       <Column size="80"/>
                       <Column size="80"/>
                       <Column size="50"/>
+                      <Column size="80"/>
                     </Columns>
                     <Rows>
                       <Row size="24" band="head"/>
@@ -71,6 +72,7 @@
                       <Cell col="2" text="소속부서"/>
                       <Cell col="3" text="이름"/>
                       <Cell col="4" text="직급"/>
+                      <Cell col="5" text="결재상태"/>
                     </Band>
                     <Band id="body">
                       <Cell text="expr:currow+1" textAlign="center"/>
@@ -78,6 +80,7 @@
                       <Cell col="2" text="bind:DEPT_NM" textAlign="center"/>
                       <Cell col="3" text="bind:EMP_NM" textAlign="center"/>
                       <Cell col="4" text="bind:POSITION_NM" textAlign="center"/>
+                      <Cell col="5" text="expr:APPROVE_STATUS  == &quot;PENDING&quot; ? &quot;결재상신&quot; : &quot;결재대기&quot;" textAlign="center"/>
                     </Band>
                   </Format>
                 </Formats>
@@ -256,7 +259,6 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				break;
 					
 			case "SearchInsa":
-				var nRow = this.dsApprove.addRow();
 				var rowPos = this.dsTempInsa.rowposition;
 				
 				var EMP_ID = this.dsTempInsa.getColumn(rowPos, "EMP_ID");
@@ -266,14 +268,29 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				var POSITION_CD = this.dsTempInsa.getColumn(rowPos, "POSITION_CD");
 				var POSITION_NM = this.dsTempInsa.getColumn(rowPos, "POSITION_NM");
 				
-				this.dsApprove.setColumn(nRow, "EMP_ID", EMP_ID);
-				this.dsApprove.setColumn(nRow, "DEPT_ID", DEPT_ID);
-				this.dsApprove.setColumn(nRow, "DEPT_NM", DEPT_NM);
-				this.dsApprove.setColumn(nRow, "EMP_NM", EMP_NM);
-				this.dsApprove.setColumn(nRow, "POSITION_CD", POSITION_CD);
-				this.dsApprove.setColumn(nRow, "POSITION_NM", POSITION_NM);
+				//최종결재자(부장)이 지정 되었다면 지정하지 못하게한다.
+				var findRow = this.dsApprove.findRow("POSITION_CD", "P5")
 				
-				this.dsTempInsa.clearData();
+				if(findRow != -1){
+					alert("최종결재자로 부장을 1명이상 지정할 수 없습니다.");
+					return false;
+				} else {
+					var nRow = this.dsApprove.addRow();
+					if(nRow == 0){
+						this.dsApprove.setColumn(nRow, "APPROVE_STATUS", "PENDING");
+					} else {
+						this.dsApprove.setColumn(nRow, "APPROVE_STATUS", "WAITING");
+					}
+				
+					this.dsApprove.setColumn(nRow, "EMP_ID", EMP_ID);
+					this.dsApprove.setColumn(nRow, "DEPT_ID", DEPT_ID);
+					this.dsApprove.setColumn(nRow, "DEPT_NM", DEPT_NM);
+					this.dsApprove.setColumn(nRow, "EMP_NM", EMP_NM);
+					this.dsApprove.setColumn(nRow, "POSITION_CD", POSITION_CD);
+					this.dsApprove.setColumn(nRow, "POSITION_NM", POSITION_NM);
+					
+					this.dsTempInsa.clearData();
+				}
 				
 				break;
 			
@@ -297,6 +314,10 @@ this.div_Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEv
 	
 	var CHK = this.dsTree.getColumn(nRow, "CHK");
 	
+	if(LEVEL == 2){
+		this.div.form.Grid00.treeusebutton = "no";
+	}
+	
 	if(LEVEL != 2){
 		alert("사업소 혹은 부서를 선택 할 순 없습니다.");
 	} else if(CHK == 1) {
@@ -306,8 +327,6 @@ this.div_Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEv
 		this.fnTranSearchInsa(ID);
 	};
 };
-
-
 
 //저장버튼
 this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -398,8 +417,7 @@ this.fnSetTreeItem = function()
 		alert("조직도를 불러 오는 과정에서 문제가 발생 하였습니다.");
 	}
 	
-};
-]]></Script>
+};]]></Script>
     <Objects>
       <Dataset id="dsDocId">
         <ColumnInfo>
@@ -495,6 +513,7 @@ this.fnSetTreeItem = function()
           <Column id="EMP_NM" type="STRING" size="256"/>
           <Column id="POSITION_CD" type="STRING" size="256"/>
           <Column id="POSITION_NM" type="STRING" size="256"/>
+          <Column id="APPROVE_STATUS" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
       <Dataset id="dsTempInsa">
