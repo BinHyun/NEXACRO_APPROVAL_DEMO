@@ -34,7 +34,7 @@
                 </Layouts>
               </Div>
               <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
-              <Button id="ButtonSave" taborder="2" text="저장" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
+              <Button id="ButtonSave" taborder="2" text="상신" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
               <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col" treeuseimage="false" treeusebutton="use" oncelldblclick="div_Grid00_oncelldblclick">
                 <Formats>
                   <Format id="default">
@@ -115,6 +115,7 @@ this.fnInit = function()
 {
 	var params = this.parent;
 	
+	var APV_ID = params.APV_ID;
 	var EV_ID = params.EV_ID;
 	var EV_TITLE = params.EV_TITLE;
 	var YEAR = params.YEAR;
@@ -331,46 +332,29 @@ this.div_Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEv
 //저장버튼
 this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {	
-	var EV_ID = this.div.form.divInfo.form.EditEvId.value;					//문서번호
-	var EV_TITLE = this.div.form.divInfo.form.EditEvTitle.value;			//문서제목
-	var EV_DESC = this.div.form.divInfo.form.EditEvEmpNo00.value;	    	//문서요약
-	var REG_EMP_NO = this.div.form.divInfo.form.EditEvEmpNo.value;			//등록자 사번
-	var REG_USER_NM = this.div.form.divInfo.form.EditEvYear00.value;		//등록자명
-	var SITE_ID = this.div.form.divInfo.form.ComboSite.value;				//등록사업소 ID
-	var SITE_NM = this.div.form.divInfo.form.ComboSite.text;				//등록사업소 명
-	var DEPT_ID = this.div.form.divInfo.form.ComboDept.value;				//등록부서 ID
-	var DEPT_NM = this.div.form.divInfo.form.ComboDept.text;				//등록부서 명
+	var params = this.parent;
 	
-	var validationList = [
-		{ field: "문서번호", value: EV_ID },
-		{ field: "문서제목", value: EV_TITLE },
-		{ field: "등록자사번", value: REG_EMP_NO },
-		{ field: "등록자명", value: REG_USER_NM },
-		{ field: "사업소ID", value: SITE_ID },
-		{ field: "사업소명", value: SITE_NM },
-		{ field: "부서ID", value: DEPT_ID },
-		{ field: "부서명", value: DEPT_NM }
-	];
-
-	//필수입력값 체크
-	var validation = this.validationChk(validationList);
+	var EV_ID = params.EV_ID;
+	var APV_ID = params.APV_ID;
 	
-	if(validation){
-		var nRow = this.dsCond.addRow();
+	var nRow = this.dsSendApprove.addRow();
+	
+	this.dsSendApprove.setColumn(nRow, "EV_ID", EV_ID);
+	this.dsSendApprove.setColumn(nRow, "APV_ID", APV_ID);
+	this.dsSendApprove.setColumn(nRow, "APV_STATUS_CD", "PROGRESS");
+	
+	for(var i=0; i<this.dsApprove.rowcount; i++){
+		var EMP_ID = this.dsApprove.getColumn(i, "EMP_ID");
+		var EMP_NM = this.dsApprove.getColumn(i, "EMP_NM");
+		var POSITION_NM = this.dsApprove.getColumn(i, "POSITION_NM");
+		var APPROVE_STATUS = this.dsApprove.getColumn(i, "APPROVE_STATUS");
 		
-		this.dsCond.setColumn(nRow, "EV_ID", EV_ID);
-		this.dsCond.setColumn(nRow, "EV_TITLE", EV_TITLE);
-		this.dsCond.setColumn(nRow, "EV_DESC", EV_DESC);
-		this.dsCond.setColumn(nRow, "REG_EMP_NO", REG_EMP_NO);
-		this.dsCond.setColumn(nRow, "REG_USER_NM", REG_USER_NM);
-		this.dsCond.setColumn(nRow, "SITE_ID", SITE_ID);
-		this.dsCond.setColumn(nRow, "SITE_NM", SITE_NM);
-		this.dsCond.setColumn(nRow, "DEPT_ID", DEPT_ID);
-		this.dsCond.setColumn(nRow, "DEPT_NM", DEPT_NM);
-		
-		//저장 트랜잭션 호출
-		this.fnTranSave();
-	};
+		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_EMP_NO", EMP_ID);
+		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_USER_NM", EMP_NM);
+		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_POSITION_NM", POSITION_NM);
+		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_STATUS_CD", APPROVE_STATUS);
+	}
+	//this.fnTranSave();
 };
 
 //취소버튼
@@ -524,6 +508,45 @@ this.fnSetTreeItem = function()
           <Column id="EMP_NM" type="STRING" size="256"/>
           <Column id="POSITION_CD" type="STRING" size="256"/>
           <Column id="POSITION_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSendApprove">
+        <ColumnInfo>
+          <Column id="EV_ID" type="STRING" size="256"/>
+          <Column id="APV_ID" type="STRING" size="256"/>
+          <Column id="APV_STATUS_CD" type="STRING" size="256"/>
+          <Column id="SUBMITTED_AT" type="STRING" size="256"/>
+          <Column id="L1_EMP_NO" type="STRING" size="256"/>
+          <Column id="L1_USER_NM" type="STRING" size="256"/>
+          <Column id="L1_POSITION_NM" type="STRING" size="256"/>
+          <Column id="L1_STATUS_CD" type="STRING" size="256"/>
+          <Column id="L1_ACTED_AT" type="STRING" size="256"/>
+          <Column id="L1_COMMENT" type="STRING" size="256"/>
+          <Column id="L2_EMP_NO" type="STRING" size="256"/>
+          <Column id="L2_USER_NM" type="STRING" size="256"/>
+          <Column id="L2_POSITION_NM" type="STRING" size="256"/>
+          <Column id="L2_STATUS_CD" type="STRING" size="256"/>
+          <Column id="L2_ACTED_AT" type="STRING" size="256"/>
+          <Column id="L2_COMMENT" type="STRING" size="256"/>
+          <Column id="L3_EMP_NO" type="STRING" size="256"/>
+          <Column id="L3_USER_NM" type="STRING" size="256"/>
+          <Column id="L3_POSITION_NM" type="STRING" size="256"/>
+          <Column id="L3_STATUS_CD" type="STRING" size="256"/>
+          <Column id="L3_ACTED_AT" type="STRING" size="256"/>
+          <Column id="L3_COMMENT" type="STRING" size="256"/>
+          <Column id="L4_EMP_NO" type="STRING" size="256"/>
+          <Column id="L4_USER_NM" type="STRING" size="256"/>
+          <Column id="L4_POSITION_NM" type="STRING" size="256"/>
+          <Column id="L4_STATUS_CD" type="STRING" size="256"/>
+          <Column id="L4_ACTED_AT" type="STRING" size="256"/>
+          <Column id="L4_COMMENT" type="STRING" size="256"/>
+          <Column id="L5_EMP_NO" type="STRING" size="256"/>
+          <Column id="L5_USER_NM" type="STRING" size="256"/>
+          <Column id="L5_POSITION_NM" type="STRING" size="256"/>
+          <Column id="L5_STATUS_CD" type="STRING" size="256"/>
+          <Column id="L5_ACTED_AT" type="STRING" size="256"/>
+          <Column id="L5_COMMENT" type="STRING" size="256"/>
+          <Column id="UPDATED_AT" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
     </Objects>
