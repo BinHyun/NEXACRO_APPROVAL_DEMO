@@ -71,7 +71,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EVD_04AutomationLogic extends EVD_04BaseAutomationLogic {
+public class APP_05AutomationLogic extends APP_05BaseAutomationLogic {
 
 	public void start(ParameterSet globalParameterSet)throws AutomationFailException {
 	}

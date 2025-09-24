@@ -144,9 +144,9 @@ this.fnInit = function()
 this.fnTranSave = function()
 {
 	var strSvcId 	 = "Save";
-	var strSvcUrl 	 = "XUP_DEMO::EVD_04";	
+	var strSvcUrl 	 = "XUP_DEMO::APP_05";	
 	var inData 		 = "dsSendApprove=dsSendApprove";
-	var outData 	 = "dsResult1=RESULT0";
+	var outData 	 = "RESULT0=RESULT0";
 	var strArg 		 = "";
 	var callBackFunc = "fnCallback";
 	var isAsync 	 = true;
@@ -296,13 +296,14 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				break;
 			
 			case "Save":
-				var rowCnt = this.dsResult1.rowcount;
-				var result = this.dsResult1.getColumn(rowCnt, "RESULT");
-				var status = this.dsResult1.getColumn(rowCnt, "STATUS");
+				var rowCnt = this.RESULT0.rowcount;
+				var status = this.RESULT0.getColumn(0, "STATUS");
+				var result = this.RESULT0.getColumn(0, "RESULT");
 				
 				if(rowCnt > 0 && status == "inserted"){
 					alert("상신이 완료 되었습니다.");
 					this.close();
+					this.opener.reload();
 				}
 				
 				break;
@@ -571,7 +572,7 @@ this.fnSetTreeItem = function()
           <Column id="UPDATED_AT" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
-      <Dataset id="dsResult1">
+      <Dataset id="RESULT0">
         <ColumnInfo>
           <Column id="ROWINDEX" type="INT" size="255"/>
           <Column id="STATUS" type="STRING" size="255"/>
