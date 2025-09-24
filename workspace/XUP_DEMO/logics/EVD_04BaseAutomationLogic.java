@@ -80,55 +80,66 @@ public class EVD_04BaseAutomationLogic extends BaseAutomationLogic {
 		initParameterSet(globalParameterSet);
 		start(globalParameterSet);
 		
-		EVD_FILE(globalParameterSet);
+		modify(globalParameterSet);
 
-		if(globalParameterSet.getParameter("dsFile") != null){
-			outputParameterSet.add(globalParameterSet.getParameter("dsFile"));
+		if(globalParameterSet.getParameter("RESULT0") != null){
+			outputParameterSet.add(globalParameterSet.getParameter("RESULT0"));
 		}
 		
 		end(globalParameterSet, outputParameterSet);
 		return outputParameterSet;
 	}
 	private void initParameterSet(ParameterSet globalParameterSet) {
-		DataSet dsFile = new DataSet("dsFile");
+		DataSet RESULT0 = new DataSet("RESULT0");
 
-		dsFile.addColumn("ATT_ID", PlatformDataType.STRING, 255);
-		dsFile.addColumn("ATT_TYPE_NM", PlatformDataType.STRING, 255);
-		dsFile.addColumn("FILE_NM", PlatformDataType.STRING, 255);
-		dsFile.addColumn("FILE_EXT", PlatformDataType.STRING, 255);
-		dsFile.addColumn("FILE_SIZE", PlatformDataType.STRING, 255);
-		dsFile.addColumn("FILE_PATH", PlatformDataType.STRING, 255);
+		RESULT0.addColumn("ROWINDEX", PlatformDataType.INT, 255);
+		RESULT0.addColumn("STATUS", PlatformDataType.STRING, 255);
+		RESULT0.addColumn("RESULT", PlatformDataType.INT, 255);
+		RESULT0.addColumn("ERROR", PlatformDataType.STRING, 255);
 
-		globalParameterSet.add(dsFile);
+		globalParameterSet.add(RESULT0);
 	}
 	public void start(ParameterSet globalParameterSet)throws AutomationFailException {//!findOffset_start!
 	}
 	public void end(ParameterSet globalParameterSet, ParameterSet outputParameterSet)throws AutomationFailException {//!findOffset_end!
 	}
-	public void EVD_FILE(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_EVD_FILE!
+	public void modify(ParameterSet globalParameterSet) throws AutomationFailException {//!findOffset_modify!
 		ParameterSet tmpParameterSet = new ParameterSet();
-		tmpParameterSet.add(globalParameterSet.getParameter("EV_ID"));
+		tmpParameterSet.add(globalParameterSet.getParameter("dsSendApprove"));
 
 		ResultNameSet resultNameSet = new ResultNameSet();
-		resultNameSet.add("RESULT0", "dsFile", null);
+		resultNameSet.add("RESULT0", "RESULT0", null);
 
-		DbSelectInvokingInfo info = new DbSelectInvokingInfo();
+		// defaultBindingValueMap
+		Map defaultBindingValueMap = new HashMap();
+		// SqlTypeBindingInfo
+		SqlTypeBindingInfo sqlTypeBindingInfo = new SqlTypeBindingInfo();
+		sqlTypeBindingInfo.setUseDefaultBinding(true);
+		// DataSetRowActionFilter
+		DataSetRowProcessConditionInfoSet dataSetRowActionFilter = new DataSetRowProcessConditionInfoSet();
+		DbModifyInvokingInfo info = new DbModifyInvokingInfo();
 		info.setDomainName("XUP_DEMO");
 		info.setDataSourceName("NEXACRO_DEMO");
-		info.setSqlSelect("SELECT\n ATT_ID,\n ATT_TYPE_NM,\n FILE_NM,\n FILE_EXT,\n FILE_SIZE,\n FILE_PATH\n FROM EVD_FILE\n WHERE EV_ID = #EV_ID#\n ");
+		info.setSqlInsert("UPDATE 	APV_DOC\n SET APV_STATUS_CD = #dsSendApprove.APV_STATUS_CD#\n , SUBMITTED_AT = TO_DATE(SYSDATE, 'YY/MM/DD')\n , L1_EMP_NO = #dsSendApprove.L1_EMP_NO#\n , L1_USER_NM = #dsSendApprove.L1_USER_NM#\n , L1_POSITION_NM = #dsSendApprove.L1_POSITION_NM#\n , L1_STATUS_CD = #dsSendApprove.L1_ACTED_AT#\n , L1_ACTED_AT = TO_DATE(SYSDATE, 'YY/MM/DD')\n , L1_COMMENT = #dsSendApprove.L1_COMMENT#\n , L2_EMP_NO = #dsSendApprove.L2_EMP_NO#\n , L2_USER_NM = #dsSendApprove.L2_USER_NM#\n , L2_POSITION_NM = #dsSendApprove.L2_POSITION_NM#\n , L2_STATUS_CD = #dsSendApprove.L2_STATUS_CD#\n , L2_ACTED_AT = #dsSendApprove.L2_ACTED_AT#\n , L2_COMMENT = #dsSendApprove.L2_COMMENT#\n , L3_EMP_NO = #dsSendApprove.L3_EMP_NO#\n , L3_USER_NM = #dsSendApprove.L3_USER_NM#\n , L3_POSITION_NM = #dsSendApprove.L3_POSITION_NM#\n , L3_STATUS_CD = #dsSendApprove.L3_STATUS_CD#\n , L3_ACTED_AT = #dsSendApprove.L3_ACTED_AT#\n , L3_COMMENT = #dsSendApprove.L3_COMMENT#\n , L4_EMP_NO = #dsSendApprove.L4_EMP_NO#\n , L4_USER_NM = #dsSendApprove.L4_USER_NM#\n , L4_POSITION_NM = #dsSendApprove.L4_POSITION_NM#\n , L4_STATUS_CD = #dsSendApprove.L4_STATUS_CD#\n , L4_ACTED_AT = #dsSendApprove.L4_ACTED_AT#\n , L4_COMMENT = #dsSendApprove.L4_COMMENT#\n , L5_EMP_NO = #dsSendApprove.L5_EMP_NO#\n , L5_USER_NM = #dsSendApprove.L5_USER_NM#\n , L5_POSITION_NM = #dsSendApprove.L5_POSITION_NM#\n , L5_STATUS_CD = #dsSendApprove.L5_STATUS_CD#\n , L5_ACTED_AT = #dsSendApprove.L5_ACTED_AT#\n , L5_COMMENT = #dsSendApprove.L5_COMMENT#\n , UPDATED_AT = SYSDATE\n WHERE APV_ID = #dsSendApprove.APV_ID#\n AND EV_ID = #dsSendApprove.EV_ID#\n ");
+		info.setSqlUpdate("UPDATE 	APV_DOC\n SET APV_STATUS_CD = #dsSendApprove.APV_STATUS_CD#\n , SUBMITTED_AT = TO_DATE(SYSDATE, 'YY/MM/DD')\n , L1_EMP_NO = #dsSendApprove.L1_EMP_NO#\n , L1_USER_NM = #dsSendApprove.L1_USER_NM#\n , L1_POSITION_NM = #dsSendApprove.L1_POSITION_NM#\n , L1_STATUS_CD = #dsSendApprove.L1_ACTED_AT#\n , L1_ACTED_AT = TO_DATE(SYSDATE, 'YY/MM/DD')\n , L1_COMMENT = #dsSendApprove.L1_COMMENT#\n , L2_EMP_NO = #dsSendApprove.L2_EMP_NO#\n , L2_USER_NM = #dsSendApprove.L2_USER_NM#\n , L2_POSITION_NM = #dsSendApprove.L2_POSITION_NM#\n , L2_STATUS_CD = #dsSendApprove.L2_STATUS_CD#\n , L2_ACTED_AT = #dsSendApprove.L2_ACTED_AT#\n , L2_COMMENT = #dsSendApprove.L2_COMMENT#\n , L3_EMP_NO = #dsSendApprove.L3_EMP_NO#\n , L3_USER_NM = #dsSendApprove.L3_USER_NM#\n , L3_POSITION_NM = #dsSendApprove.L3_POSITION_NM#\n , L3_STATUS_CD = #dsSendApprove.L3_STATUS_CD#\n , L3_ACTED_AT = #dsSendApprove.L3_ACTED_AT#\n , L3_COMMENT = #dsSendApprove.L3_COMMENT#\n , L4_EMP_NO = #dsSendApprove.L4_EMP_NO#\n , L4_USER_NM = #dsSendApprove.L4_USER_NM#\n , L4_POSITION_NM = #dsSendApprove.L4_POSITION_NM#\n , L4_STATUS_CD = #dsSendApprove.L4_STATUS_CD#\n , L4_ACTED_AT = #dsSendApprove.L4_ACTED_AT#\n , L4_COMMENT = #dsSendApprove.L4_COMMENT#\n , L5_EMP_NO = #dsSendApprove.L5_EMP_NO#\n , L5_USER_NM = #dsSendApprove.L5_USER_NM#\n , L5_POSITION_NM = #dsSendApprove.L5_POSITION_NM#\n , L5_STATUS_CD = #dsSendApprove.L5_STATUS_CD#\n , L5_ACTED_AT = #dsSendApprove.L5_ACTED_AT#\n , L5_COMMENT = #dsSendApprove.L5_COMMENT#\n , UPDATED_AT = SYSDATE\n WHERE APV_ID = #dsSendApprove.APV_ID#\n AND EV_ID = #dsSendApprove.EV_ID#\n ");
+		info.setSqlDelete("");
 		info.setResultNameSet(resultNameSet);
 		info.setParameterSet(tmpParameterSet);
+		info.setLoopTargetDataSetName("dsSendApprove");
+		info.setSqlTypeBindingInfo(sqlTypeBindingInfo);
+		info.setDataSetRowActionFilter(dataSetRowActionFilter);
+		info.setDefaultBindingValueMap(defaultBindingValueMap);
 		EventHandler eventHandler = new EventHandler();
 		invoke(info, eventHandler, globalParameterSet);
 
 	}
-	public void EVD_FILEonAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+	public void modifyonAfterExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
 		
 	}
-	public void EVD_FILEonBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
+	public void modifyonBeforeExecute(ParameterSet globalParameterSet, InvokingInfo invokingInfo, DataSource dataSource) throws AutomationFailException {
 		
 	}
-	public void EVD_FILEonExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
+	public void modifyonExceptionOccured(ParameterSet globalParameterSet, InvokingInfo invokingInfo, Throwable e, InvokingErrorInfo errorInfo) throws AutomationFailException {
 		throw new AutomationFailException(e.getMessage(), e);
 	}
 

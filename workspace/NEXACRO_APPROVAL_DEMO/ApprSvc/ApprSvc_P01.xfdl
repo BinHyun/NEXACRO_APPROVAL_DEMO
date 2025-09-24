@@ -144,9 +144,9 @@ this.fnInit = function()
 this.fnTranSave = function()
 {
 	var strSvcId 	 = "Save";
-	var strSvcUrl 	 = "XUP_DEMO::EVD_03";	
-	var inData 		 = "dsCond=dsCond";
-	var outData 	 = "dsResult1=RESULT0 dsResult2=RESULT1";
+	var strSvcUrl 	 = "XUP_DEMO::EVD_04";	
+	var inData 		 = "dsSendApprove=dsSendApprove";
+	var outData 	 = "dsResult1=RESULT0";
 	var strArg 		 = "";
 	var callBackFunc = "fnCallback";
 	var isAsync 	 = true;
@@ -295,6 +295,18 @@ this.fnCallback = function(sId,nErrorCode,sErrorMSG)
 				
 				break;
 			
+			case "Save":
+				var rowCnt = this.dsResult1.rowcount;
+				var result = this.dsResult1.getColumn(rowCnt, "RESULT");
+				var status = this.dsResult1.getColumn(rowCnt, "STATUS");
+				
+				if(rowCnt > 0 && status == "inserted"){
+					alert("상신이 완료 되었습니다.");
+					this.close();
+				}
+				
+				break;
+			
 			default:
 				
 				break;
@@ -349,12 +361,22 @@ this.div_ButtonSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
 		var POSITION_NM = this.dsApprove.getColumn(i, "POSITION_NM");
 		var APPROVE_STATUS = this.dsApprove.getColumn(i, "APPROVE_STATUS");
 		
+		if(APPROVE_STATUS == "WAITING"){
+			APPROVE_STATUS = "PENDING";
+		}
+		
 		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_EMP_NO", EMP_ID);
 		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_USER_NM", EMP_NM);
 		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_POSITION_NM", POSITION_NM);
-		this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_STATUS_CD", APPROVE_STATUS);
+		
+		if("L"+(i+1) != "L1"){
+			this.dsSendApprove.setColumn(nRow, "L"+(i+1)+"_STATUS_CD", APPROVE_STATUS);
+		} else {
+			this.dsSendApprove.setColumn(nRow, "L1_STATUS_CD", "APPROVED");
+		}
+		
 	}
-	//this.fnTranSave();
+	this.fnTranSave();
 };
 
 //취소버튼
@@ -547,6 +569,14 @@ this.fnSetTreeItem = function()
           <Column id="L5_ACTED_AT" type="STRING" size="256"/>
           <Column id="L5_COMMENT" type="STRING" size="256"/>
           <Column id="UPDATED_AT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult1">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
         </ColumnInfo>
       </Dataset>
     </Objects>
