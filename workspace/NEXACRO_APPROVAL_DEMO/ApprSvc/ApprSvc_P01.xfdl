@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="AppSvc_P01" width="855" height="550" titletext="" onload="AppSvc_P01_onload" scrolltype="none">
+  <Form id="AppSvc_P01" width="855" height="450" titletext="" onload="AppSvc_P01_onload" scrolltype="none">
     <Layouts>
-      <Layout height="550" width="855" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
-        <Div id="div" taborder="0" text="Div00" left="0" top="0" width="850" height="530">
+      <Layout height="450" width="855" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" type="default">
+        <Div id="div" taborder="0" text="Div00" left="0" top="0" width="850" height="440">
           <Layouts>
             <Layout flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="center" tablecellalign="start start" tablecellincompalign="start start" tabledirection="horizontal" flexwrap="nowrap" type="default">
               <Div id="divInfo" taborder="0" text="Div00" left="0" top="0" width="850" height="110">
@@ -33,9 +33,9 @@
                   </Layout>
                 </Layouts>
               </Div>
-              <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
-              <Button id="ButtonSave" taborder="2" text="상신" left="725.00" top="510" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
-              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="220" height="390" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col" treeuseimage="false" treeusebutton="use" oncelldblclick="div_Grid00_oncelldblclick">
+              <Button id="ButtonCancel" taborder="1" text="취소" left="785.00" top="410" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonCancel_onclick"/>
+              <Button id="ButtonSave" taborder="2" text="상신" left="725.00" top="410" width="50" height="20" cssclass="btn_WF_ModuleKustom" onclick="div_ButtonSave_onclick" visible="true"/>
+              <Grid id="Grid00" taborder="3" left="20.00" top="140" width="250" height="255" binddataset="dsTree" treeinitstatus="collapse,null" autofittype="col" treeuseimage="false" treeusebutton="use" oncelldblclick="div_Grid00_oncelldblclick">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -51,7 +51,7 @@
                 </Formats>
               </Grid>
               <Static id="StaticYear" taborder="4" text="조직도" left="20" top="110" width="80" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
-              <Grid id="Grid01" taborder="5" left="319" top="140" width="516" height="255" autofittype="col" binddataset="dsApprove">
+              <Grid id="Grid01" taborder="5" left="292.00" top="140" width="543" height="255" autofittype="col" binddataset="dsApprove">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -85,7 +85,7 @@
                   </Format>
                 </Formats>
               </Grid>
-              <Static id="StaticYear00" taborder="6" text="선택된 목록" left="319" top="110" width="91" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
+              <Static id="StaticYear00" taborder="6" text="선택된 목록" left="292" top="110" width="91" height="28" cssclass="sta_WF_SearchLabel1" color="black"/>
             </Layout>
           </Layouts>
         </Div>
