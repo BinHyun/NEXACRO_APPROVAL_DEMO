@@ -32,13 +32,35 @@
 
 ## 📂 폴더 구조
 ```
+## 📂 폴더 구조
 workspace/
-├── .metadata/                # Nexacro Studio 내부 메타데이터 (버전/환경설정)  
-├── .xup/                     # XUP 관련 캐시/설정 파일  
-├── Compile/                  # 컴파일된 결과물 (Nexacro Form, XUP 매퍼 XML)  
-├── NEXACRO_APPROVAL_DEMO/    # Nexacro 프로젝트 소스 (Form, Script, Dataset 등)  
-├── Servers/                  # 로컬 서버 관련 설정 (Tomcat 등)  
-└── XUP_DEMO/                 # XUP 매퍼(XML) 및 SQL 연동 파일  
+├── NEXACRO_APPROVAL_DEMO/             # Nexacro 프로젝트 소스
+│   ├── ApprSvc/                       # 결재 서비스 관련 소스
+│   ├── DashSvc/                       # 대시보드 서비스 관련 소스
+│   ├── EvdSvc/                        # 증빙 서비스 관련 소스
+│   ├── Fram/                          # 공통 프레임 관련
+│   ├── Frame/                         # 화면 프레임 구성
+│   ├── Lib/                           # 공통 라이브러리
+│   ├── ProgSvc/                       # 프로그램 서비스 관련 소스
+│   ├── TestPage/                      # 테스트용 페이지
+│   ├── _resource_/                    # 이미지/리소스 파일
+│   ├── $Geninfo$.geninfo              # Nexacro 환경 설정
+│   ├── Application_Desktop.xadl       # Nexacro Application 진입점
+│   └── NEXACRO_APPROVAL_DEMO.xprj     # Nexacro 프로젝트 파일
+│
+├── XUP_DEMO/                          # XUP 매퍼 및 SQL 연동
+│   ├── logics/                        # 비즈니스 로직 매퍼
+│   └── models/                        # 데이터 모델 매퍼
+│       ├── AppSvc/                    # 결재 관련 매퍼
+│       ├── DashSvc/                   # 대시보드 관련 매퍼
+│       ├── EvdSvc/                    # 증빙 관련 매퍼
+│       ├── ORG/                       # 조직도 매퍼
+│       ├── TEST/                      # 테스트용 매퍼
+│       └── _XUP_TEMP/                 # 임시 매퍼 파일
+│
+├── .gitignore                         # Git 무시 규칙
+└── README.md                          # 프로젝트 설명 문서
+
 ```
 ---
 
